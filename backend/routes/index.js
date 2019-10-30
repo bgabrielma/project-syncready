@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
     }
   ]
 
-  res.render('index', { users });
+  res.render('index', { users, title: 'Uma página como as outras' });
 });
 
 module.exports = router;
