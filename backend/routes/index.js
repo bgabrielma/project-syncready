@@ -16,7 +16,6 @@ router.get('/', function(req, res, next) {
       club: "FC Porto"
     }
   ]
-
   res.render('index', { users, title: 'Uma página como as outras' });
 });
 
