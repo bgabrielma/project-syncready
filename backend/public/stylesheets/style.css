@@ -1,7 +1,7 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: red;
+  background-color: #DDDD36;
 }
 
 a {
@@ -21,4 +21,16 @@ html {
 .content {
   display: flex;
   flex-direction: column;
+}
+
+.main-area > .content > img {
+  background-color: transparent !important;
+  border: none;
+}
+
+.main-area .content form {
+  margin-top: 20px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
 }
