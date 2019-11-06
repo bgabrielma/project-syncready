@@ -3,20 +3,9 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  const payload = {}
 
-  const users = [
-    { 
-      name: "Bruno Martins",
-      age: 18,
-      club: "FC Porto"
-    },
-    { 
-      name: "Pinto da Costa",
-      age: 19,
-      club: "FC Porto"
-    }
-  ]
-  res.render('index', { users, title: 'Uma página como as outras' });
+  res.render('index', { payload });
 });
 
 module.exports = router;
