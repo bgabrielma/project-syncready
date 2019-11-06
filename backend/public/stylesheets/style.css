@@ -9,4 +9,16 @@ a {
 }
 html {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.main-area {
+  display: flex;
+  justify-content: center;
+  align-content: center; 
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
 }
