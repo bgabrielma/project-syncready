@@ -1,36 +1,57 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #DDDD36;
-}
 
-a {
-  color: #00B7FF;
-}
-html {
+html, body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  height: 100%;
+  width: 100%;
 }
-.main-area {
+
+.login {
+  height: 100%;
+  background-color: #DDDD36;
   display: flex;
   justify-content: center;
-  align-content: center; 
+  align-items: center;
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
+.login .title {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-.main-area > .content > img {
-  background-color: transparent !important;
+.login .login-form {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.login .login-form button {
+  background-color: #F3EC78;
+  color: black;
+  font-weight: bold;
   border: none;
 }
 
-.main-area .content form {
-  margin-top: 20px;
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 5px;
+.login-footer {
+  width: 100%;
+  background: #757575;
+  text-align: center;
+  color: white;
+  padding: 5px;
+  font-size: 0.7rem
+}
+
+@media only screen and (max-width: 650px) {
+  .login .container {
+    margin-bottom: 80px;
+    padding: 40px;
+  }
+  .login img {
+    width: 130px;
+    text-align: center;
+    margin: 20px 20px;
+  }
 }
