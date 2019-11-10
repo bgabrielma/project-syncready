@@ -10,8 +10,8 @@ const db = require('./middlewares/db')
 
 const app = express()
 
-// Linking db object to all app
-app.db = db;
+// Linking db object to all app, setting a new variable
+app.set('db', db);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
