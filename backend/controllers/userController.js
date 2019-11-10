@@ -1,6 +1,6 @@
 const db = require('../config/db')
 
-const getUsers = function(req, res, next) {
+const getUsers = function(req, res) {
   res.send('123')
 }
 

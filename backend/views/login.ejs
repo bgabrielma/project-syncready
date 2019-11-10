@@ -14,7 +14,7 @@
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-8">
-                <form class="login-form shadow" action="/users">
+                <form class="login-form shadow" method="POST" action="/users">
                     <div class="form-group">
                         <label class="" for="exampleInputEmail1">Email</label>
                         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email"> </div>
@@ -24,10 +24,11 @@
                     </div>
                     <button type="submit" class="btn btn-primary btn-block shadow-sm">Submit</button>
                 </form>
+                <a href="/main?type=register">Registar agora</a>
             </div>
         </div>
     </div>
 </div>
 <footer class="login-footer shadow">
-    <strong>SyncReady</strong> - 2019 - todos os direitos reservados
+    <strong>&copy; SyncReady</strong> - 2019 - todos os direitos reservados
 </footer>
