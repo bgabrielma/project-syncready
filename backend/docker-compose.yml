@@ -1,9 +1,11 @@
 version: '3.7'
 services:
   db:
-    image: mysql:5.7
+    image: mysql  
     environment:
       MYSQL_ROOT_PASSWORD: ''
+      MYSQL_USER: 'root'
+      MYSQL_PASS: ''
 
     ports:
       # <Port exposed> : < MySQL Port running inside container>
