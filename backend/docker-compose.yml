@@ -2,7 +2,7 @@ version: '3.7'
 services:
   db:
     image: mysql:5.7
-    #command: --default-authentication-plugin=mysql_native_password
+    command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
     - MYSQL_ROOT_PASSWORD=''
@@ -33,6 +33,8 @@ services:
     image: phpmyadmin/phpmyadmin:latest
     ports:
       - 80:80
+    link:
+    - db
     depends_on:
       - db
 
