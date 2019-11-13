@@ -6,7 +6,8 @@ const IndexController = require('../controllers/indexController')
 const userController = require('../controllers/userController')
 
 /* index */
-router.get('/', IndexController.login)
+router.get('/', IndexController.loginOrRegister)
+router.get('/main', IndexController.main)
 
 /* user */
 router.get('/user', userController.getUsers)
