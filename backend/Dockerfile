@@ -3,9 +3,9 @@ FROM node:latest
 WORKDIR /usr/app
 
 
-COPY ../backend/package.json .
+COPY package.json .
 
 RUN npm install --quiet
 RUN npm start
 
-COPY ../ .
+COPY . .
