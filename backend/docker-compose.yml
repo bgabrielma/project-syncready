@@ -17,7 +17,7 @@ services:
       # Where our data will be persisted
     volumes:
       - my-db:/var/lib/mysql
-    - ./scripts/syncready-database.sql:/docker-entrypoint-initdb.d/syncready-database.sql
+      - ./scripts/syncready-database.sql:/docker-entrypoint-initdb.d/syncready-database.sql
 
   backend:
     build: .
