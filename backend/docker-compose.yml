@@ -3,7 +3,6 @@ services:
   db:
     image: mysql:5.7
     environment:
-      MYSQL_DATABASE: 'syncready_database'
       MYSQL_ROOT_PASSWORD: ''
       MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
     restart: always
@@ -33,6 +32,8 @@ services:
     image: phpmyadmin/phpmyadmin:latest
     ports:
       - 80:80
+    depends_on:
+      - db
 
 # Names our volume
 volumes:
