@@ -1,8 +1,8 @@
 version: '3.7'
 services:
   db:
-    image: mysql:5.7
-    command: --default-authentication-plugin=mysql_native_password
+    image: mysql
+    #command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: ''
       MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
