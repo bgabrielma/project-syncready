@@ -2,19 +2,13 @@ FROM node:latest
 
 # Create app directory
 RUN mkdir -p /usr/src/app
-
-# Install git
-RUN apt-get -y install git
-
 WORKDIR /usr/src/app
-# Bundle app source
-
-#COPY package.json /usr/src/app/
-#COPY . /usr/src/app
-
-RUN git clone https://github.com/bgabrielma/project-syncready .
 
 # Install app dependencies
+COPY package.json /usr/src/app/
 RUN npm install
+
+# Bundle app source
+COPY . /usr/src/app
 
 CMD [ "npm", "start" ]
