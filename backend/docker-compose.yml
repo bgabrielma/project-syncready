@@ -33,7 +33,7 @@ services:
     image: phpmyadmin/phpmyadmin:latest
     ports:
       - 80:80
-    link:
+    links:
     - db
     depends_on:
       - db
