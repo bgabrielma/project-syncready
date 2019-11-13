@@ -1,8 +1,7 @@
 version: '3.7'
 services:
   db:
-    image: mysql
-    #command: --default-authentication-plugin=mysql_native_password
+    image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: ''
       MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
@@ -17,6 +16,7 @@ services:
       # Where our data will be persisted
     volumes:
       - my-db:/var/lib/mysql
+    - ./scripts/syncready-database.sql:/docker-entrypoint-initdb.d/syncready-database.sql
 
   backend:
     build: .
