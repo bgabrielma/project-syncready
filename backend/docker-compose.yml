@@ -2,7 +2,6 @@ version: '3.7'
 services:
   db:
     image: mysql:5.7
-    command: --disable-partition-engine-check
     restart: always
     environment:
     - MYSQL_ROOT_PASSWORD=''
