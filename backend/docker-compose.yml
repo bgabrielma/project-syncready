@@ -3,6 +3,7 @@ services:
   db:
     image: mysql:5.7
     environment:
+      MYSQL_DATABASE: 'syncready_database'
       MYSQL_ROOT_PASSWORD: ''
       MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
     restart: always
