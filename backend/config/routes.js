@@ -7,6 +7,7 @@ const userController = require('../controllers/userController')
 
 /* index */
 router.get('/', IndexController.loginOrRegister)
+router.get('/checkdb', IndexController.checkdb)
 router.get('/main', IndexController.main)
 
 /* user */
