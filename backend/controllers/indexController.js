@@ -19,6 +19,9 @@ const main = function(req, res) {
 }
 
 const checkdb = async function(req, res) {
+
+  console.log(process.env)
+
   let message = {
     status: 'ok'
   }
