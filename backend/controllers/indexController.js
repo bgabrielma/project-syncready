@@ -27,7 +27,7 @@ const checkdb = async function(req, res) {
     message = err
   });
 
-  res.send(process.env)
+  res.send({process: process.env, message})
 }
 
 
