@@ -5,8 +5,8 @@ module.exports = {
   connection: {
     host: process.env.APP_DB_HOST,
     database: process.env.APP_DB_DATABASE,
-    user:     'root',
-    password: ''
+    user:     process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD
   },
   pool: {
     min: 2,

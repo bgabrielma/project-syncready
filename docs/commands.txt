@@ -4,7 +4,7 @@
 
   - docker system prune --force --volumes --all
 
-  -docker-compose up
+  - docker-compose up -d
 
 # opcional
  docker rm -f $(docker ps -aq) or docker rm $(docker ps -a -f status=exited -q)
