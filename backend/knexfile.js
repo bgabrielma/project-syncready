@@ -5,8 +5,8 @@ module.exports = {
   connection: {
     host: process.env.APP_DB_HOST || 'localhost',
     database: process.env.APP_DB_DATABASE || 'syncready_database',
-    user:     process.env.MYSQL_USER || 'root',
-    password: process.env.MYSQL_PASSWORD || ''
+    user:     process.env.APP_DB_USER || 'root',
+    password: process.env.APP_DB_PASSWORD || ''
   },
   pool: {
     min: 2,

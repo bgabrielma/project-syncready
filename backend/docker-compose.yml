@@ -25,8 +25,8 @@ services:
     environment:
       APP_DB_HOST: db
       APP_DB_DATABASE: ${DOCKER_DATABASE}
-      MYSQL_USER: ${DOCKER_DATABASE_USERNAME}
-      MYSQL_ROOT_PASSWORD: ${DOCKER_DATABASE_PASSWORD}
+      APP_DB_USER: ${DOCKER_DATABASE_USERNAME}
+      APP_DB_PASSWORD: ${DOCKER_DATABASE_PASSWORD}
     volumes:
       - .:/usr/app/
       # - /usr/app/node_modules
