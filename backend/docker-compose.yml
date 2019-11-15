@@ -4,10 +4,10 @@ services:
     image: mysql:5.7
     restart: always
     environment:
-    - MYSQL_ROOT_PASSWORD=${DOCKER_DATABASE_PASSWORD}
-    - MYSQL_USER=${DOCKER_DATABASE_USERNAME}
-    - MYSQL_PASSWORD=${DOCKER_DATABASE_PASSWORD}
-    - MYSQL_ALLOW_EMPTY_PASSWORD=false
+      MYSQL_ROOT_PASSWORD: ${DOCKER_DATABASE_PASSWORD}
+      MYSQL_USER: ${DOCKER_DATABASE_USERNAME}
+      MYSQL_PASSWORD: ${DOCKER_DATABASE_PASSWORD}
+      MYSQL_ALLOW_EMPTY_PASSWORD: false
     restart: always
     ports:
       # <Port exposed> : < MySQL Port running inside container>
@@ -24,6 +24,7 @@ services:
     command: npm start
     environment:
       APP_DB_HOST: db
+      APP_DB_DATABASE: ${DOCKER_DATABASE}
     volumes:
       - .:/usr/app/
       # - /usr/app/node_modules
