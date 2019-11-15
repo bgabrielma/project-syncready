@@ -20,8 +20,6 @@ const main = function(req, res) {
 
 const checkdb = async function(req, res) {
 
-  console.log(process.env)
-
   let message = {
     status: 'ok'
   }
@@ -29,7 +27,7 @@ const checkdb = async function(req, res) {
     message = err
   });
 
-  res.send(message)
+  res.send(process.env)
 }
 
 
