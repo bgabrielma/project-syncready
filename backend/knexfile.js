@@ -3,7 +3,7 @@
 module.exports = {
   client: 'mysql2',
   connection: {
-    host: "",
+    host: process.env.APP_DB_HOST,
     database: 'syncready_database',
     user:     'root',
     password: ''
