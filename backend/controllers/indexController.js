@@ -15,7 +15,7 @@ const main = function(req, res) {
   if (method != 'r') page = 'login'
   else page = 'register'
 
-  res.render('index', { title: 'SyncReady', page } )
+  res.render('index', { title: 'SyncReady', page: `main/${page}` } )
 }
 
 const checkdb = async function(req, res) {
