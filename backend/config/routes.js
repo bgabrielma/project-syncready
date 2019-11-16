@@ -3,7 +3,8 @@ const router = express.Router();
 
 /* Controllers */
 const IndexController = require('../controllers/indexController')
-const userController = require('../controllers/userController')
+const UserController = require('../controllers/userController')
+const DashboardController = require('../controllers/dashboardController')
 
 /* index */
 router.get('/', IndexController.loginOrRegister)
@@ -11,6 +12,9 @@ router.get('/checkdb', IndexController.checkdb)
 router.get('/main', IndexController.main)
 
 /* user */
-router.get('/user', userController.getUsers)
+router.get('/user', UserController.getUsers)
+
+/* dashboard */
+router.get('/dashboard', DashboardController.dashboard)
 
 module.exports = router
