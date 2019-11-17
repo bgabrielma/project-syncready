@@ -1,4 +1,5 @@
 const db = require('../config/db')
+const validateCC = require('../utils/validadorCC')
 
 const loginOrRegister = function(req, res) {
   // res.render('index', { title: 'SyncReady', page: 'register' });
@@ -10,7 +11,7 @@ const main = function(req, res) {
   const method = req.query.m || 'login'
   let page = ''
 
-  console.log(method)
+  console.log(validateCC('142295248ZZ3'))
     
   if (method != 'r') page = 'login'
   else page = 'register'
