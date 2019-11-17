@@ -29,7 +29,7 @@ VALUES
 (UUID(), 'Suspensa'),
 (UUID(), 'Cancelada');
 
-INSERT INTO Ticket_Options (`uuid_status_room`, `status_room_designation`)
+INSERT INTO Ticket_Options (`uuid_ticket_options`, `ticket_option_designation`)
 VALUES 
 (UUID(), 'Técnico pendente'),
 (UUID(), 'Em funcionamento'),
