@@ -75,7 +75,6 @@ html, body {
 /* dashboard */
 
 .sidebar-sticky {
-  margin-top: 55px;
   height: calc(100vh - 48px);
   padding-top: .5rem;
   overflow-x: hidden;
