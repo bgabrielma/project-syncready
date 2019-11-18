@@ -3,12 +3,15 @@ html, body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+body {
+  min-height: 100vh;
   height: 100%;
-  width: 100%;
 }
 
 .login {
-  height: 100vh;
+  min-height: 100vh;
   background-color: #DDDD36;
   display: flex;
   justify-content: center;
@@ -36,6 +39,7 @@ html, body {
 }
 
 .login-footer {
+  bottom: 0;
   width: 100%;
   background: #757575;
   text-align: center;
@@ -45,31 +49,13 @@ html, body {
 }
 
 @media screen and (max-width: 650px) {
-  .login img {
+  .login .col-md-12 img {
     width: 130px;
     text-align: center;
-    margin: 20px 20px;
   }
-}
-
-@media screen and (max-width: 1097px) {
-  .login {
-    height: auto;
+  .login .col-md-12 {
+    margin-bottom: 20px;
   }
-
-  .login .container {
-    margin-bottom: 50px;
-    padding: 40px;
-  }
-}
-
-@media only screen 
-  and (min-width: 768px) 
-  and (max-height: 1366px) {
-
-    .login {
-      height: 100vh;
-    }
 }
 
 /* dashboard */

@@ -1,5 +1,5 @@
 <div class="login">
-    <div class="container">
+    <div class="container mt-5 mb-5">
         <div class="row">
             <div class="col-lg-3 d-flex justify-content-center">
                 <div class="row text-center title">
@@ -46,6 +46,24 @@
                         <% if(!!errors.fullname) { %>
                             <div class="invalid-feedback">
                                 <%- errors.fullname.message %>
+                            </div>
+                        <% } %>
+
+                    </div>
+
+                    <div class="form-group col-lg-12">
+                        <label class="" for="exampleInputName1">Local de residência</label>
+                        <input
+                            value="<% if(!!predata.address) { %><%- predata.address %><% } %>"
+                            type="text" 
+                            name="address"
+                            class="form-control <% if(!!errors.address) { %> is-invalid <% } %>" 
+                            aria-describedby="emailHelp" 
+                            placeholder="Localidade">
+
+                        <% if(!!errors.address) { %>
+                            <div class="invalid-feedback">
+                                <%- errors.address.message %>
                             </div>
                         <% } %>
 
