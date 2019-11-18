@@ -12,7 +12,8 @@ router.get('/checkdb', IndexController.checkdb)
 router.get('/main', IndexController.main)
 
 /* user */
-router.get('/user', UserController.getUsers)
+router.post('/register', UserController.register)
+router.post('/auth', UserController.auth)
 
 /* dashboard */
 router.get('/dashboard', DashboardController.dashboard)

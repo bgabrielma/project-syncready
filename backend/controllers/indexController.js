@@ -1,5 +1,4 @@
 const db = require('../config/db')
-const validateCC = require('../utils/validadorCC')
 
 const loginOrRegister = function(req, res) {
   // res.render('index', { title: 'SyncReady', page: 'register' });
@@ -10,13 +9,11 @@ const loginOrRegister = function(req, res) {
 const main = function(req, res) {
   const method = req.query.m || 'login'
   let page = ''
-
-  console.log(validateCC('142295248ZZ3'))
     
   if (method != 'r') page = 'login'
   else page = 'register'
 
-  res.render('index', { title: 'SyncReady', page: `main/${page}` } )
+  res.render('index', { title: 'SyncReady', page: `main/${page}`, errors: {}, predata: {} } )
 }
 
 const checkdb = async function(req, res) {
