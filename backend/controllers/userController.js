@@ -17,6 +17,7 @@ const register = function(req, res) {
   let errors = {}
 
   const emptyField = { message: 'Este campo não pode estar vazio!' }
+  const invalidPass = { message: 'As palavras-passes indicadas não correspondem uma com a outra!' }
 
   console.log(req.body)
 
@@ -38,7 +39,10 @@ const register = function(req, res) {
   if (!password) errors.password = emptyField
   if (!repeatpassword) errors.repeatpassword = emptyField
   
-  if (password != repeatpassword) errors.repeatpassword = { message: 'As palavras-passes indicadas não correspondem uma com a outra!' }
+  if (password != repeatpassword) {
+    errors.repeatpassword = invalidPass
+    errors.password = invalidPass
+  } 
 
   if (Object.keys(errors).length > 0) {
     res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: req.body } )
