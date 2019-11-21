@@ -18,4 +18,8 @@ router.post('/auth', UserController.auth)
 /* dashboard */
 router.get('/dashboard', DashboardController.dashboard)
 
+/* Users */
+router.get('/dashboard/user/new', DashboardController.newUser)
+router.get('/dashboard/user/list', DashboardController.listUsers)
+
 module.exports = router

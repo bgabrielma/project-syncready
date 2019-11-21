@@ -46,13 +46,13 @@
         </h6>
         <ul class="nav flex-column ml-3 mr-1">
           <li class="nav-item">
-            <a class="nav-link text-black-50 " href="#">
+            <a class="nav-link text-black-50 " href="/dashboard/user/new">
               <i class="fas fa-plus mr-2 text-black-50"></i>
               Inserir novo utilizador
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-black-50 " href="#">
+            <a class="nav-link text-black-50 " href="/dashboard/user/list">
               <i class="fas fa-list mr-2 text-black-50"></i>
               Listar utilizadores
             </a>
@@ -107,7 +107,7 @@
     </nav>
     <div class="col-md-10 border-top mt-5">
       <!-- formulários -->
-      <%- include('user/new_user_form') %>
+      <%- include(subPage) %>
     </div>
   </div>
 </div>
