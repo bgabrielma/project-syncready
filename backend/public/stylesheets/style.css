@@ -74,3 +74,63 @@ body {
   }
 }
 
+/* dashboard home */
+
+.card-deck .card-footer {
+  text-align: center;
+  cursor: pointer;
+}
+
+.card-deck .card-body {
+  color: #E0EBF9;
+}
+
+.card-deck .card-tickets .card-body {
+  color: #FFFFFF;
+}
+
+.card-deck .card {
+  color: #ffffff;
+  border: none;
+}
+
+.card-deck .card-users {
+  background-color: #659CE0;
+}
+
+.card-deck .card-rooms {
+  background-color: #34B4C1;
+}
+
+.card-deck .card-rooms {
+  background-color: #34B4C1;
+}
+
+.card-deck .card-alerts {
+  background-color: #ED6B76;
+}
+
+.card-deck .card-tickets {
+  background-color: #F7DC6F;
+}
+
+.card-deck .card-users .card-footer {
+  background-color: #84B0E6;
+}
+
+.card-deck .card-rooms .card-footer {
+  background-color: #5DC3CD;
+}
+
+.card-deck .card-alerts .card-footer {
+  background-color: #F18991;
+}
+
+.card-deck .card-tickets .card-footer {
+  background-color: #faeaa8;
+}
+
+
+
+
+
