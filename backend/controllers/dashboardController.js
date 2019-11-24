@@ -1,5 +1,5 @@
 const db = require('../config/db')
-
+const randomToken = require('random-token')
 const dashboard = function(req, res) {
   res.render('index', { title: 'Dashboard | SyncReady', page: 'dashboard', subPage: 'dashboard/home'} )
 }
@@ -15,11 +15,14 @@ const listUsers = function(req, res) {
 
 /* Rooms */
 const newRoom = function(req, res) {
-  res.render('index', { title:  'New room | SyncReady', page: 'dashboard', subPage: 'rooms/new_room_form'})
+  const payload = {
+    token: randomToken(20)
+  }
+  res.render('index', { title:  'New room | SyncReady', page: 'dashboard', subPage: 'rooms/new_room_form', payload })
 }
 
 const listRoom = function(req, res) {
-  res.render('index', { title:  'List of rooms | SyncReady', page: 'dashboard', subPage: 'rooms/list_room'})
+  res.render('index', { title:  'List of rooms | SyncReady', page: 'dashboard', subPage: 'rooms/list_room' })
 }
 
 module.exports = {
