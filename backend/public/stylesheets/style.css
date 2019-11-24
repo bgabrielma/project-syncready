@@ -76,10 +76,7 @@ body {
 
 /* Enable effects */
 
-.sidebar-sticky .nav-link {
-  -webkit-transition: all 0.5s; /* For Safari 3.1 to 6.0 */
-  transition: all 0.5s;
-}
+.sidebar-sticky .nav-link,
 .sidebar-heading i {
   -webkit-transition: all 0.5s; /* For Safari 3.1 to 6.0 */
   transition: all 0.5s;
