@@ -84,9 +84,9 @@ body {
 
 /* -- */
 
-.sidebar-heading i:hover {
+/*.sidebar-heading i:hover {
   transform: rotate(40deg);
-}
+}*/
 
 @supports ((position: -webkit-sticky) or (position: sticky)) {
   .sidebar-sticky {
