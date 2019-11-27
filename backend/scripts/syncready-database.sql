@@ -266,17 +266,17 @@ DROP TABLE IF EXISTS `Users` ;
 
 CREATE TABLE IF NOT EXISTS `Users` (
   `pk_user` INT NOT NULL AUTO_INCREMENT,
-  `pk_uuid` VARCHAR(255) NOT NULL,
+  `pk_uuid` VARCHAR(255) NOT NULL DEFAULT UUID(),
   `nickname` VARCHAR(100) NOT NULL,
   `fullname` VARCHAR(100) NOT NULL,
   `address` VARCHAR(100) NOT NULL,
-  `e-mail` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
   `telephone` VARCHAR(100) NOT NULL,
   `citizencard` INT(50) NOT NULL,
   `password` VARCHAR(50) NOT NULL,
-  `created_at` DATETIME NOT NULL,
-  `update_at` DATETIME NOT NULL,
-  `Type_Of_User_uuid_type_of_users` VARCHAR(255) NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT NOW(),
+  `update_at` DATETIME NOT NULL DEFAULT NOW(),
+  `Type_Of_User_uuid_type_of_users` VARCHAR(255) DEFAULT 1,
   PRIMARY KEY (`pk_user`, `pk_uuid`))
 ENGINE = InnoDB;
 

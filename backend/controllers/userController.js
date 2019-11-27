@@ -12,14 +12,12 @@ const login = function(email, password, res) {
   res.redirect(`/dashboard?uuid=${uuid}`)
 }
 
-const register = function(req, res) {
+const register = async function(req, res) {
   
   let errors = {}
 
   const emptyField = { message: 'Este campo não pode estar vazio!' }
   const invalidPass = { message: 'As palavras-passes indicadas não correspondem uma com a outra!' }
-
-  console.log(req.body)
 
   const { fullname, address, email, contacto, cc, username, password, repeatpassword } = req.body
 
@@ -30,10 +28,13 @@ const register = function(req, res) {
   if (!contacto || contacto.length !== 9) errors.contacto = { message: 'O número de telefone é inválido!' }
 
   if (username) {
-
-    // TODO: fazer sistema para verificar se tal username já existe
-    
-
+    await db.count('nickname', { as: 'count' }).from('users')
+      .where('nickname', username)
+      .then(r => { 
+        if (r[0].count) {
+          errors.username = { message: 'O nome de utilizador indicado já está em uso!'}
+        }
+      });
   } else errors.username = emptyField
 
   if (!password) errors.password = emptyField
@@ -49,9 +50,19 @@ const register = function(req, res) {
   } else {
     
     // TODO: fazer sistema de registar
+    await db('users').insert({
+      nickname: username,
+      fullname,
+      address, 
+      email,
+      telephone: contacto, 
+      citizencard: cc,
+      password
+    })
+    .catch(res.send('An error occurred during new user registration'))
+    .then(login(email, password, res))
 
     // then login
-    login(email, password, res)
   }
 }
 
