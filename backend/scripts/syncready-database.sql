@@ -215,7 +215,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `Type_Of_Alert` ;
 
 CREATE TABLE IF NOT EXISTS `Type_Of_Alert` (
-  `pk_type_of_alert` INT NULL AUTO_INCREMENT,
+  `pk_type_of_alert` INT NOT NULL AUTO_INCREMENT,
   `uuid_type_of_alert` VARCHAR(255) NOT NULL,
   `type_of_alert_designation` VARCHAR(50) NULL,
   PRIMARY KEY (`pk_type_of_alert`, `uuid_type_of_alert`))
