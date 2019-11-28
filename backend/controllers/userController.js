@@ -70,6 +70,7 @@ const register = async function(req, res) {
     res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: req.body } )
   } else {
     await db('users').insert({
+      pk_uuid: db.raw("UUID()"),
       nickname: username,
       fullname,
       address, 
