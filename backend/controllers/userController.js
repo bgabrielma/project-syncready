@@ -86,8 +86,7 @@ const register = async function(req, res) {
     })
     
     // In order to avoid the following bug: First, the system needs to execute the main query -> insert and, after this task is completed, execute the login query
-    if(!errors.errorOnInsert)
-      login(email, password, res)
+    login(email, password, res)
   }
 }
 
