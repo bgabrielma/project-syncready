@@ -3,29 +3,41 @@ const validadorCC = require('../utils/validadorCC')
 
 const messageErrorOnInsert = { message: 'Ocorreu um erro ao realizar o seu pedido - tente mais tarde :(' }
 
-const login = function(email, password, res) {
-  
+const emptyField = { message: 'Este campo não pode estar vazio!' }
+const invalidPass = { message: 'As palavras-passes indicadas não correspondem uma com a outra!' }
+
+const login = async function(email, password, res) {
+
   // get uuid
   const uuid = 'aindapordefinir'
 
-  // res.render('index', { title: 'SyncReady', page: 'main/login', errors: { }, messageErrorOnInsert } )
+  db('users').count('*', { as: 'count' })
+    .where({
+      email,
+      password
+    })
+    .then(r => {
+      if(r[0].count) {
+        // TODO: mecanismo do token ou cookie por definir
 
-  res.redirect(`/dashboard?uuid=${uuid}`)
+        res.redirect(`/dashboard?uuid=${uuid}`)
+      } else
+        messageErrorOnInsert.message = 'Email e/ou password inválido(s)!'
+        res.render('index', { title: 'SyncReady', page: 'main/login', errors: { }, messageErrorOnInsert } )
+    })
+    .catch(_ => {
+      res.render('index', { title: 'SyncReady', page: 'main/login', errors: { }, messageErrorOnInsert } )
+    })
 }
 
 const register = async function(req, res) {
-  
   let errors = {}
-
-  const emptyField = { message: 'Este campo não pode estar vazio!' }
-  const invalidPass = { message: 'As palavras-passes indicadas não correspondem uma com a outra!' }
-
   const { fullname, address, email, contacto, cc, username, password, repeatpassword } = req.body
 
   if (!fullname) errors.fullname = emptyField
   if (!address) errors.address = emptyField 
   if (email) {
-    await db.count('email', { as: 'count' }).from('users')
+    await db('users').count('email', { as: 'count' })
       .where('email', email)
       .then(r => { 
         if (r[0].count) {
@@ -37,7 +49,7 @@ const register = async function(req, res) {
   if (!contacto || contacto.length !== 9) errors.contacto = { message: 'O número de telefone é inválido!' }
 
   if (username) {
-    await db.count('nickname', { as: 'count' }).from('users')
+    await db('users').count('nickname', { as: 'count' })
       .where('nickname', username)
       .then(r => { 
         if (r[0].count) {
@@ -57,8 +69,6 @@ const register = async function(req, res) {
   if (Object.keys(errors).length > 0) {
     res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: req.body } )
   } else {
-    
-    // TODO: fazer sistema de registar
     await db('users').insert({
       nickname: username,
       fullname,
@@ -68,19 +78,20 @@ const register = async function(req, res) {
       citizencard: cc,
       password
     })
-    .then(login(email, password, res))
     .catch(_ => {
       errors.errorOnInsert = messageErrorOnInsert
       res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: { } } )
+      return
     })
+    
+    // In order to avoid the following bug: First, the system needs to execute the main query -> insert and, after this task is completed, execute the login query
+    login(email, password, res)
   }
 }
 
 const auth = function(req, res) {
   let errors = {}
-
   const emptyField = { message: 'Este campo não pode estar vazio!' }
-
   const { email, password } = req.body
 
   if (!email) errors.email = emptyField
