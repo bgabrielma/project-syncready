@@ -11,7 +11,7 @@ const login = async function(email, password, res) {
   // get uuid
   const uuid = 'aindapordefinir'
 
-  db('users').count('*', { as: 'count' })
+  db('Users').count('*', { as: 'count' })
     .where({
       email,
       password
@@ -37,7 +37,7 @@ const register = async function(req, res) {
   if (!fullname) errors.fullname = emptyField
   if (!address) errors.address = emptyField 
   if (email) {
-    await db('users').count('email', { as: 'count' })
+    await db('Users').count('email', { as: 'count' })
       .where('email', email)
       .then(r => { 
         if (r[0].count) {
@@ -49,7 +49,7 @@ const register = async function(req, res) {
   if (!contacto || contacto.length !== 9) errors.contacto = { message: 'O número de telefone é inválido!' }
 
   if (username) {
-    await db('users').count('nickname', { as: 'count' })
+    await db('Users').count('nickname', { as: 'count' })
       .where('nickname', username)
       .then(r => { 
         if (r[0].count) {
@@ -69,7 +69,7 @@ const register = async function(req, res) {
   if (Object.keys(errors).length > 0) {
     res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: req.body } )
   } else {
-    await db('users').insert({
+    await db('Users').insert({
       pk_uuid: db.raw("UUID()"),
       nickname: username,
       fullname,
