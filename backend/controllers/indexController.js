@@ -13,7 +13,7 @@ const main = function(req, res) {
   if (method != 'r') page = 'login'
   else page = 'register'
 
-  res.render('index', { title: 'SyncReady', page: `main/${page}`, errors: {}, predata: {} } )
+  res.render('index', { title: 'SyncReady', page: `main/${page}`, errors: {}, predata: {}, messageErrorOnInsert: null } )
 }
 
 const checkdb = async function(req, res) {
