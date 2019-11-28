@@ -25,6 +25,9 @@ const login = async function(email, password, res) {
         messageErrorOnInsert.message = 'Email e/ou password inválido(s)!'
         res.render('index', { title: 'SyncReady', page: 'main/login', errors: { }, messageErrorOnInsert } )
     })
+    .catch(_ => {
+      res.render('index', { title: 'SyncReady', page: 'main/login', errors: { }, messageErrorOnInsert } )
+    })
 }
 
 const register = async function(req, res) {
@@ -75,7 +78,13 @@ const register = async function(req, res) {
       citizencard: cc,
       password
     })
+    .catch(_ => {
+      errors.errorOnInsert = messageErrorOnInsert
+      res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: { } } )
+      return
+    })
 
+    // In order to avoid the following bug: First, the system needs to execute the main query -> insert and, after this task is completed, execute the login query
     login(email, password, res)
   }
 }
