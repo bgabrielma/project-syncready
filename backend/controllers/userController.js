@@ -25,9 +25,6 @@ const login = async function(email, password, res) {
         messageErrorOnInsert.message = 'Email e/ou password inválido(s)!'
         res.render('index', { title: 'SyncReady', page: 'main/login', errors: { }, messageErrorOnInsert } )
     })
-    .catch(_ => {
-      res.render('index', { title: 'SyncReady', page: 'main/login', errors: { }, messageErrorOnInsert } )
-    })
 }
 
 const register = async function(req, res) {
@@ -36,14 +33,14 @@ const register = async function(req, res) {
 
   if (!fullname) errors.fullname = emptyField
   if (!address) errors.address = emptyField 
-  if (email) {
+   if (email) {
     await db('Users').count('email', { as: 'count' })
       .where('email', email)
       .then(r => { 
         if (r[0].count) {
           errors.email = { message: 'O email indicado já pertence a outra conta!'}
         }
-      });
+      })
   } else errors.email = emptyField
   if (!cc || validadorCC(cc) !== 1) errors.cc = { message: 'O número de cartão de cidadão é inválido!' }
   if (!contacto || contacto.length !== 9) errors.contacto = { message: 'O número de telefone é inválido!' }
@@ -55,7 +52,7 @@ const register = async function(req, res) {
         if (r[0].count) {
           errors.username = { message: 'O nome de utilizador indicado já está em uso!'}
         }
-      });
+      })
   } else errors.username = emptyField
 
   if (!password) errors.password = emptyField
@@ -69,8 +66,7 @@ const register = async function(req, res) {
   if (Object.keys(errors).length > 0) {
     res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: req.body } )
   } else {
-    await db('Users').insert({
-      pk_uuid: db.raw("UUID()"),
+    await db('users').insert({
       nickname: username,
       fullname,
       address, 
@@ -79,13 +75,7 @@ const register = async function(req, res) {
       citizencard: cc,
       password
     })
-    .catch(_ => {
-      errors.errorOnInsert = messageErrorOnInsert
-      res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: { } } )
-      return
-    })
-    
-    // In order to avoid the following bug: First, the system needs to execute the main query -> insert and, after this task is completed, execute the login query
+
     login(email, password, res)
   }
 }

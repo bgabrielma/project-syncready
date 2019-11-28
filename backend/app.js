@@ -7,11 +7,16 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 
+const helmet = require('helmet')
+
 const app = express()
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
+
+// disable cache and activate security
+app.use(helmet())
 
 app.use(logger('dev'))
 app.use(express.json())
