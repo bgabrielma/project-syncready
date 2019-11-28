@@ -66,7 +66,7 @@ const register = async function(req, res) {
   if (Object.keys(errors).length > 0) {
     res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: req.body } )
   } else {
-    await db('users').insert({
+    await db('Users').insert({
       nickname: username,
       fullname,
       address, 
