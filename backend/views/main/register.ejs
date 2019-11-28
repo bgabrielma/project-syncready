@@ -26,7 +26,8 @@
 
                     <% if(!!errors && Object.keys(errors).length > 0) { %>
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>Holy guacamole!</strong> Veja os erros abaixo
+                                <strong>Holy guacamole!</strong>
+                                <%- !!errors.errorOnInsert ? errors.errorOnInsert.message : 'Veja os erros abaixo' %>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -36,10 +37,10 @@
                     <div class="form-group col-lg-12">
                         <label class="" for="exampleInputName1">Nome completo</label>
                         <input
-                            value="<% if(!!predata.fullname) { %><%- predata.fullname %><% } %>"
+                            value="<%- !!predata.fullname ? predata.fullname : '' %>"
                             type="text" 
                             name="fullname"
-                            class="form-control <% if(!!errors.fullname) { %> is-invalid <% } %>" 
+                            class="form-control <%- !!errors.fullname ? 'is-invalid' : '' %>" 
                             aria-describedby="emailHelp" 
                             placeholder="Nome completo">
 
@@ -54,10 +55,10 @@
                     <div class="form-group col-lg-12">
                         <label class="" for="exampleInputName1">Local de residência</label>
                         <input
-                            value="<% if(!!predata.address) { %><%- predata.address %><% } %>"
+                            value="<%- !!predata.address ? predata.address : '' %>"
                             type="text" 
                             name="address"
-                            class="form-control <% if(!!errors.address) { %> is-invalid <% } %>" 
+                            class="form-control <%- !!errors.address ? 'is-invalid' : '' %>" 
                             aria-describedby="emailHelp" 
                             placeholder="Localidade">
 
@@ -71,9 +72,9 @@
                     <div class="form-group col-lg-12">
                         <label for="exampleInputEmail1">E-mail</label>
                         <input 
-                            value="<% if(!!predata.email) { %><%- predata.email %><% } %>"
+                            value="<%- !!predata.email ? predata.email : '' %>"
                             type="email" 
-                            class="form-control <% if(!!errors.email) { %> is-invalid <% } %>" 
+                            class="form-control <%- !!errors.email ? 'is-invalid' : '' %>" 
                             name="email" 
                             placeholder="E-mail">
 
@@ -92,10 +93,10 @@
                                 <option>+351</option>
                               </select>
                             </div>
-                            <input
-                                value="<% if(!!predata.contacto) { %><%- predata.contacto %><% } %>" 
+                           <input
+                                value="<%- !!predata.contacto ? predata.contacto : '' %>" 
                                 type="tel" 
-                                class="form-control <% if(!!errors.contacto) { %> is-invalid <% } %>" 
+                                class="form-control <%- !!errors.contacto ? 'is-invalid' : '' %>" 
                                 name="contacto" 
                                 placeholder="Telemóvel">
 
@@ -104,15 +105,14 @@
                                     <%- errors.contacto.message %>
                                 </div>
                             <% } %>
-            
                         </div> 
                     </div>
                     <div class="form-group col-lg-12">
                         <label for="exampleInputCC1">Cartão de cidadão</label>
                         <input 
-                            value="<% if(!!predata.cc) { %><%- predata.cc %><% } %>" 
+                            value="<%- !!predata.cc ? predata.cc : '' %>" 
                             type="text" 
-                            class="form-control <% if(!!errors.cc) { %> is-invalid <% } %>" 
+                            class="form-control <%- !!errors.cc ? 'is-invalid' : '' %>" 
                             name="cc" 
                             placeholder="Cartão de cidadão">
 
@@ -130,9 +130,9 @@
                               <span class="input-group-text" id="inputGroupPrepend">@</span>
                             </div>
                         <input
-                            value="<% if(!!predata.username) { %><%- predata.username.trim() %><% } %>"  
+                            value="<%- !!predata.username ? predata.username : '' %>"  
                             type="text" 
-                            class="form-control <% if(!!errors.username) { %> is-invalid <% } %>" 
+                            class="form-control <%- !!errors.username ? 'is-invalid' : '' %>" 
                             name="username" 
                             placeholder="Nome de utilizador">
 
@@ -148,7 +148,7 @@
                         <label for="exampleInputPassword1">Palavra-passe</label>
                         <input 
                             type="password" 
-                            class="form-control <% if(!!errors.password) { %> is-invalid <% } %>" 
+                            class="form-control <%- !!errors.password ? 'is-invalid' : '' %>" 
                             name="password" 
                             placeholder="Palavra-passe">
 
@@ -163,7 +163,7 @@
                         <label for="exampleInputConfirm1">Confirmar palavra-passe</label>
                         <input 
                             type="password" 
-                            class="form-control <% if(!!errors.repeatpassword) { %> is-invalid <% } %>" 
+                            class="form-control <%- !!errors.repeatpassword ? 'is-invalid' : '' %>"  
                             name="repeatpassword" 
                             placeholder="Confirmar palavra-passe">
 

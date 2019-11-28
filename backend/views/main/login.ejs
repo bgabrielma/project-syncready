@@ -15,16 +15,15 @@
             <div class="col-md-1"></div>
             <div class="col-md-8">
                 <form class="login-form shadow" method="POST" action="/auth">
-
-                    <% if(!!errors && Object.keys(errors).length > 0) { %>
+                    <% if(!!errors && Object.keys(errors).length > 0 || !!messageErrorOnInsert) { %>
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>Holy guacamole!</strong> Erro ao iniciar sessão
+                                <strong>Holy guacamole!</strong>
+                                <%- !!messageErrorOnInsert ? messageErrorOnInsert.message : 'Veja os erros abaixo' %>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                     <% } %>
-
                     <div class="form-group">
                         <label class="" for="exampleInputEmail1">Email</label>
                         <input 

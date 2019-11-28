@@ -1,13 +1,14 @@
 const db = require('../config/db')
 const validadorCC = require('../utils/validadorCC')
 
-const registerNew = function() {
-  
-}
+const messageErrorOnInsert = { message: 'Ocorreu um erro ao realizar o seu pedido - tente mais tarde :(' }
 
 const login = function(email, password, res) {
+  
   // get uuid
   const uuid = 'aindapordefinir'
+
+  // res.render('index', { title: 'SyncReady', page: 'main/login', errors: { }, messageErrorOnInsert } )
 
   res.redirect(`/dashboard?uuid=${uuid}`)
 }
@@ -23,7 +24,15 @@ const register = async function(req, res) {
 
   if (!fullname) errors.fullname = emptyField
   if (!address) errors.address = emptyField 
-  if (!email) errors.email = emptyField
+  if (email) {
+    await db.count('email', { as: 'count' }).from('users')
+      .where('email', email)
+      .then(r => { 
+        if (r[0].count) {
+          errors.email = { message: 'O email indicado já pertence a outra conta!'}
+        }
+      });
+  } else errors.email = emptyField
   if (!cc || validadorCC(cc) !== 1) errors.cc = { message: 'O número de cartão de cidadão é inválido!' }
   if (!contacto || contacto.length !== 9) errors.contacto = { message: 'O número de telefone é inválido!' }
 
@@ -59,10 +68,11 @@ const register = async function(req, res) {
       citizencard: cc,
       password
     })
-    .catch(res.send('An error occurred during new user registration'))
     .then(login(email, password, res))
-
-    // then login
+    .catch(_ => {
+      errors.errorOnInsert = messageErrorOnInsert
+      res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: { } } )
+    })
   }
 }
 
@@ -77,7 +87,7 @@ const auth = function(req, res) {
   if (!password) errors.password = emptyField
 
   if (Object.keys(errors).length > 0) {
-    res.render('index', { title: 'SyncReady', page: 'main/login', errors} )
+    res.render('index', { title: 'SyncReady', page: 'main/login', errors, messageErrorOnInsert: null })
   } else {
     login(email, password, res);
   }
