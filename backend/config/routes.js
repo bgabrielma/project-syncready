@@ -26,4 +26,8 @@ router.get('/dashboard/user/list', DashboardController.listUsers)
 router.get('/dashboard/room/new', DashboardController.newRoom)
 router.get('/dashboard/room/list', DashboardController.listRoom)
 
+router.get('/cookies', function(req, res) {
+  res.send(req.cookies)
+});
+
 module.exports = router

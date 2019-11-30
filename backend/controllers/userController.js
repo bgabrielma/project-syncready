@@ -6,26 +6,26 @@ const messageErrorOnInsert = { message: 'Ocorreu um erro ao realizar o seu pedid
 const emptyField = { message: 'Este campo não pode estar vazio!' }
 const invalidPass = { message: 'As palavras-passes indicadas não correspondem uma com a outra!' }
 
-const login = async function(email, password, res) {
+const login = async function(email, password, req, res) {
 
-  // get uuid
-  const uuid = 'aindapordefinir'
-
-  db('Users').count('*', { as: 'count' })
-    .where({
+  await db('Users').where({
       email,
       password
     })
     .then(r => {
-      if(r[0].count) {
-        // TODO: mecanismo do token ou cookie por definir
-
-        res.redirect(`/dashboard?uuid=${uuid}`)
-      } else
+      if(r.length !== 0) {
+        if(!req.cookies['SYNCREADY_COOKIE_LOGIN']) {
+          // 72000000 milliseconds = 20 hours
+          res.cookie('SYNCREADY_COOKIE_LOGIN', r[0].pk_uuid, { maxAge: 72000000, httpOnly: true });
+        }
+        res.redirect(`/dashboard`)
+      } else {
         messageErrorOnInsert.message = 'Email e/ou password inválido(s)!'
         res.render('index', { title: 'SyncReady', page: 'main/login', errors: { }, messageErrorOnInsert } )
+      }
     })
-    .catch(_ => {
+    .catch(err => {
+      console.log(err)
       res.render('index', { title: 'SyncReady', page: 'main/login', errors: { }, messageErrorOnInsert } )
     })
 }
@@ -92,7 +92,7 @@ const register = async function(req, res) {
     })
 
     // In order to avoid the following bug: First, the system needs to execute the main query -> insert and, after this task is completed, execute the login query
-    login(email, password, res)
+    login(email, password, req, res)
   }
 }
 
@@ -107,7 +107,7 @@ const auth = function(req, res) {
   if (Object.keys(errors).length > 0) {
     res.render('index', { title: 'SyncReady', page: 'main/login', errors, messageErrorOnInsert: null })
   } else {
-    login(email, password, res);
+    login(email, password, req, res);
   }
 }
 
