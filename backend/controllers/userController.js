@@ -46,8 +46,6 @@ const register = async function(req, res) {
       })
       .catch(_ => {
         errors.errorOnInsert = messageErrorOnInsert
-        res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: { } } )
-        return
       })
   } else errors.email = emptyField
 
@@ -64,8 +62,6 @@ const register = async function(req, res) {
       })
       .catch(_ => {
         errors.errorOnInsert = messageErrorOnInsert
-        res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: { } } )
-        return
       })
   } else errors.username = emptyField
 
