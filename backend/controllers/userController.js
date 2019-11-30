@@ -39,15 +39,15 @@ const register = async function(req, res) {
    if (email) {
     await db('Users').count('email', { as: 'count' })
       .where('email', email)
-      .catch(_ => {
-        errors.errorOnInsert = messageErrorOnInsert
-        res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: { } } )
-        return
-      })
       .then(r => { 
         if (r[0].count) {
           errors.email = { message: 'O email indicado já pertence a outra conta!'}
         }
+      })
+      .catch(_ => {
+        errors.errorOnInsert = messageErrorOnInsert
+        res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: { } } )
+        return
       })
   } else errors.email = emptyField
   if (!cc || validadorCC(cc) !== 1) errors.cc = { message: 'O número de cartão de cidadão é inválido!' }
@@ -56,15 +56,15 @@ const register = async function(req, res) {
   if (username) {
     await db('Users').count('nickname', { as: 'count' })
       .where('nickname', username)
-      .catch(_ => {
-        errors.errorOnInsert = messageErrorOnInsert
-        res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: { } } )
-        return
-      })
       .then(r => { 
         if (r[0].count) {
           errors.username = { message: 'O nome de utilizador indicado já está em uso!'}
         }
+      })
+      .catch(_ => {
+        errors.errorOnInsert = messageErrorOnInsert
+        res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: { } } )
+        return
       })
   } else errors.username = emptyField
 
