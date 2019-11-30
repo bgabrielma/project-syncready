@@ -1,0 +1,51 @@
+<div class="container-fluid p-4 ">
+    <div class="dashboard-forms-users">
+        <h2>
+                Registar novo ticket
+                <i class="fas fa-ticket-alt ml-2 fa-1x"></i>
+        </h2>
+        <form class="border shadow-sm">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Nome do ticket</label>
+                <input type="text" class="form-control" id="exampleInputFullName" aria-describedby="emailHelp" placeholder="Nome">
+            </div>
+            <div class="form-group">
+                <label for="ticketDesc">Descrição do ticket</label>
+                <textarea class="form-control" id="ticketDesc" rows="3" placeholder="Descrição do ticket"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="rooms">Salas</label>
+                <select name="rooms" class="selectpicker show-tick form-control border" data-live-search="true">>
+                    <optgroup label="Nome das salas">
+                        <option>Asus - Placa de Rede - António Semedo - Worten</option>
+                        <option>HP - Placa de Vídeo - Hugo Antonio - Worten</option>
+                        <option>Asus - Placa de Rede - António Semedo - Worten</option>
+                        <option>HP - Placa de Vídeo - Hugo Antonio - Worten</option>
+                    </optgroup>
+                    <optgroup label="Planetas nunca vistos">
+                        <option>Pesquisa por Jupiturno</option>
+                        <option>Pesquisa por Terrercurio</option>
+                        <option>Pesquisa por Venarte</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="ticketPriority">Nível de prioridade do ticket</label>
+                <select name="ticketPriority" class="selectpicker show-tick form-control border" data-live-search="true">
+                    <optgroup label="Níveis de prioridade">
+                        <option>Urgente</option>
+                        <option>Alta</option>
+                        <option>Normal</option>
+                        <option>Baixa</option>
+                    </optgroup>
+                    <optgroup label="Planetas nunca vistos">
+                        <option>Pesquisa por Jupiturno</option>
+                        <option>Pesquisa por Terrercurio</option>
+                        <option>Pesquisa por Venarte</option>
+                    </optgroup>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-block">Registar</button>
+        </form>
+    </div>
+</div>

@@ -21,7 +21,7 @@ const dashboard = async function(req, res) {
 
 /* Users */
 const newUser = function(req, res) {
-  res.render('index', { title: 'New user | SyncReady', page: 'dashboard', data: {}, subPage: 'user/new_user_form'} )
+  res.render('index', { title: 'Registar novo utilizador | SyncReady', page: 'dashboard', data: {}, subPage: 'user/new_user_form'} )
 }
 
 /* Logout */
@@ -31,7 +31,7 @@ const logout = function(req, res) {
 }
 
 const listUsers = function(req, res) {
-  res.render('index', { title: 'List of users | SyncReady', page: 'dashboard', data: {}, subPage: 'user/list_user'} )
+  res.render('index', { title: 'Lista de utilizadores | SyncReady', page: 'dashboard', data: {}, subPage: 'user/list_user'} )
 }
 
 /* Rooms */
@@ -39,11 +39,19 @@ const newRoom = function(req, res) {
   const data = {
     token: randomToken(20)
   }
-  res.render('index', { title:  'New room | SyncReady', page: 'dashboard', data: {}, subPage: 'rooms/new_room_form' })
+  res.render('index', { title:  'Registar nova sala | SyncReady', page: 'dashboard', data: {}, subPage: 'rooms/new_room_form' })
 }
 
 const listRoom = function(req, res) {
-  res.render('index', { title:  'List of rooms | SyncReady', page: 'dashboard', data: {}, subPage: 'rooms/list_room' })
+  res.render('index', { title:  'Lista de salas | SyncReady', page: 'dashboard', data: {}, subPage: 'rooms/list_room' })
+}
+
+const newTicket = function(req, res) {
+  res.render('index', { title:  'Registar novo ticket | SyncReady', page: 'dashboard', data: {}, subPage: 'tickets/new_ticket_form' })
+}
+
+const listTicket = function(req, res) {
+  res.render('index', { title:  'Lista de tickets | SyncReady', page: 'dashboard', data: {}, subPage: 'tickets/list_ticket' })
 }
 
 module.exports = {
@@ -52,5 +60,7 @@ module.exports = {
   listUsers,
   newRoom,
   listRoom,
-  logout
+  newTicket,
+  listTicket,
+  logout,
 }

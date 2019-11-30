@@ -27,6 +27,10 @@ router.get('/dashboard/user/list', DashboardController.listUsers)
 router.get('/dashboard/room/new', DashboardController.newRoom)
 router.get('/dashboard/room/list', DashboardController.listRoom)
 
+/* Tickets */
+router.get('/dashboard/ticket/new', DashboardController.newTicket)
+router.get('/dashboard/ticket/list', DashboardController.listTicket)
+
 router.get('/cookies', function(req, res) {
   res.send(req.cookies)
 });
