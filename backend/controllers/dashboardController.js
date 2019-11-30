@@ -21,7 +21,7 @@ const dashboard = async function(req, res) {
 
 /* Users */
 const newUser = function(req, res) {
-  res.render('index', { title: 'New user | SyncReady', page: 'dashboard', subPage: 'user/new_user_form'} )
+  res.render('index', { title: 'New user | SyncReady', page: 'dashboard', data: {}, subPage: 'user/new_user_form'} )
 }
 
 /* Logout */
@@ -31,19 +31,19 @@ const logout = function(req, res) {
 }
 
 const listUsers = function(req, res) {
-  res.render('index', { title: 'List of users | SyncReady', page: 'dashboard', subPage: 'user/list_user'} )
+  res.render('index', { title: 'List of users | SyncReady', page: 'dashboard', data: {}, subPage: 'user/list_user'} )
 }
 
 /* Rooms */
 const newRoom = function(req, res) {
-  const payload = {
+  const data = {
     token: randomToken(20)
   }
-  res.render('index', { title:  'New room | SyncReady', page: 'dashboard', subPage: 'rooms/new_room_form', payload })
+  res.render('index', { title:  'New room | SyncReady', page: 'dashboard', data: {}, subPage: 'rooms/new_room_form' })
 }
 
 const listRoom = function(req, res) {
-  res.render('index', { title:  'List of rooms | SyncReady', page: 'dashboard', subPage: 'rooms/list_room' })
+  res.render('index', { title:  'List of rooms | SyncReady', page: 'dashboard', data: {}, subPage: 'rooms/list_room' })
 }
 
 module.exports = {
