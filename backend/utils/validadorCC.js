@@ -1,111 +1,93 @@
-/*******************************************
- *        STRING RELATED FUNCTIONS         *
- * FROM http://stackoverflow.com/a/1144788 *
- *******************************************/
+/**
+ * @author asmarques 
+ * @name pt-Id
+ * 
+ * @see https://github.com/asmarques/pt-id
+ * 
+ * @see file https://github.com/asmarques/pt-id/blob/master/lib/cc.js
+ */
+var CHAR = {
+  '0': 0,
+  '1': 1,
+  '2': 2,
+  '3': 3,
+  '4': 4,
+  '5': 5,
+  '6': 6,
+  '7': 7,
+  '8': 8,
+  '9': 9,
+  'A': 10,
+  'B': 11,
+  'C': 12,
+  'D': 13,
+  'E': 14,
+  'F': 15,
+  'G': 16,
+  'H': 17,
+  'I': 18,
+  'J': 19,
+  'K': 20,
+  'L': 21,
+  'M': 22,
+  'N': 23,
+  'O': 24,
+  'P': 25,
+  'Q': 26,
+  'R': 27,
+  'S': 28,
+  'T': 29,
+  'U': 30,
+  'V': 31,
+  'W': 32,
+  'X': 33,
+  'Y': 34,
+  'Z': 35,
+};
 
+var CHARS = Object.keys(CHAR);
 
- /********************************************
-  * 
-  * @credits
-  *   https://github.com/AfonsoFGarcia/
-  * 
-  * @see
-  *   https://github.com/AfonsoFGarcia/Portuguese-ID-Validator/
-  * 
-  */
-
-function escapeRegExp(string) {
-  return string.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
-}
-
-function replaceAll(find, replace, str) {
-  return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
-}
-
-/*******************************************
-*         CHAR RELATED FUNCTIONS          *
-*******************************************/
-
-function isNumber(char) {
-  var asciiVal = char.charCodeAt(0);
-  return (asciiVal >= 48 && asciiVal <=57);
-}
-
-/*******************************************
-*            BI CHECK FUNCTIONS           *
-*******************************************/
-
-function validBI(biVal, is10) {
-  i = 1;
-  sum = 0;
-  for(j = biVal.length-1; j >= 0; j--) {
-      if(j == biVal.length-1 && is10 == 1) {
-          sum += 10*i;
-          i++;
-          continue;
-      }
-      sum += parseInt(biVal.charAt(j))*i;
-      i++;
-  }
-  return (sum % 11 == 0 ? 1 : 0);
-}
-
-function performBIValidation(biVal) {
-  if(!validBI(biVal, 0)) {
-      if(parseInt(biVal.charAt(biVal.length - 1)) == 0) {
-          return validBI(biVal, 1);
-      }
-      return 0;
-  }
-  return 1;
-}
-
-/*******************************************
-*            CC CHECK FUNCTIONS           *
-*******************************************/
-
-function getNumberFromChar(letter) {
-  if(isNumber(letter)) {
-      return parseInt(letter);
-  } else {
-      return letter.charCodeAt(0) - 55;
-  }
-}
-
-function performCCValidation(ccVal) {
+function calculateSum(value) {
   var sum = 0;
-  var secondDigit = false;
 
-  for(i = ccVal.length - 1; i >= 0; i--) {
-      var valor = getNumberFromChar(ccVal.charAt(i));
-      if(secondDigit) {
-          valor *= 2;
-          if(valor > 9) {
-              valor -= 9;
-          }
+  for (var i = value.length - 1; i >= 0; i--) {
+    var d = CHAR[value[i]];
+
+    if (d === undefined || (i < 9 && d > 9)) {
+      return false;
+    }
+
+    if (i % 2 === 0) {
+      d *= 2;
+
+      if (d > 9) {
+        d -= 9;
       }
+    }
 
-      sum += valor;
-      secondDigit = !secondDigit;
+    sum += d;
   }
 
-  return (sum % 10 == 0 ? 1 : 0);
+  return sum % 10;
 }
 
-/*******************************************
-*              CHECK FUNCTION             *
-*******************************************/
+/** 
+ * Validate a given Citizen's Card (Cartão do Cidadão) Document Number.
+ *
+ * @param {string} number - the document number to validate.
+ *
+ * @returns {boolean} True if the given document number is valid.
+ */
 
-function check(val) {
-   var ccRegExp = /^[0-9]{7,8}\ [0-9]\ ([A-Z]|[0-9]){2}[0-9]$/;
-   var biRegExp = /^[0-9]{7,8}\ [0-9]$/;
-   if(ccRegExp.test(val)) {
-       return performCCValidation(replaceAll(" ", "", val));
-   } else if(biRegExp.test(val)) {
-       return performBIValidation(replaceAll(" ", "", val));
-   } else {
-       return -1;
-   }
+function validate(number) {
+  // Remove spaces if exists
+  number = number.replace(/\s/g, '');
+
+  if (typeof number !== 'string' || number.length !== 12) {
+    return false;
+  }
+
+  return calculateSum(number) === 0;
 }
 
-module.exports = check
+module.exports = validate;

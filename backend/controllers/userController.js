@@ -50,7 +50,8 @@ const register = async function(req, res) {
         return
       })
   } else errors.email = emptyField
-  if (!cc || validadorCC(cc) !== 1) errors.cc = { message: 'O número de cartão de cidadão é inválido!' }
+
+  if (!cc || !validadorCC(cc)) errors.cc = { message: 'O número de cartão de cidadão é inválido!' }
   if (!contacto || contacto.length !== 9) errors.contacto = { message: 'O número de telefone é inválido!' }
 
   if (username) {
