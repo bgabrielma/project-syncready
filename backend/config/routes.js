@@ -17,6 +17,7 @@ router.post('/auth', UserController.auth)
 
 /* dashboard */
 router.get('/dashboard', DashboardController.dashboard)
+router.get('/logout', DashboardController.logout)
 
 /* Users */
 router.get('/dashboard/user/new', DashboardController.newUser)

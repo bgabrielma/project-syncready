@@ -16,7 +16,7 @@ const login = async function(email, password, req, res) {
       if(r.length !== 0) {
         if(!req.cookies['SYNCREADY_COOKIE_LOGIN']) {
           // 72000000 milliseconds = 20 hours
-          res.cookie('SYNCREADY_COOKIE_LOGIN', r[0].pk_uuid, { maxAge: 72000000, httpOnly: true });
+          res.cookie('SYNCREADY_COOKIE_LOGIN', r[0].pk_uuid, { maxAge: 72000000, httpOnly: true })
         }
         res.redirect(`/dashboard`)
       } else {
@@ -107,7 +107,7 @@ const auth = function(req, res) {
   if (Object.keys(errors).length > 0) {
     res.render('index', { title: 'SyncReady', page: 'main/login', errors, messageErrorOnInsert: null })
   } else {
-    login(email, password, req, res);
+    login(email, password, req, res)
   }
 }
 
