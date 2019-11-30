@@ -156,7 +156,8 @@ body {
 /* dashboard-forms-rooms */
 
 .dashboard-forms-rooms h2,
-.dashboard-forms-users h2 {
+.dashboard-forms-users h2,
+.dashboard-forms-ticket h2 {
   font-weight: lighter;
   margin: 30px 0px;
   padding: 10px;
@@ -169,7 +170,8 @@ body {
 }
 
 .dashboard-forms-rooms form,
-.dashboard-forms-users form {
+.dashboard-forms-users form,
+.dashboard-forms-ticket form {
   background-color: #fafafb;
   padding: 30px 20px;
   border-radius: 10px;
@@ -213,3 +215,13 @@ body {
   border-left: 10px solid #ed9121;
 }
 
+.dashboard-forms-ticket button[type=submit] {
+  margin-top: 10px;
+  background-color: #ed9121;
+  border-color: #f5c07f;
+  color: #FFFFFF;
+}
+
+.dashboard-forms-ticket button[type=submit]:active{
+  background-color: #ed9121;
+}
