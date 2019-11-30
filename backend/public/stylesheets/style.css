@@ -205,3 +205,11 @@ body {
   background-color: #659CE0;
 }
 
+/* dashboard-form-ticket*/
+
+.dashboard-forms-ticket h2::before {
+  content: '';
+  margin-right: 10px;
+  border-left: 10px solid #ed9121;
+}
+
