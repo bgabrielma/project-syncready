@@ -31,6 +31,10 @@ router.get('/dashboard/room/list', DashboardController.listRoom)
 router.get('/dashboard/ticket/new', DashboardController.newTicket)
 router.get('/dashboard/ticket/list', DashboardController.listTicket)
 
+
+/* API REST */
+router.post('/user', UserController.post)
+
 router.get('/cookies', function(req, res) {
   res.send(req.cookies)
 });

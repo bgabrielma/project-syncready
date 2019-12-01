@@ -5,6 +5,8 @@ const dashboard = async function(req, res) {
   
   const pk_uuid = req.cookies['SYNCREADY_COOKIE_LOGIN']
 
+  console.log(req.cookies['SYNCREADY_COOKIE_LOGIN'])
+
   if(!pk_uuid) {
     res.redirect('/main')
     return
@@ -13,6 +15,9 @@ const dashboard = async function(req, res) {
   await db('Users')
     .select('Users.*', 'Type_Of_User.*')
     .join('Type_Of_User', 'Users.Type_Of_User_uuid_type_of_users', '=', 'Type_Of_User.pk_type_of_user')
+    .where({
+      pk_uuid
+    })
     .then(r => {
       res.render('index', { title: 'Dashboard | SyncReady', page: 'dashboard', data: r[0], subPage: 'dashboard/home'} )
     })
@@ -39,7 +44,7 @@ const newRoom = function(req, res) {
   const data = {
     token: randomToken(20)
   }
-  res.render('index', { title:  'Registar nova sala | SyncReady', page: 'dashboard', data: {}, subPage: 'rooms/new_room_form' })
+  res.render('index', { title:  'Registar nova sala | SyncReady', page: 'dashboard', data, subPage: 'rooms/new_room_form' })
 }
 
 const listRoom = function(req, res) {

@@ -7,30 +7,25 @@ const emptyField = { message: 'Este campo não pode estar vazio!' }
 const invalidPass = { message: 'As palavras-passes indicadas não correspondem uma com a outra!' }
 
 const login = async function(email, password, req, res) {
-
   await db('Users').where({
       email,
       password
     })
     .then(r => {
       if(r.length !== 0) {
-        if(!req.cookies['SYNCREADY_COOKIE_LOGIN']) {
-          // 72000000 milliseconds = 20 hours
-          res.cookie('SYNCREADY_COOKIE_LOGIN', r[0].pk_uuid, { maxAge: 72000000, httpOnly: true })
-        }
-        res.redirect(`/dashboard`)
+        res.cookie('SYNCREADY_COOKIE_LOGIN', r[0].pk_uuid, { maxAge: 72000000, httpOnly: true })
+        return res.redirect(`/dashboard`)
       } else {
         messageErrorOnInsert.message = 'Email e/ou password inválido(s)!'
-        res.render('index', { title: 'SyncReady', page: 'main/login', errors: { }, messageErrorOnInsert } )
+        return res.render('index', { title: 'SyncReady', page: 'main/login', errors: { }, messageErrorOnInsert } )
       }
     })
     .catch(err => {
-      console.log(err)
-      res.render('index', { title: 'SyncReady', page: 'main/login', errors: { }, messageErrorOnInsert } )
+      return res.render('index', { title: 'SyncReady', page: 'main/login', errors: { }, messageErrorOnInsert } )
     })
 }
 
-const register = async function(req, res) {
+const validateNewUser = async function(req) {
   let errors = {}
   const { fullname, address, email, contacto, cc, username, password, repeatpassword } = req.body
 
@@ -71,28 +66,29 @@ const register = async function(req, res) {
   if (password != repeatpassword) {
     errors.repeatpassword = invalidPass
     errors.password = invalidPass
-  } 
+  }
+  
+  return {
+    errors,
+    predata: req.body
+  }
+}
 
-  if (Object.keys(errors).length > 0) {
-    res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: req.body } )
-  } else {
-    await db('Users').insert({
-      nickname: username,
-      fullname,
-      address, 
-      email,
-      telephone: contacto, 
-      citizencard: cc,
-      password
-    })
-    .catch(_ => {
-      errors.errorOnInsert = messageErrorOnInsert
-      res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: { } } )
-      return
-    })
+const register = async function(req, res) {
+  const { errors, predata } = await validateNewUser(req)
 
-    // In order to avoid the following bug: First, the system needs to execute the main query -> insert and, after this task is completed, execute the login query
-    login(email, password, req, res)
+  if (Object.keys(errors).length > 0) 
+    return res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata } )
+  else {
+    
+    await saveUser(req)
+      .catch(_ => {
+        errors.errorOnInsert = messageErrorOnInsert
+        return res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: { } } )
+      })
+
+    // Login username
+    login(predata.email, predata.password, req, res)
   }
 }
 
@@ -104,14 +100,42 @@ const auth = function(req, res) {
   if (!email) errors.email = emptyField
   if (!password) errors.password = emptyField
 
-  if (Object.keys(errors).length > 0) {
-    res.render('index', { title: 'SyncReady', page: 'main/login', errors, messageErrorOnInsert: null })
-  } else {
-    login(email, password, req, res)
-  }
+  if (Object.keys(errors).length > 0) 
+    return res.render('index', { title: 'SyncReady', page: 'main/login', errors, messageErrorOnInsert: null })
+  else 
+    login(email, password, req, res) 
+}
+
+const saveUser = async function(req) {
+  const { fullname, address, email, contacto, cc, username, password } = req.body
+
+  return db('Users')
+    .insert({
+    nickname: username,
+    fullname,
+    address, 
+    email,
+    telephone: contacto,
+    citizencard: cc,
+    password
+  })
+}
+
+/* API REST */
+const post = async function(req, res) {
+
+  const { errors } = await validateNewUser(req)
+
+  if(Object.keys(errors).length > 0) {
+    return res.status(401).send(errors)
+  } 
+  await saveUser(req)
+    .then(data => res.status(200).send({ lastIdInserted: data[0], inserted: true }))
+    .catch(err => res.status(401).send(err))
 }
 
 module.exports = {
   register,
-  auth
+  auth,
+  post
 }
