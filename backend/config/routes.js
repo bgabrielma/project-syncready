@@ -21,6 +21,7 @@ router.get('/logout', DashboardController.logout)
 
 /* Users */
 router.get('/dashboard/user/new', DashboardController.newUser)
+router.post('/dashboard/user/new', DashboardController.registerUser)
 router.get('/dashboard/user/list', DashboardController.listUsers)
 
 /* Rooms */

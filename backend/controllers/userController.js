@@ -137,5 +137,6 @@ const post = async function(req, res) {
 module.exports = {
   register,
   auth,
-  post
+  post,
+  validateNewUser
 }
