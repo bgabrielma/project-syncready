@@ -35,6 +35,7 @@ router.get('/dashboard/ticket/list', DashboardController.listTicket)
 
 /* API REST */
 router.post('/user', UserController.post)
+router.delete('/user', UserController.del)
 
 router.get('/cookies', function(req, res) {
   res.send(req.cookies)

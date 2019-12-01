@@ -140,14 +140,25 @@ const post = async function(req, res) {
     return res.status(401).send(errors)
   } 
   await saveUser(req)
-    .then(data => res.status(200).send({ lastIdInserted: data[0], inserted: true }))
-    .catch(err => res.status(401).send(err))
+    .then(data => res.status(200).send({ lastIdInserted: data[0], ok: true }))
+    .catch(err => res.status(401).send({ err, ok: false }))
+}
+
+const del = async function(req, res) {
+  const { uuid: pk_uuid } = req.body
+  
+  await db('Users')
+    .where({ pk_uuid })
+    .del()
+    .then(res.send({ ok: true }))
+    .catch(res.send({ ok: false }))
 }
 
 module.exports = {
   register,
   auth,
   post,
+  del,
   validateNewUser,
   saveUser,
   messageErrorOnInsert
