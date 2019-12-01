@@ -80,15 +80,8 @@ const registerUser = async function(req, res) {
     citizencard: cc,
     password,
     Type_Of_User_uuid_type_of_users: type
-  }).then(() => {
-    return res.render('index', 
-    { 
-      title: 'Utilizador registado | SyncReady', 
-      page: 'dashboard', 
-      userLogged: req.userLogged,
-      subPage: 'success'
-    })
   })
+  .then(() => res.redirect('/dashboard/user/list'))
   .catch(_ => {
     errors.errorOnInsert = userController.messageErrorOnInsert
     return res.render('index', 
