@@ -103,18 +103,21 @@ const logout = function(req, res) {
   res.redirect('/main')
 }
 
-const listUsers = function(req, res) {
+const listUsers = async function(req, res) {
 
   // if user is not logged
   if(!verifyUser(req)) return res.redirect('/main')
 
-  return res.render('index', 
-    { 
-      title: 'Lista de utilizadores | SyncReady', 
-      page: 'dashboard', 
-      data: {}, 
-      userLogged: req.userLogged,
-      subPage: 'user/list_user'
+  await db('Users')
+    .then(data => {
+      return res.render('index', 
+      { 
+        title: 'Lista de utilizadores | SyncReady', 
+        page: 'dashboard', 
+        data, 
+        userLogged: req.userLogged,
+        subPage: 'user/list_user'
+      })
     })
 }
 
