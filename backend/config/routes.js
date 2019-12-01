@@ -32,6 +32,10 @@ router.get('/dashboard/room/list', DashboardController.listRoom)
 router.get('/dashboard/ticket/new', DashboardController.newTicket)
 router.get('/dashboard/ticket/list', DashboardController.listTicket)
 
+/* Alerts */
+router.get('/dashboard/alert/new', DashboardController.newAlert)
+router.get('/dashboard/alert/list', DashboardController.listAlert)
+
 
 /* API REST */
 router.post('/user', UserController.post)

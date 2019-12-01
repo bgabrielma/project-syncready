@@ -153,28 +153,30 @@ body {
 
 /* dashboard forms */
 
-/* dashboard-forms-rooms */
-
 .dashboard-forms-rooms h2,
 .dashboard-forms-users h2,
-.dashboard-forms-ticket h2 {
+.dashboard-forms-ticket h2,
+.dashboard-forms-alert h2 {
   font-weight: lighter;
   margin: 30px 0px;
   padding: 10px;
 }
 
+.dashboard-forms-rooms form,
+.dashboard-forms-users form,
+.dashboard-forms-ticket form,
+.dashboard-forms-alert form {
+  background-color: #fafafb;
+  padding: 30px 20px;
+  border-radius: 10px;
+}
+
+/* dashboard-forms-rooms */
+
 .dashboard-forms-rooms h2::before {
   content: '';
   margin-right: 10px;
   border-left: 10px solid #34B4C1;
-}
-
-.dashboard-forms-rooms form,
-.dashboard-forms-users form,
-.dashboard-forms-ticket form {
-  background-color: #fafafb;
-  padding: 30px 20px;
-  border-radius: 10px;
 }
 
 .dashboard-forms-rooms button[type=submit] {
@@ -205,6 +207,24 @@ body {
 
 .dashboard-forms-users button[type=submit]:active{
   background-color: #659CE0;
+}
+
+/* dashboard-form-alerts*/
+.dashboard-forms-alert h2::before {
+  content: '';
+  margin-right: 10px;
+  border-left: 10px solid #ED6B76;
+}
+
+.dashboard-forms-alert button[type=submit] {
+  margin-top: 10px;
+  background-color: #ED6B76;
+  border-color: #F18991;
+  color: #FFFFFF;
+}
+
+.dashboard-forms-alert button[type=submit]:active {
+  background-color: #ED6B76;
 }
 
 /* dashboard-form-ticket*/

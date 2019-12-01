@@ -185,6 +185,36 @@ const listTicket = function(req, res) {
     })
 }
 
+const newAlert = function(req, res) {
+
+  // if user is not logged
+  if(!verifyUser(req)) return res.redirect('/main')
+
+  res.render('index', 
+    { 
+      title:  'Registar novo alerta | SyncReady', 
+      page: 'dashboard', 
+      data: {},
+      userLogged: req.userLogged,
+      subPage: 'alerts/new_alert_form' 
+    })
+}
+
+const listAlert = function(req, res) {
+
+  // if user is not logged
+  if(!verifyUser(req)) return res.redirect('/main')
+
+  res.render('index', 
+    { 
+      title:  'Lista de alertas | SyncReady', 
+      page: 'dashboard', 
+      data: {},
+      userLogged: req.userLogged,
+      subPage: 'alerts/list_alert' 
+    })
+}
+
 module.exports = {
   dashboard,
   newUser,
@@ -192,6 +222,8 @@ module.exports = {
   listUsers,
   newRoom,
   listRoom,
+  newAlert,
+  listAlert,
   newTicket,
   listTicket,
   logout,
