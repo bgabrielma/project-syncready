@@ -18,9 +18,9 @@
             <div class="form-group col-12">
                 <label for="type">Tipo de utilizador</label>
                 <select name="type" class="custom-select">
-                    <option value="1">Cliente</option>
-                    <option value="2">Técnico</option>
-                    <option value="3">Administrador</option>
+                    <% types.forEach(elem => { %>
+                        <option value="<%- elem.uuid_type_of_users %>"><%- elem.type %></option>
+                    <% }) %>
                 </select>
             </div>
             <div class="form-group col-lg-12">

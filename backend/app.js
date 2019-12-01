@@ -35,7 +35,7 @@ app.use(async function (req, res, next) {
   if(pk_uuid) {
     await db('Users')
       .select('Users.*', 'Type_Of_User.*')
-      .join('Type_Of_User', 'Users.Type_Of_User_uuid_type_of_users', '=', 'Type_Of_User.pk_type_of_user')
+      .join('Type_Of_User', 'Users.Type_Of_User_uuid_type_of_users', '=', 'Type_Of_User.uuid_type_of_users')
       .where({
         pk_uuid
       })

@@ -12,7 +12,13 @@ const dashboard = async function(req, res) {
   // if user is not logged
   if(!verifyUser(req)) return res.redirect('/main')
 
-  return res.render('index', { title: 'Dashboard | SyncReady', page: 'dashboard', userLogged, subPage: 'dashboard/home'} )
+  return res.render('index', 
+    { 
+      title: 'Dashboard | SyncReady', 
+      page: 'dashboard', 
+      userLogged: req.userLogged, 
+      subPage: 'dashboard/home'
+    })
 }
 
 /* Users */
@@ -41,6 +47,11 @@ const registerUser = async function(req, res) {
   // if user is not logged
   if(!verifyUser(req)) return res.redirect('/main')
 
+  let Alltypes = {}
+
+  await db('Type_Of_User')
+    .then(types => Alltypes = types )
+
   const { errors } = await userController.validateNewUser(req)
 
   if(Object.keys(errors).length > 0) {
@@ -51,19 +62,47 @@ const registerUser = async function(req, res) {
       data: {}, 
       subPage: 'user/new_user_form',
       userLogged: req.userLogged,
+      types: Alltypes,
       errors, 
       predata: req.body,
     })
   }
 
-  return res.render('index', 
+  const { fullname, address, email, contacto, cc, username, password, type } = req.body
+
+  await db('Users')
+    .insert({
+    nickname: username,
+    fullname,
+    address, 
+    email,
+    telephone: contacto,
+    citizencard: cc,
+    password,
+    Type_Of_User_uuid_type_of_users: type
+  }).then(() => {
+    return res.render('index', 
     { 
       title: 'Utilizador registado | SyncReady', 
       page: 'dashboard', 
-      data: {}, 
       userLogged: req.userLogged,
       subPage: 'success'
     })
+  })
+  .catch(_ => {
+    errors.errorOnInsert = userController.messageErrorOnInsert
+    return res.render('index', 
+    { 
+      title: 'Registar novo utilizador | SyncReady', 
+      page: 'dashboard', 
+      data: {}, 
+      subPage: 'user/new_user_form',
+      userLogged: req.userLogged,
+      types: Alltypes,
+      errors, 
+      predata: {},
+    })
+  })
 }
 /* Logout */
 const logout = function(req, res) {

@@ -109,6 +109,15 @@ const auth = function(req, res) {
 const saveUser = async function(req) {
   const { fullname, address, email, contacto, cc, username, password } = req.body
 
+  // get uuid for default value "Cliente"
+  let typeOfUserUUID = null
+
+  await db('Type_Of_User')
+    .where({
+      type: 'Cliente'
+    })
+    .then(res => typeOfUserUUID = res[0].uuid_type_of_users)
+
   return db('Users')
     .insert({
     nickname: username,
@@ -117,7 +126,8 @@ const saveUser = async function(req) {
     email,
     telephone: contacto,
     citizencard: cc,
-    password
+    password,
+    Type_Of_User_uuid_type_of_users: typeOfUserUUID
   })
 }
 
@@ -138,5 +148,7 @@ module.exports = {
   register,
   auth,
   post,
-  validateNewUser
+  validateNewUser,
+  saveUser,
+  messageErrorOnInsert
 }
