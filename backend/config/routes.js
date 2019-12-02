@@ -26,6 +26,7 @@ router.get('/dashboard/user/list', DashboardController.listUsers)
 
 /* Rooms */
 router.get('/dashboard/room/new', DashboardController.newRoom)
+router.post('/dashboard/room/new', DashboardController.registerRoom)
 router.get('/dashboard/room/list', DashboardController.listRoom)
 
 /* Tickets */

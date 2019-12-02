@@ -1,7 +1,9 @@
 const db = require('../config/db')
-const randomToken = require('random-token')
 
 const userController = require('./userController')
+const roomController = require('./roomController')
+
+const { randomToken } = roomController
 
 function verifyUser(req) {
   return !!req.userLogged
@@ -97,11 +99,6 @@ const registerUser = async function(req, res) {
     })
   })
 }
-/* Logout */
-const logout = function(req, res) {
-  res.clearCookie('SYNCREADY_COOKIE_LOGIN')
-  res.redirect('/main')
-}
 
 const listUsers = async function(req, res) {
 
@@ -121,11 +118,34 @@ const listUsers = async function(req, res) {
     })
 }
 
+/* Logout */
+const logout = function(req, res) {
+  res.clearCookie('SYNCREADY_COOKIE_LOGIN')
+  res.redirect('/main')
+}
+
 /* Rooms */
-const newRoom = function(req, res) {
+const newRoom = async function(req, res) {
 
   // if user is not logged
   if(!verifyUser(req)) return res.redirect('/main')
+
+  
+  let listDataSheets, members = []
+
+  // get all list of dataSheets
+
+  /* await db('Datasheet')
+    .then(response => listDataSheets = response) 
+
+  await db('Users')
+    .select('Users.*', 'Type_Of_User.*')
+    .join('Type_Of_User', 'Users.Type_Of_User_uuid_type_of_users', '=', 'Type_Of_User.uuid_type_of_users')
+    .whereIn('Type_Of_User.type', ['Técnico', 'Cliente', 'Administrador'])
+    .then(response => res.send(response))
+    .catch(err => res.send(err))
+
+  return*/
 
   const data = {
     token: randomToken(20)
@@ -139,6 +159,10 @@ const newRoom = function(req, res) {
       userLogged: req.userLogged,
       subPage: 'rooms/new_room_form' 
     })
+}
+
+const registerRoom = function(req, res) {
+  res.send(req.body)
 }
 
 const listRoom = function(req, res) {
@@ -155,6 +179,7 @@ const listRoom = function(req, res) {
     })
 }
 
+/* Ticket */
 const newTicket = function(req, res) {
 
   // if user is not logged
@@ -185,6 +210,7 @@ const listTicket = function(req, res) {
     })
 }
 
+/* Alert */
 const newAlert = function(req, res) {
 
   // if user is not logged
@@ -217,10 +243,12 @@ const listAlert = function(req, res) {
 
 module.exports = {
   dashboard,
+  verifyUser,
   newUser,
   registerUser,
   listUsers,
   newRoom,
+  registerRoom,
   listRoom,
   newAlert,
   listAlert,
