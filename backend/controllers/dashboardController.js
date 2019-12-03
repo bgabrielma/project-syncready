@@ -56,7 +56,7 @@ const registerUser = async function(req, res) {
 
   // define req.body.companyCode
 
-  return res.send(req.body, req.userLogged)
+  return res.send({data: req.body, userLogged: req.userLogged})
 
   await userController.findCompanyByUUID(req.userLogged.pk_uuid)
   .then(r => req.body.companyCode = r[0].uuid_company)
