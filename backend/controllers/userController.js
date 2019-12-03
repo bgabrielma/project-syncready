@@ -7,10 +7,14 @@ const emptyField = { message: 'Este campo não pode estar vazio!' }
 const invalidPass = { message: 'As palavras-passes indicadas não correspondem uma com a outra!' }
 
 const login = async function(email, password, req, res) {
-  await db('Users').where({
+  await db('Users')
+  .select('Users.*')
+  .join('Type_Of_User', 'Users.Type_Of_User_uuid_type_of_users', '=', 'Type_Of_User.uuid_type_of_users')
+  .where({
       email,
-      password
+      password,
     })
+  .whereNot('Type_Of_User.type', 'Cliente')
     .then(r => {
       if(r.length !== 0) {
         res.cookie('SYNCREADY_COOKIE_LOGIN', r[0].pk_uuid, { maxAge: 72000000, httpOnly: true })
