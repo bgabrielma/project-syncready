@@ -8,6 +8,8 @@
         <th>Nome de utilizador</th>
         <th>E-mail</th>
         <th>Cartão de cidadão</th>
+        <th>Empresa</th>
+        <th>Tipo de utilizador</th>
         <th>Data de criação</th>
         <th>Data da ultima atualização</th>
         <th>Opções</th>
@@ -21,6 +23,8 @@
             <td><%- elem.nickname %></td>
             <td><%- elem.email %></td>
             <td><%- elem.citizencard %></td>
+            <td><%- elem.name %></td>
+            <td><%- elem.type %></td>
             <td><%- elem.created_at %></td>
             <td><%- elem.update_at %></td>
             <td>
@@ -28,7 +32,9 @@
               data-placement="bottom" title="Editar">
                   <i class="fas fa-edit"></i>
               </button>
-              <% if(userLogged.pk_uuid != elem.pk_uuid) { %>
+              <% if(userLogged.pk_uuid !== elem.pk_uuid && 
+                ((userLogged.type == 'Técnico' && elem.type == 'Cliente') || (userLogged.type == 'Administrador'))
+                ) { %>
                 <button class="btn btn-danger" name="listButtonDelete" data-userValue="<%- elem.pk_uuid -%>" data-toggle="tooltip" 
                 data-placement="bottom" title="Apagar">
                     <i class="fas fa-trash"></i>

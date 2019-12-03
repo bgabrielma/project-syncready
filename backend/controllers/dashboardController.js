@@ -131,7 +131,17 @@ const listUsers = async function(req, res) {
   // if user is not logged
   if(!verifyUser(req)) return res.redirect('/main')
 
+  let companyUUID = {}
+
+  await userController.findCompanyByUUID(req.userLogged.pk_uuid)
+    .then(data => companyUUID = data[0].uuid_company)
+    
   await db('Users')
+    .select('Users.*', 'Type_Of_User.type', 'Companies.name')
+    .join('Type_Of_User', 'Users.Type_Of_User_uuid_type_of_users', '=', 'Type_Of_User.uuid_type_of_users')
+    .join('Users_has_Companies', 'Users_has_Companies.Users_pk_uuid', '=', 'Users.pk_uuid')
+    .join('Companies', 'Companies.uuid_company', '=', 'Users_has_Companies.Companies_uuid_company')
+    .where('Companies.uuid_company', '=', companyUUID)
     .then(data => {
       return res.render('index', 
       { 

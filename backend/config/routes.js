@@ -36,7 +36,6 @@ router.get('/dashboard/ticket/list', DashboardController.listTicket)
 router.get('/dashboard/alert/new', DashboardController.newAlert)
 router.get('/dashboard/alert/list', DashboardController.listAlert)
 
-
 /* API REST */
 router.post('/user', UserController.post)
 router.delete('/user', UserController.del)
