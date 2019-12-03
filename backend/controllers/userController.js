@@ -27,7 +27,7 @@ const login = async function(email, password, req, res) {
 
 const validateNewUser = async function(req) {
   let errors = {}
-  const { fullname, address, email, contacto, cc, username, password, repeatpassword } = req.body
+  const { fullname, address, email, contacto, cc, username, password, repeatpassword, companyCode } = req.body
 
   if (!fullname) errors.fullname = emptyField
   if (!address) errors.address = emptyField 
@@ -60,6 +60,20 @@ const validateNewUser = async function(req) {
       })
   } else errors.username = emptyField
 
+  if (companyCode) {
+    await db('Companies').count('uuid_company', { as: 'count' })
+      .where('uuid_company', companyCode)
+      .then(r => {
+        if (!r[0].count) {
+          errors.companyCode = { message: 'O código da empresa é inválida!' }
+        }
+      })
+      .catch(_ => {
+        errors.errorOnInsert = messageErrorOnInsert
+      })
+
+  } else errors.companyCode = emptyField
+
   if (!password) errors.password = emptyField
   if (!repeatpassword) errors.repeatpassword = emptyField
   
@@ -74,6 +88,33 @@ const validateNewUser = async function(req) {
   }
 }
 
+const registerToCompany = async function (uuid, companyCode) {
+  return db('Users_has_Companies')
+      .insert({
+        Users_pk_uuid: uuid,
+        Companies_uuid_company: companyCode
+      })
+}
+
+const findUUIDByID = async function(id) {
+  return db('Users')
+      .select('pk_uuid')
+      .where('pk_user', id)
+}
+
+const findCompanyByUUID = async function(uuid) {
+  return db('Users_has_Companies')
+    .join('Companies', 'Users_has_Companies.Companies_uuid_company', '=', 'Companies.uuid_company')
+    .where('Users_pk_uuid', uuid)
+}
+
+const getUserType = async function(companyCode) {
+  return db('Type_Of_User')
+  .where({
+    type: !!companyCode ? 'Técnico' : 'Cliente'
+  })
+}
+
 const register = async function(req, res) {
   const { errors, predata } = await validateNewUser(req)
 
@@ -82,13 +123,33 @@ const register = async function(req, res) {
   else {
     
     await saveUser(req)
+      .then(async (responseOne) => { 
+
+        // getting uuid
+        let uuid = {}
+
+        await findUUIDByID(responseOne[0])
+          .then(response2 => {
+            uuid = response2[0].pk_uuid
+          })
+          
+        // Insert to company
+        await registerToCompany(uuid, req.body.companyCode)
+          .then(_ => login(predata.email, predata.password, req, res))
+          .catch(_ => {
+            errors.errorOnInsert = messageErrorOnInsert
+            return res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: { } } )
+          })
+      })
       .catch(_ => {
         errors.errorOnInsert = messageErrorOnInsert
         return res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: { } } )
       })
 
+
+
     // Login username
-    login(predata.email, predata.password, req, res)
+    // login(predata.email, predata.password, req, res)
   }
 }
 
@@ -107,15 +168,11 @@ const auth = function(req, res) {
 }
 
 const saveUser = async function(req) {
-  const { fullname, address, email, contacto, cc, username, password } = req.body
-
-  // get uuid for default value "Cliente"
+  const { fullname, address, email, contacto, cc, username, password, companyCode } = req.body
+  
   let typeOfUserUUID = null
 
-  await db('Type_Of_User')
-    .where({
-      type: 'Cliente'
-    })
+  await getUserType(companyCode)
     .then(res => typeOfUserUUID = res[0].uuid_type_of_users)
 
   return db('Users')
@@ -161,5 +218,8 @@ module.exports = {
   del,
   validateNewUser,
   saveUser,
-  messageErrorOnInsert
+  messageErrorOnInsert,
+  findCompanyByUUID,
+  registerToCompany,
+  findUUIDByID
 }

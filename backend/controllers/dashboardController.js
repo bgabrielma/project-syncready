@@ -28,6 +28,7 @@ const newUser = async function(req, res) {
   if(!verifyUser(req)) return res.redirect('/main')
 
   await db('Type_Of_User')
+    .whereNotIn('type', ['Cliente', 'Entidade'])
     .then(types => {
       res.render('index', 
       { 
@@ -49,8 +50,14 @@ const registerUser = async function(req, res) {
 
   let Alltypes = {}
 
-  await db('Type_Of_User')
-    .then(types => Alltypes = types )
+    await db('Type_Of_User')
+      .whereNotIn('type', ['Cliente', 'Entidade'])
+      .then(types => Alltypes = types )
+
+  // define req.body.companyCode
+
+  await userController.findCompanyByUUID(req.userLogged.pk_uuid)
+  .then(r => req.body.companyCode = r[0].uuid_company)
 
   const { errors } = await userController.validateNewUser(req)
 
@@ -68,21 +75,19 @@ const registerUser = async function(req, res) {
     })
   }
 
-  const { fullname, address, email, contacto, cc, username, password, type } = req.body
 
-  await db('Users')
-    .insert({
-    nickname: username,
-    fullname,
-    address, 
-    email,
-    telephone: contacto,
-    citizencard: cc,
-    password,
-    Type_Of_User_uuid_type_of_users: type
+  // getting uuid
+  let uuid = '123'
+
+  // save user
+  await userController.saveUser(req)
+  .then(async (responseOne) => {
+    await userController.findUUIDByID(responseOne[0])
+      .then(response2 => {
+        uuid = response2[0].pk_uuid
+      })
   })
-  .then(() => res.redirect('/dashboard/user/list'))
-  .catch(_ => {
+  .catch(err => {
     errors.errorOnInsert = userController.messageErrorOnInsert
     return res.render('index', 
     { 
@@ -96,6 +101,24 @@ const registerUser = async function(req, res) {
       predata: {},
     })
   })
+
+  // Insert to company
+  await userController.registerToCompany(uuid, req.body.companyCode)
+    .then(_ => res.redirect('/dashboard/user/list'))
+    .catch(_ => {
+      errors.errorOnInsert = userController.messageErrorOnInsert
+      return res.render('index', 
+      { 
+        title: 'Registar novo utilizador | SyncReady', 
+        page: 'dashboard', 
+        data: {}, 
+        subPage: 'user/new_user_form',
+        userLogged: req.userLogged,
+        types: Alltypes,
+        errors, 
+        predata: {},
+      })
+    })
 }
 /* Logout */
 const logout = function(req, res) {
