@@ -37,3 +37,7 @@ VALUES
 (UUID(), 'Avaliada'),
 (UUID(), 'Suspensa'),
 (UUID(), 'Cancelada');
+
+INSERT INTO Companies (`uuid_company`, `name`, `company_address`, `company_telephone`, `company_email`)
+VALUES
+(UUID(), 'Fnac', 'Rua da fnac', '92312412', 'office@fnac.pt');

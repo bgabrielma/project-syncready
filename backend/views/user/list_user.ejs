@@ -28,7 +28,7 @@
             <td><%- elem.created_at %></td>
             <td><%- elem.update_at %></td>
             <td>
-              <button class="btn btn-light" data-toggle="tooltip" 
+              <button class="btn btn-light" name="listButtonEdit" data-userValue="<%- elem.pk_uuid -%>" data-toggle="tooltip" 
               data-placement="bottom" title="Editar">
                   <i class="fas fa-edit"></i>
               </button>
@@ -54,7 +54,7 @@
       const btn = $(this)
       const uuid = btn.attr('data-userValue')
 
-      // prepare dialog«
+      // prepare dialog
       const deleteModal = $(document).find('#modalDeleteDialog')
 
       // set secret uuid key
@@ -67,8 +67,35 @@
       deleteModal.modal('show')
     })
 
+    $(document).on('click', 'button[name="listButtonEdit"]', function() {
+      const btn = $(this)
+      const uuid = btn.attr('data-userValue')
 
-    $(document).on('click', '#modalDeleteBtnConf', async function() {
+      // prepare dialog
+      const editModal = $(document).find('#modalEditDialog')
+
+      // set secret uuid key
+      $(document).find('#modalEditDialogSecret').val(uuid)
+
+      // load data
+      const form = editModal.find('form')
+
+      const types = form.find('select[name="type"]')
+      const fullname = form.find('input[name="fullname"]')
+      const address = form.find('input[name="address"]')
+      const email = form.find('input[name="email"]')
+      const contacto = form.find('input[name="contacto"]')
+      const cc = form.find('input[name="cc"]')
+      const password = form.find('input[name="password"]')
+
+      console.log(password[0])
+
+      // call modal
+      editModal.modal('show')
+    })
+
+
+    $(document).on('click', '#modalDeleteBtnConf', function() {
       const uuid = $(document).find('#modalDeleteDialogSecret').val()
 
       $.ajax({
@@ -87,6 +114,9 @@
       });
 
     })
+
+    $(document).on('click', '#modalEditBtnConf', function() {
+    })
   })
 </script>
 
@@ -95,7 +125,7 @@
 <!-- Delete dialog  -->
 <div class="modal fade" id="modalDeleteDialog" tabindex="-1" role="dialog" aria-labelledby="modalDeleteDialog" aria-hidden="true">
   <input type="hidden" id="modalDeleteDialogSecret" value="secret">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-top" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">Remoção de utilizador</h5>
@@ -109,6 +139,98 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
         <button type="button" id="modalDeleteBtnConf" class="btn" style="background-color: #E4D530">Confirmar operação</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit dialog  -->
+
+<div class="modal fade" id="modalEditDialog" tabindex="-1" role="dialog" aria-labelledby="modalEditDialog" aria-hidden="true">
+  <input type="hidden" id="modalEditDialogSecret" value="secret">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Edição de dados</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="background-color: #F8F9FA">
+        <form>
+          <div class="form-group col-12">
+              <label for="type">Tipo de utilizador</label>
+              <select name="type" class="custom-select">
+                <option value="123">123</option>
+              </select>
+          </div>
+          <div class="form-group col-lg-12">
+            <label class="" for="exampleInputName1">Nome completo</label>
+            <input
+                value=""
+                type="text" 
+                name="fullname"
+                class="form-control" 
+                aria-describedby="emailHelp" 
+                placeholder="Nome completo">
+          </div>
+          <div class="form-group col-lg-12">
+            <label class="" for="exampleInputName1">Local de residência</label>
+            <input
+                value=""
+                type="text" 
+                name="address"
+                class="form-control" 
+                aria-describedby="emailHelp" 
+                placeholder="Localidade">
+          </div>
+          <div class="form-group col-lg-12">
+            <label for="exampleInputEmail1">E-mail</label>
+            <input 
+                value=""
+                type="email" 
+                class="form-control" 
+                name="email" 
+                placeholder="E-mail">
+          </div>
+          <div class="form-group col-lg-9">
+            <label for="exampleInputTel1">Telemóvel</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <select id="disabledSelect" class="form-control input-group-text">
+                  <option>+351</option>
+                </select>
+              </div>
+              <input
+                  value="" 
+                  type="tel" 
+                  class="form-control" 
+                  name="contacto" 
+                  placeholder="Telemóvel">
+            </div> 
+          </div>
+          <div class="form-group col-lg-12">
+            <label for="exampleInputCC1">Cartão de cidadão</label>
+            <input 
+                value="" 
+                type="text" 
+                class="form-control" 
+                name="cc" 
+                placeholder="Cartão de cidadão">
+          </div>
+          <div class="form-group col-lg-12">
+            <label for="exampleInputPassword1">Redefinir palavra-passe</label>
+            <input 
+                type="password" 
+                class="form-control" 
+                name="password" 
+                placeholder="Palavra-passe">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" id="modalEditBtnConf" class="btn" style="background-color: #E4D530">Confirmar operação</button>
       </div>
     </div>
   </div>
