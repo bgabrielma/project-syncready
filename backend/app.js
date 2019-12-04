@@ -13,6 +13,8 @@ const db = require('./config/db')
 
 const app = express()
 
+const { findCompanyByUUID } = require('./controllers/userController')
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
@@ -44,7 +46,11 @@ app.use(async function (req, res, next) {
       .where({
         pk_uuid
       })
-      .then(r =>  req.userLogged = r[0])
+      .then(async r =>  {
+        req.userLogged = r[0]
+        
+        await findCompanyByUUID(pk_uuid).then(res => req.userLogged.company = res[0])
+      })
       .catch(err => res.send(err))
   }
   next()

@@ -7,10 +7,16 @@ function verifyUser(req) {
   return !!req.userLogged
 }
 
+function validateIfUserIsAdminPlus(req) {
+  return req.userLogged.type !== 'Cliente' && req.userLogged.type !== 'Técnico'
+}
+
 const dashboard = async function(req, res) {
 
   // if user is not logged
   if(!verifyUser(req)) return res.redirect('/main')
+
+  return res.send(req.userLogged)
 
   return res.render('index', 
     { 
@@ -27,19 +33,22 @@ const newUser = async function(req, res) {
   // if user is not logged
   if(!verifyUser(req)) return res.redirect('/main')
 
+  // Admin+ user is required to access this page/operation
+  if(!validateIfUserIsAdminPlus(req)) return res.redirect('/dashboard')
+
   await db('Type_Of_User')
     .whereNotIn('type', ['Cliente', 'Entidade'])
     .then(types => {
-      res.render('index', 
-      { 
-        title: 'Registar novo utilizador | SyncReady', 
-        page: 'dashboard', 
-        subPage: 'user/new_user_form',
-        userLogged: req.userLogged,
-        types,
-        errors: {}, 
-        predata: {},
-      })
+        res.render('index', 
+        { 
+          title: 'Registar novo utilizador | SyncReady', 
+          page: 'dashboard', 
+          subPage: 'user/new_user_form',
+          userLogged: req.userLogged,
+          types,
+          errors: {}, 
+          predata: {},
+        })
     })
 }
 
@@ -48,6 +57,9 @@ const registerUser = async function(req, res) {
   // if user is not logged
   if(!verifyUser(req)) return res.redirect('/main')
 
+  // Admin+ user is required to access this page/operation
+  if(!validateIfUserIsAdminPlus(req)) return res.redirect('/dashboard')
+
   let Alltypes = {}
 
     await db('Type_Of_User')
@@ -55,9 +67,7 @@ const registerUser = async function(req, res) {
       .then(types => Alltypes = types )
 
   // define req.body.companyCode
-
-  await userController.findCompanyByUUID(req.userLogged.pk_uuid)
-  .then(r => req.body.companyCode = r[0].uuid_company)
+  req.body.companyCode = req.userLogged.company.uuid_company
 
   const { errors } = await userController.validateNewUser(req)
 
@@ -87,7 +97,7 @@ const registerUser = async function(req, res) {
         uuid = response2[0].pk_uuid
       })
   })
-  .catch(err => {
+  .catch(_ => {
     errors.errorOnInsert = userController.messageErrorOnInsert
     return res.render('index', 
     { 
@@ -131,10 +141,7 @@ const listUsers = async function(req, res) {
   // if user is not logged
   if(!verifyUser(req)) return res.redirect('/main')
 
-  let companyUUID = {}
-
-  await userController.findCompanyByUUID(req.userLogged.pk_uuid)
-    .then(data => companyUUID = data[0].uuid_company)
+  let companyUUID = req.userLogged.company.uuid_company
     
   await db('Users')
     .select('Users.*', 'Type_Of_User.type', 'Companies.name')
@@ -159,6 +166,9 @@ const newRoom = function(req, res) {
 
   // if user is not logged
   if(!verifyUser(req)) return res.redirect('/main')
+  
+  // Admin+ user is required to access this page/operation
+  if(!validateIfUserIsAdminPlus(req)) return res.redirect('/dashboard')
 
   const data = {
     token: randomToken(20)

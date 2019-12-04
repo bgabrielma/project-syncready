@@ -9,18 +9,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-5 mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/dashboard">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Foo</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Foo</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
+          <span class="navbar-text">
+              <a class="font-weight-bold text-black-50 mr-4"><%- userLogged.uuid_company %></small></a>
+          </span>
       </ul>
       <span class="navbar-text">
           <a class="font-weight-bold text-black-50 mr-4"><%- userLogged.fullname %> | <small class="text-muted "><%- userLogged.type %></small></a>
@@ -53,12 +44,16 @@
           <span>Utilizadores</span>
         </h6>
         <ul class="nav flex-column ml-3 mr-1">
-          <li class="nav-item">
-            <a class="nav-link text-black-50" href="/dashboard/user/new">
-              <i class="fas fa-plus mr-2"></i>
-              Registar novo utilizador
-            </a>
-          </li>
+
+          <% if(userLogged.type !== 'Cliente' && userLogged.type !== 'Técnico') { %>
+            <li class="nav-item">
+              <a class="nav-link text-black-50" href="/dashboard/user/new">
+                <i class="fas fa-plus mr-2"></i>
+                Registar novo utilizador
+              </a>
+            </li>
+          <% } %>
+
           <li class="nav-item">
             <a class="nav-link text-black-50 " href="/dashboard/user/list">
               <i class="fas fa-list mr-2"></i>
@@ -75,12 +70,16 @@
           <span>Salas</span>
         </h6>
         <ul class="nav flex-column ml-3">
-          <li class="nav-item">
-            <a class="nav-link text-black-50 " href="/dashboard/room/new">
-              <i class="fas fa-plus mr-2"></i>
-              Registar nova sala
-            </a>
-          </li>
+          
+          <% if(userLogged.type !== 'Cliente' && userLogged.type !== 'Técnico') { %>
+            <li class="nav-item">
+              <a class="nav-link text-black-50 " href="/dashboard/room/new">
+                <i class="fas fa-plus mr-2"></i>
+                Registar nova sala
+              </a>
+            </li>
+          <% } %>
+
           <li class="nav-item">
             <a class="nav-link text-black-50 " href="/dashboard/room/list">
               <i class="fas fa-list mr-2"></i>
