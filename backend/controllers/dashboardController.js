@@ -16,8 +16,6 @@ const dashboard = async function(req, res) {
   // if user is not logged
   if(!verifyUser(req)) return res.redirect('/main')
 
-  return res.send(req.userLogged)
-
   return res.render('index', 
     { 
       title: 'Dashboard | SyncReady', 
