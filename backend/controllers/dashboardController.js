@@ -85,7 +85,7 @@ const registerUser = async function(req, res) {
 
 
   // getting uuid
-  let uuid = null
+  let uuid = ''
 
   // save user
   await userController.saveUser(req)
