@@ -192,17 +192,67 @@ const saveUser = async function(req) {
   })
 }
 
+const updateUser = async function(req) {
+  let user = {}
+
+  await db('Users')
+    .where({
+      pk_uuid: req.body.secretUUIDToUpdate
+    })
+    .then(data => {
+      user = data[0]
+    })
+    .catch(err => {
+      throw err
+    })
+
+  const { fullname, address, email, contacto, cc, password, type, secretUUIDToUpdate } = req.body
+
+  return db('Users')
+    .update({
+    fullname,
+    address, 
+    email,
+    telephone: contacto,
+    citizencard: cc,
+    Type_Of_User_uuid_type_of_users: type,
+    password: password === "" ? user.password : password,
+    update_at: db.raw('NOW()')
+    })
+    .where({ pk_uuid: secretUUIDToUpdate })
+}
+
 /* API REST */
 const post = async function(req, res) {
 
-  const { errors } = await validateNewUser(req)
+  if(!req.body.secretUUIDToUpdate) {
+    const { errors } = await validateNewUser(req)
 
-  if(Object.keys(errors).length > 0) {
-    return res.status(401).send(errors)
-  } 
-  await saveUser(req)
-    .then(data => res.status(200).send({ lastIdInserted: data[0], ok: true }))
-    .catch(err => res.status(401).send({ err, ok: false }))
+    if(Object.keys(errors).length > 0) {
+      return res.status(401).send(errors)
+    } 
+    await saveUser(req)
+      .then(data => res.status(200).send({ lastIdInserted: data[0], ok: true }))
+      .catch(err => res.status(500).send({ err, ok: false }))
+
+      return
+  }
+
+  // update
+  await updateUser(req)
+    .then(_ => res.status(200).send({ ok: true }))
+    .catch(err => res.status(500).send({ err, ok: false }))
+}
+
+const get = async function(req, res) {
+  const instance = db('Users')
+
+  if (req.query.uuid)
+    instance.where({ pk_uuid: req.query.uuid })
+
+  instance
+    .then(data => res.status(200).send(data))
+    .catch(err => res.status(500).send(err))
 }
 
 const del = async function(req, res) {
@@ -212,12 +262,13 @@ const del = async function(req, res) {
     .where({ pk_uuid })
     .del()
     .then(res.send({ ok: true }))
-    .catch(res.send({ ok: false }))
+    .catch(err => res.send({ err, ok: false }))
 }
 
 module.exports = {
   register,
   auth,
+  get,
   post,
   del,
   validateNewUser,

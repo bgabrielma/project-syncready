@@ -88,7 +88,42 @@
       const cc = form.find('input[name="cc"]')
       const password = form.find('input[name="password"]')
 
-      console.log(password[0])
+      // loading data
+      $.ajax({
+        url: '/user',
+        type: 'GET',
+        data: { uuid },
+        success: function(user) {
+          const data = user[0]
+          const { Type_Of_User_uuid_type_of_users: typeUser } = data
+
+          // select
+          $.ajax({
+            url: '/user/type',
+            method: 'GET',
+            data: {},
+            success: function(allTypes) {
+
+              // empty type's select
+              types.empty()
+
+              allTypes.forEach(elem => {
+                if(elem.uuid_type_of_users === typeUser)
+                  types.append(`<option value="${elem.uuid_type_of_users}" selected>${elem.type}</option>`)
+                else
+                  types.append(`<option value="${elem.uuid_type_of_users}">${elem.type}</option>`)
+              })
+
+            // inputs
+            fullname.val(data.fullname)
+            address.val(data.address)
+            email.val(data.email)
+            contacto.val(data.telephone)
+            cc.val(data.citizencard)
+            }
+          })
+        }
+      })
 
       // call modal
       editModal.modal('show')
@@ -101,9 +136,7 @@
       $.ajax({
           url: '/user',
           type: 'DELETE',
-          data: {
-            uuid
-          },
+          data: { uuid },
           success: function(result) {
               if(result.ok) {
                 location.reload()
@@ -111,11 +144,52 @@
                 alert('An error occurred!')
               }
           }
-      });
+      })
 
     })
 
-    $(document).on('click', '#modalEditBtnConf', function() {
+    $(document).on('click', '#modalEditBtnConf', function(e) {
+      
+      // get editModal
+      const editModal = $(document).find('#modalEditDialog')
+
+      // load data
+      const form = editModal.find('form')
+
+      const secretUUIDToUpdate = form.find('input[name="secretUUIDToUpdate"]')
+      const types = form.find('select[name="type"]')
+      const fullname = form.find('input[name="fullname"]')
+      const address = form.find('input[name="address"]')
+      const email = form.find('input[name="email"]')
+      const contacto = form.find('input[name="contacto"]')
+      const cc = form.find('input[name="cc"]')
+      const password = form.find('input[name="password"]')
+
+     $.ajax({
+        url: "/user",
+        method: "POST",
+        data: { 
+          secretUUIDToUpdate: secretUUIDToUpdate.val(),
+          type: types.val(),
+          fullname: fullname.val(),
+          address: address.val(),
+          email: email.val(),
+          contacto: contacto.val(),
+          cc: cc.val(),
+          password: password.val()
+        },
+        success: function(result) {
+          if(result.ok) {
+            alert('Utilizador atualizado com sucesso')
+            location.reload()
+          } else {
+            alert('Dados com formato incorreto!')
+          }
+        },
+        error: function(err) {
+            alert('An error occurred!')
+        }
+      })
     })
   })
 </script>
@@ -147,7 +221,6 @@
 <!-- Edit dialog  -->
 
 <div class="modal fade" id="modalEditDialog" tabindex="-1" role="dialog" aria-labelledby="modalEditDialog" aria-hidden="true">
-  <input type="hidden" id="modalEditDialogSecret" value="secret">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -157,11 +230,11 @@
         </button>
       </div>
       <div class="modal-body" style="background-color: #F8F9FA">
-        <form>
+        <form method="POST" action="">
+          <input type="hidden" name="secretUUIDToUpdate" id="modalEditDialogSecret" value="secret">
           <div class="form-group col-12">
               <label for="type">Tipo de utilizador</label>
               <select name="type" class="custom-select">
-                <option value="123">123</option>
               </select>
           </div>
           <div class="form-group col-lg-12">
@@ -172,7 +245,7 @@
                 name="fullname"
                 class="form-control" 
                 aria-describedby="emailHelp" 
-                placeholder="Nome completo">
+                placeholder="Nome completo" required>
           </div>
           <div class="form-group col-lg-12">
             <label class="" for="exampleInputName1">Local de residência</label>
@@ -182,7 +255,7 @@
                 name="address"
                 class="form-control" 
                 aria-describedby="emailHelp" 
-                placeholder="Localidade">
+                placeholder="Localidade" required>
           </div>
           <div class="form-group col-lg-12">
             <label for="exampleInputEmail1">E-mail</label>
@@ -191,7 +264,7 @@
                 type="email" 
                 class="form-control" 
                 name="email" 
-                placeholder="E-mail">
+                placeholder="E-mail" required>
           </div>
           <div class="form-group col-lg-9">
             <label for="exampleInputTel1">Telemóvel</label>
@@ -206,7 +279,7 @@
                   type="tel" 
                   class="form-control" 
                   name="contacto" 
-                  placeholder="Telemóvel">
+                  placeholder="Telemóvel" required>
             </div> 
           </div>
           <div class="form-group col-lg-12">
@@ -216,7 +289,7 @@
                 type="text" 
                 class="form-control" 
                 name="cc" 
-                placeholder="Cartão de cidadão">
+                placeholder="Cartão de cidadão" required>
           </div>
           <div class="form-group col-lg-12">
             <label for="exampleInputPassword1">Redefinir palavra-passe</label>
@@ -229,8 +302,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" id="modalEditBtnConf" class="btn" style="background-color: #E4D530">Confirmar operação</button>
+        <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancelar</button>
+        <button type="button" id="modalEditBtnConf" class="btn btn-block text-white" style="background-color: #E4D530">Confirmar operação</button>
       </div>
     </div>
   </div>

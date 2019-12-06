@@ -5,6 +5,7 @@ const router = express.Router();
 const IndexController = require('../controllers/indexController')
 const UserController = require('../controllers/userController')
 const DashboardController = require('../controllers/dashboardController')
+const TypeUserController = require('../controllers/typeUserController')
 
 /* index */
 router.get('/', IndexController.loginOrRegister)
@@ -37,8 +38,14 @@ router.get('/dashboard/alert/new', DashboardController.newAlert)
 router.get('/dashboard/alert/list', DashboardController.listAlert)
 
 /* API REST */
+
+// user
+router.get('/user', UserController.get)
 router.post('/user', UserController.post)
 router.delete('/user', UserController.del)
+
+// type user
+router.get('/user/type', TypeUserController.get)
 
 router.get('/cookies', function(req, res) {
   res.send(req.cookies)
