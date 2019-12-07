@@ -20,15 +20,6 @@ VALUES
 (UUID(), 'Lida'),
 (UUID(), 'Não Lida');
 
-INSERT INTO Status_Room (`uuid_status_room`, `status_room_designation`)
-VALUES 
-(UUID(), 'Técnico pendente'),
-(UUID(), 'Em funcionamento'),
-(UUID(), 'Fechada'),
-(UUID(), 'Avaliada'),
-(UUID(), 'Suspensa'),
-(UUID(), 'Cancelada');
-
 INSERT INTO Ticket_Options (`uuid_ticket_options`, `ticket_option_designation`)
 VALUES 
 (UUID(), 'Técnico pendente'),

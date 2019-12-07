@@ -2,6 +2,7 @@ const db = require('../config/db')
 const randomToken = require('random-token')
 
 const userController = require('./userController')
+const roomController = require('./roomController')
 
 function verifyUser(req) {
   return !!req.userLogged
@@ -181,7 +182,6 @@ const newRoom = async function(req, res) {
     .select('Users.*', 'Type_Of_User.type')
     .join('Type_Of_User', 'Users.Type_Of_User_uuid_type_of_users', '=', 'Type_Of_User.uuid_type_of_users')
     .then(data => members = data)
-
     
   // get all members
   let types = []
@@ -197,7 +197,6 @@ const newRoom = async function(req, res) {
     types,
     members,
   }
-
 
   return res.render('index', 
     { 
@@ -223,8 +222,14 @@ const listRoom = function(req, res) {
     })
 }
 
-const registerRoom = function(req, res) {
-  return res.send({file: req.file, body: req.body})
+const registerRoom = async function(req, res) {
+  // const filename = !!req.file.filename ? req.file.filename : req.body.datasheet
+
+  await roomController.saveRoom(req, res)
+    .then(_ => { res.send({ ok: true }) })
+    .catch(err => {
+      return res.send('error')
+    })
 }
 
 const newTicket = function(req, res) {

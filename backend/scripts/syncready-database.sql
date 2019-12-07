@@ -41,7 +41,7 @@
 
   CREATE TABLE IF NOT EXISTS `Companies` (
     `pk_companies` INT NOT NULL AUTO_INCREMENT,
-    `uuid_company` VARCHAR(255) NOT NULL,
+    `uuid_company` VARCHAR(255) NOT NULL DEFAULT UUID(),
     `name` VARCHAR(100) NOT NULL,
     `company_address` VARCHAR(100) NOT NULL,
     `company_telephone` VARCHAR(100) NOT NULL,
@@ -57,7 +57,7 @@
 
   CREATE TABLE IF NOT EXISTS `Datasheet` (
     `pk_datasheet` INT NOT NULL AUTO_INCREMENT,
-    `uuid_datasheet` VARCHAR(255) NOT NULL,
+    `uuid_datasheet` VARCHAR(255) NOT NULL DEFAULT UUID(),
     `description` TEXT NOT NULL,
     `created_at` DATETIME NOT NULL,
     `updated_at` DATETIME NOT NULL,
@@ -134,14 +134,13 @@
 
   CREATE TABLE IF NOT EXISTS `Rooms` (
     `pk_rooms` INT NOT NULL AUTO_INCREMENT,
-    `uuid_room` VARCHAR(255) NOT NULL,
+    `uuid_room` VARCHAR(255) NOT NULL DEFAULT UUID(),
     `room_code` VARCHAR(255) NOT NULL,
     `name_room` VARCHAR(100) NOT NULL,
     `created_at` DATETIME NOT NULL,
     `updated_at` DATETIME NOT NULL,
     `until_at` DATETIME NOT NULL,
     `Datasheet_uuid_datasheet` VARCHAR(255) NOT NULL,
-    `Status_Room_uuid_status_room` VARCHAR(45) NOT NULL,
     PRIMARY KEY (`pk_rooms`, `uuid_room`, `room_code`))
   ENGINE = InnoDB;
 
@@ -198,7 +197,7 @@
 
   CREATE TABLE IF NOT EXISTS `Tickets` (
     `pk_ticket` INT NOT NULL AUTO_INCREMENT,
-    `uuid_ticket` VARCHAR(100) NOT NULL,
+    `uuid_ticket` VARCHAR(100) NOT NULL DEFAULT UUID(),
     `Users_pk_uuid` VARCHAR(255) NOT NULL,
     `created_at` DATETIME NOT NULL,
     `updated_at` DATETIME NOT NULL,
