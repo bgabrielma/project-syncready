@@ -33,6 +33,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
+app.use('/public/files', express.static(path.join(__dirname, 'uploads')))
+
 // store user logged if cookie exists
 app.use(async function (req, res, next) {
   const pk_uuid = req.cookies['SYNCREADY_COOKIE_LOGIN']

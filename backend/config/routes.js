@@ -1,11 +1,15 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
+
+const multer = require('multer')
+const multerConfig = require('./multerConfig')
 
 /* Controllers */
 const IndexController = require('../controllers/indexController')
 const UserController = require('../controllers/userController')
 const DashboardController = require('../controllers/dashboardController')
 const TypeUserController = require('../controllers/typeUserController')
+const RoomController = require('../controllers/roomController')
 
 /* index */
 router.get('/', IndexController.loginOrRegister)
@@ -27,6 +31,7 @@ router.get('/dashboard/user/list', DashboardController.listUsers)
 
 /* Rooms */
 router.get('/dashboard/room/new', DashboardController.newRoom)
+router.post('/dashboard/room/new', multer(multerConfig).single('newFile'), DashboardController.registerRoom)
 router.get('/dashboard/room/list', DashboardController.listRoom)
 
 /* Tickets */
@@ -46,6 +51,12 @@ router.delete('/user', UserController.del)
 
 // type user
 router.get('/user/type', TypeUserController.get)
+
+// room
+router.post('/room', multer(multerConfig).single('newFile'), function(req, res) {
+  const fileinfo = req.file;
+  res.send(req.body)
+})
 
 router.get('/cookies', function(req, res) {
   res.send(req.cookies)

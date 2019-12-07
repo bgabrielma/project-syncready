@@ -58,7 +58,6 @@
   CREATE TABLE IF NOT EXISTS `Datasheet` (
     `pk_datasheet` INT NOT NULL AUTO_INCREMENT,
     `uuid_datasheet` VARCHAR(255) NOT NULL,
-    `pdf_file_path` VARCHAR(255) NULL,
     `description` TEXT NOT NULL,
     `created_at` DATETIME NOT NULL,
     `updated_at` DATETIME NOT NULL,

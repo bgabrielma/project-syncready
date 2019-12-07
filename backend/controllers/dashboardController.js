@@ -160,7 +160,7 @@ const listUsers = async function(req, res) {
 }
 
 /* Rooms */
-const newRoom = function(req, res) {
+const newRoom = async function(req, res) {
 
   // if user is not logged
   if(!verifyUser(req)) return res.redirect('/main')
@@ -168,15 +168,42 @@ const newRoom = function(req, res) {
   // Admin+ user is required to access this page/operation
   if(!validateIfUserIsAdminPlus(req)) return res.redirect('/dashboard')
 
+  // get all datasheets
+  let datasheets = []
+
+  await db('Datasheet')
+    .then(data => datasheets = data)
+
+  // get all members
+  let members = []
+
+  await db('Users')
+    .select('Users.*', 'Type_Of_User.type')
+    .join('Type_Of_User', 'Users.Type_Of_User_uuid_type_of_users', '=', 'Type_Of_User.uuid_type_of_users')
+    .then(data => members = data)
+
+    
+  // get all members
+  let types = []
+
+  await db('Type_Of_User')
+    .select('Type_Of_User.Type')
+    .then(data => types = data)
+    
+
   const data = {
-    token: randomToken(20)
+    token: randomToken(20),
+    datasheets,
+    types,
+    members,
   }
+
 
   return res.render('index', 
     { 
       title:  'Registar nova sala | SyncReady', 
-      page: 'dashboard', 
-      data, 
+      page: 'dashboard',
+      data,
       userLogged: req.userLogged,
       subPage: 'rooms/new_room_form' 
     })
@@ -194,6 +221,10 @@ const listRoom = function(req, res) {
       userLogged: req.userLogged,
       subPage: 'rooms/list_room' 
     })
+}
+
+const registerRoom = function(req, res) {
+  return res.send({file: req.file, body: req.body})
 }
 
 const newTicket = function(req, res) {
@@ -263,6 +294,7 @@ module.exports = {
   listUsers,
   newRoom,
   listRoom,
+  registerRoom,
   newAlert,
   listAlert,
   newTicket,
