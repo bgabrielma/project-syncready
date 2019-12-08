@@ -1,6 +1,6 @@
 const db = require('../config/db')
 
-const getUUIDicketOptionsByID = function(id) {
+const getUUIDTicketOptionsByID = function(id) {
   
   return db('Ticket_Options')
     .select('Ticket_Options.uuid_ticket_options')
@@ -13,7 +13,7 @@ const newTicket = async function(req, id, roomUUID) {
 
   let ticketOptionUUID = ''
 
-  await getUUIDicketOptionsByID(id)
+  await getUUIDTicketOptionsByID(id)
   .then(async data => ticketOptionUUID = data[0].uuid_ticket_options)
   
   return db('Tickets')

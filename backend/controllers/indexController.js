@@ -7,6 +7,9 @@ const loginOrRegister = function(req, res) {
 }
 
 const main = function(req, res) {
+
+  if(!!req.userLogged) return res.redirect('/dashboard')
+
   const method = req.query.m || 'login'
   let page = ''
     
