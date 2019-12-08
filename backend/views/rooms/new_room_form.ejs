@@ -38,12 +38,12 @@
             </div>
             <div class="form-group">
                 <label for="members">Membros do grupo</label>
-                <select name="members" class="selectpicker show-tick form-control border" data-live-search="true" required multiple>
+                <select name="members" class="selectpicker show-tick form-control border" data-live-search="true" data-header="<i class='fas fa-user-plus m-2'></i>Adicionar membros ao grupo" required multiple>
                     <% data.types.forEach(elem => { %>
                         <optgroup label="<%- elem.Type %>">
                             <% data.members.forEach(member => { %>
                                 <% if (elem.Type === member.type) {%>
-                                    <option value="<%- member.pk_uuid %>"><%- member.fullname %></option>
+                                    <option data-icon="fa fa-user-tie mr-1" data-subtext="<%- member.name || 'Cliente' %>" value="<%- member.pk_uuid %>"><strong><%- member.fullname %></option>
                                 <% } %>
                             <% }) %>
                         </optgroup>

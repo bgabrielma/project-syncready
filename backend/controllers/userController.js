@@ -112,10 +112,10 @@ const findCompanyByUUID = async function(uuid) {
     .where('Users_pk_uuid', uuid)
 }
 
-const getUserType = async function(companyCode) {
+const getUserType = async function(type) {
   return db('Type_Of_User')
   .where({
-    type: !!companyCode ? 'Técnico' : 'Cliente'
+    type
   })
 }
 
@@ -172,12 +172,18 @@ const auth = function(req, res) {
 }
 
 const saveUser = async function(req) {
-  const { fullname, address, email, contacto, cc, username, password, companyCode } = req.body
+  const { fullname, address, email, contacto, cc, username, password, type, companyCode } = req.body
   
   let typeOfUserUUID = null
+  let typeToSearch = ''
 
-  await getUserType(companyCode)
+  if(companyCode && !type) typeToSearch = 'Técnico'
+  else if(!companyCode && !type) typeToSearch = 'Cliente'
+
+  if (typeToSearch) {
+    await getUserType(typeToSearch)
     .then(res => typeOfUserUUID = res[0].uuid_type_of_users)
+  }
 
   return db('Users')
     .insert({
@@ -188,7 +194,7 @@ const saveUser = async function(req) {
     telephone: contacto,
     citizencard: cc,
     password,
-    Type_Of_User_uuid_type_of_users: typeOfUserUUID
+    Type_Of_User_uuid_type_of_users: typeToSearch ? typeOfUserUUID : type
   })
 }
 

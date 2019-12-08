@@ -2,6 +2,14 @@ const db = require('../config/db')
 
 const ticketController = require('./ticketController')
 
+const saveUsersIntoRoom = function(pk_uuid, room_uuid) {
+  return db('Users_has_Rooms')
+    .insert({
+      Users_pk_uuid: pk_uuid,
+      Rooms_uuid_room: room_uuid
+    })
+}
+
 const saveRoom = async function(req, res) {
 
   const { nameRoom, description, roomCode, datasheet, members, untilAt } = req.body
@@ -62,14 +70,32 @@ const saveRoom = async function(req, res) {
           roomUUID = data[0].uuid_room
 
           // put users in room
-          
-          members.forEach(async elem => {
-            await db('Users_has_Rooms')
-              .insert({
-                Users_pk_uuid: elem,
-                Rooms_uuid_room: roomUUID
-              })
-          })
+
+          // one elem
+          if(typeof(req.body.members) === 'string') 
+            await saveUsersIntoRoom(req.body.members, roomUUID)
+          else members.forEach(async elem => {
+              await saveUsersIntoRoom(elem, roomUUID)
+            })
+
+          // set user's company entity as an member of this group
+
+          // avoid system to insert "two times" this user
+          if(req.userLogged.pk_uuid !== data[0].pk_uuid) {
+            await db('Users')
+            .select('pk_uuid')
+            .innerJoin('Users_has_Companies', 'Users_has_Companies.Users_pk_uuid', '=', 'Users.pk_uuid')
+            .innerJoin('Companies', 'Users_has_Companies.Companies_uuid_company', '=', 'Companies.uuid_company')
+            .innerJoin('Type_Of_User', 'Type_Of_User.uuid_type_of_users', '=', 'Users.Type_Of_User_uuid_type_of_users')
+            .where('Type_Of_User.type', '=', 'Entidade')
+            .then(async data => {
+              await db('Users_has_Rooms')
+                .insert({
+                  Users_pk_uuid: data[0].pk_uuid,
+                  Rooms_uuid_room: roomUUID
+                })
+            })
+          }
         })
     })
     .catch(err => {

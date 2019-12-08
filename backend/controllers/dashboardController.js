@@ -179,8 +179,10 @@ const newRoom = async function(req, res) {
   let members = []
 
   await db('Users')
-    .select('Users.*', 'Type_Of_User.type')
-    .join('Type_Of_User', 'Users.Type_Of_User_uuid_type_of_users', '=', 'Type_Of_User.uuid_type_of_users')
+    .select('Users.*', 'Type_Of_User.type', 'Companies.name')
+    .innerJoin('Type_Of_User', 'Users.Type_Of_User_uuid_type_of_users', '=', 'Type_Of_User.uuid_type_of_users')
+    .leftJoin('Users_has_Companies', 'Users_has_Companies.Users_pk_uuid', '=', 'Users.pk_uuid')
+    .leftJoin('Companies', 'Companies.uuid_company', '=', 'Users_has_Companies.Companies_uuid_company')
     .then(data => members = data)
     
   // get all members
@@ -208,17 +210,31 @@ const newRoom = async function(req, res) {
     })
 }
 
-const listRoom = function(req, res) {
-
+const listRoom = async function(req, res) {
+  
   // if user is not logged
   if(!verifyUser(req)) return res.redirect('/main')
 
-  return res.render('index', 
-    { title:  'Lista de salas | SyncReady', 
-      page: 'dashboard', 
-      data: {}, 
-      userLogged: req.userLogged,
-      subPage: 'rooms/list_room' 
+  await db('Rooms')
+    .select('Rooms.*', 'Datasheet.*', 'Ticket_Options.ticket_option_designation')
+    .innerJoin('Datasheet', 'Datasheet.uuid_datasheet', '=', 'Rooms.Datasheet_uuid_datasheet')
+    .innerJoin('Tickets', 'Tickets.Rooms_uuid_room', '=', 'Rooms.uuid_room')
+    .innerJoin('Ticket_Options', 'Ticket_Options.uuid_ticket_options', '=', 'Tickets.Ticket_Options_uuid_ticket_options')
+    .innerJoin('Users_has_Rooms', 'Users_has_rooms.Rooms_uuid_room', '=', 'Rooms.uuid_room')
+    .innerJoin('Users', 'Users_has_Rooms.Users_pk_uuid', '=', 'Users.pk_uuid')
+    .innerJoin('Type_Of_User', 'Type_Of_User.uuid_type_of_users', '=', 'Users.Type_Of_User_uuid_type_of_users')
+    .innerJoin('Users_has_Companies', 'Users_has_Companies.Users_pk_uuid', '=', 'Users.pk_uuid')
+    .innerJoin('Companies', 'Companies.uuid_company', '=', 'Users_has_Companies.Companies_uuid_company')
+    .where('Type_Of_User.type', '=', 'Entidade')
+    .andWhere('Companies.uuid_company', '=', req.userLogged.company.uuid_company)
+    .then(data => {
+      return res.render('index', 
+        { title:  'Lista de salas | SyncReady', 
+          page: 'dashboard', 
+          data, 
+          userLogged: req.userLogged,
+          subPage: 'rooms/list_room' 
+        })
     })
 }
 

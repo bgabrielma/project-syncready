@@ -53,10 +53,6 @@ router.delete('/user', UserController.del)
 router.get('/user/type', TypeUserController.get)
 
 // room
-router.post('/room', multer(multerConfig).single('newFile'), function(req, res) {
-  const fileinfo = req.file;
-  res.send(req.body)
-})
 
 router.get('/cookies', function(req, res) {
   res.send(req.cookies)
