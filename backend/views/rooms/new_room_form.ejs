@@ -41,9 +41,9 @@
                 <select name="members" class="selectpicker show-tick form-control border" data-live-search="true" required multiple>
                     <% data.types.forEach(elem => { %>
                         <optgroup label="<%- elem.Type %>">
-                            <% data.members.forEach(members => { %>
-                                <% if (elem.Type == members.type) {%>
-                                    <option value="<%- members.pk_uuid %>"><%- members.fullname %></option>
+                            <% data.members.forEach(member => { %>
+                                <% if (elem.Type === member.type) {%>
+                                    <option value="<%- member.pk_uuid %>"><%- member.fullname %></option>
                                 <% } %>
                             <% }) %>
                         </optgroup>
