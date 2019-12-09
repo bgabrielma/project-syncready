@@ -124,15 +124,16 @@
                           allTypes.forEach(type => {
                             optgroup = `<optgroup label=${type.type}>`
                               allUsers.forEach(user => {
-                                if(user.Type_Of_User_uuid_type_of_users === type.uuid_type_of_users) {
-
+                                if(user.Type_Of_User_uuid_type_of_users === type.uuid_type_of_users && type.type) {
+                                    
+                                  let isEntity = type.type === 'Entidade'
                                   let wasInserted = false
 
                                   // check verification
                                   usersRooms.forEach(usersRoom => {
                                     if(user.pk_uuid == usersRoom.Users_pk_uuid) {
                                       wasInserted = true
-                                      optgroup += `<option data-icon="fa fa-user-tie mr-1" data-subtext="${type.type}" value="${user.pk_uuid}" selected><strong>${user.fullname}</option>`
+                                      optgroup += `<option data-icon="fa fa-user-tie mr-1" data-subtext="${type.type}" value="${user.pk_uuid}" selected ${isEntity ? 'disabled': ''}><strong>${user.fullname}</option>`
                                     }
                                   })
 
@@ -163,6 +164,54 @@
 
       $(editModal).modal('show')
     })
+  
+    $(document).on('click', '#modalEditBtnConf', function() {
+    
+      // get editModal
+      const editModal = $(document).find('#modalEditDialog')
+
+      // load data
+      const form = editModal.find('form')
+
+      const secretUUIDToUpdate = $(document).find('#modalEditDialogSecret').val()
+      const status = form.find('select[name="status"]').val()
+      const nameRoom = form.find('input[name="nameRoom"]').val()
+      const untilAt = form.find('input[name="untilAt"]').val()
+      const description = form.find('textarea[name="description"]').val()
+      let members = form.find('select[name="members"]').val()
+
+      var optionsDisabled = $('select[name="members"] option[disabled]').map(function(i,v) {
+          return this.value;
+      }).get(); // result is array
+
+      // fuse default entities inserted with new users
+      members = members.concat(optionsDisabled)
+
+      $.ajax({
+        url: '/room',
+        method: 'POST',
+        data: {
+          secretUUIDToUpdate,
+          statusRoom: status,
+          nameRoom,
+          untilAtRoom: untilAt,
+          descriptionRoom: description,
+          membersRoom: members
+        },
+        success: function(result) {
+          if(result.ok) {
+            alert('Utilizador atualizado com sucesso')
+            location.reload()
+          } else {
+            alert('An error occurred!')
+          }
+        },
+        error: function(err) {
+            alert('An error occurred!')
+        }
+      })
+    })
+  
   })
 </script>
 

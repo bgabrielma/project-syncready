@@ -109,8 +109,67 @@ const saveRoom = async function(req, res) {
     return ticketController.newTicket(req, '1', roomUUID)
 }
 
-const post = function(req, res) {
-  return res.send(req.body)
+const post = async function(req, res) {
+
+  const { secretUUIDToUpdate, statusRoom, nameRoom, untilAtRoom, descriptionRoom, membersRoom } = req.body
+  
+  if (!req.body.secretUUIDToUpdate) {
+    return
+  }
+
+  // update room
+  await db('Rooms')
+    .update({
+      name_room: nameRoom, 
+      updated_at: db.raw('NOW()'),
+      until_at: untilAtRoom,
+    })
+    .where('Rooms.uuid_room', '=', `${secretUUIDToUpdate}`)
+    .then(async _ => {
+
+      // update status on ticket
+      await db('Tickets')
+        .update({
+          Ticket_Options_uuid_ticket_options: statusRoom
+        })
+        .where('Tickets.Rooms_uuid_room', '=', `${secretUUIDToUpdate}`)
+
+      // update datasheet
+        
+      // first, get uuid datasheet from uuid room
+      await db('Rooms')
+        .select('Rooms.Datasheet_uuid_datasheet')
+        .where('Rooms.uuid_room', '=', `${secretUUIDToUpdate}`)
+        .then(async datasheet => {
+          await db('Datasheet')
+          .update({
+            description: descriptionRoom
+          })
+          .where('uuid_datasheet', '=', `${datasheet[0].Datasheet_uuid_datasheet}`)
+        })
+
+      // update User_has_Rooms
+
+      // first, delete all rows with existing members
+      await db('Users_has_Rooms')
+        .del()
+        .where({
+          Rooms_uuid_room: secretUUIDToUpdate
+        })
+
+      console.log(membersRoom)
+
+      // and then insert them all again
+      membersRoom.forEach(async memberRoom => {
+        await db('Users_has_Rooms')
+          .insert({
+            Users_pk_uuid: memberRoom,
+            Rooms_uuid_room: secretUUIDToUpdate
+          })
+      })
+        
+      res.status(200).send({ ok: true })
+    })
 }
 
 const get = function(req, res) {

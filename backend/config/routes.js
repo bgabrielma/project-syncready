@@ -59,6 +59,7 @@ router.get('/user/room', UserRoomController.get)
 
 // room
 router.get('/room', RoomController.get)
+router.post('/room', RoomController.post)
 
 // ticket option
 router.get('/ticket/option/status', TicketOptionsController.get)

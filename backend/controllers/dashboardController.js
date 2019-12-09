@@ -242,7 +242,7 @@ const registerRoom = async function(req, res) {
   // const filename = !!req.file.filename ? req.file.filename : req.body.datasheet
 
   await roomController.saveRoom(req, res)
-    .then(_ => { res.send({ ok: true }) })
+    .then(_ => { res.redirect('/dashboard/room/list') })
     .catch(err => {
       return res.send('error')
     })
