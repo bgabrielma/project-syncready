@@ -10,6 +10,8 @@ const UserController = require('../controllers/userController')
 const DashboardController = require('../controllers/dashboardController')
 const TypeUserController = require('../controllers/typeUserController')
 const RoomController = require('../controllers/roomController')
+const TicketOptionsController = require('../controllers/ticketOptionsController')
+const UserRoomController = require('../controllers/usersRoomsController')
 
 /* index */
 router.get('/', IndexController.loginOrRegister)
@@ -52,7 +54,14 @@ router.delete('/user', UserController.del)
 // type user
 router.get('/user/type', TypeUserController.get)
 
+// User has rooms
+router.get('/user/room', UserRoomController.get)
+
 // room
+router.get('/room', RoomController.get)
+
+// ticket option
+router.get('/ticket/option/status', TicketOptionsController.get)
 
 router.get('/cookies', function(req, res) {
   res.send(req.cookies)
