@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">SyncReadyApp</string>
-    <string name="logoname">SyncReady</string>
+    <string name="app_name">SyncReady</string>
+    <string name="app_year">2019</string>
 </resources>
