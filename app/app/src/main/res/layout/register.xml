@@ -29,14 +29,60 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/txtName"
+                    android:id="@+id/txtFullName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="Nome de utilizador"
+                    android:text="Nome Completo"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textSize="15sp" />
 
+                <EditText
+                    android:id="@+id/editTextFullName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:theme="@style/EditTextTheme"
+                    android:textColor="@color/EditText_TextColor"/>
+
+                <TextView
+                    android:id="@+id/txtEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:text="E-mail"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/editTextEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textEmailAddress"
+                    android:theme="@style/EditTextTheme"
+                    android:textColor="@color/EditText_TextColor"/>
+
+                <TextView
+                    android:id="@+id/txtCC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Nº Cartão de Cidadão"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/editTextCC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:theme="@style/EditTextTheme"
+                    android:textColor="@color/EditText_TextColor"/>
             </LinearLayout>
         </LinearLayout>
 

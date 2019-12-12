@@ -52,7 +52,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/txtName"
+                    android:id="@+id/txtUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -62,7 +62,7 @@
                     android:textSize="15sp" />
 
                 <EditText
-                    android:id="@+id/editTextName"
+                    android:id="@+id/editTextNameLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -82,7 +82,7 @@
                     android:textSize="15sp" />
 
                 <EditText
-                    android:id="@+id/editTextPass"
+                    android:id="@+id/editTextPassLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
