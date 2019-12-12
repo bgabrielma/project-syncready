@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">SyncReady</string>
     <string name="app_year">2019</string>
+    <string name="btnEntra_name">Entrar</string>
+    <string name="NTemConta">Não tem conta?</string>
+    <string name="btnRegista_name">Registar</string>
 </resources>
