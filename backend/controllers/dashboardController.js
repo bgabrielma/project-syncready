@@ -4,11 +4,11 @@ const randomToken = require('random-token')
 const userController = require('./userController')
 const roomController = require('./roomController')
 
-function verifyUser(req) {
+const verifyUser = function (req) {
   return !!req.userLogged
 }
 
-function validateIfUserIsAdminPlus(req) {
+const validateIfUserIsAdminPlus = function (req) {
   return req.userLogged.type !== 'Cliente' && req.userLogged.type !== 'Técnico'
 }
 
@@ -209,7 +209,6 @@ const newRoom = async function(req, res) {
       subPage: 'rooms/new_room_form' 
     })
 }
-
 const listRoom = async function(req, res) {
   
   // if user is not logged
@@ -228,6 +227,24 @@ const listRoom = async function(req, res) {
     .where('Type_Of_User.type', '=', 'Entidade')
     .andWhere('Companies.uuid_company', '=', req.userLogged.company.uuid_company)
     .then(data => {
+
+      data = data.map(elem => {
+
+        db('Users_has_Rooms')
+          .count('Users_has_Rooms.Rooms_uuid_room', { as: 'count' })
+          .innerJoin('Users', 'Users.pk_uuid', '=', 'Users_has_Rooms.Users_pk_uuid')
+          .innerJoin('Type_Of_User', 'Users.Type_Of_User_uuid_type_of_users', '=', 'Type_Of_User.uuid_type_of_users')
+          .where('Users_has_Rooms.Rooms_uuid_room', `${elem.uuid_room}`)
+          .where('Type_Of_User.type', '=', 'Técnico')
+          .then(response => {
+           if (response[0].count) {
+             console.log("Need update!")
+           }
+          })
+
+        return elem
+      })
+
       return res.render('index', 
         { title:  'Lista de salas | SyncReady', 
           page: 'dashboard', 
