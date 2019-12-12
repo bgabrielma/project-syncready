@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e4d530">
+    android:background="@color/colorPrimaryDark">
 
     <ImageView
         android:id="@+id/imageView"
@@ -107,6 +107,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             </LinearLayout>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
