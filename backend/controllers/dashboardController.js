@@ -3,6 +3,7 @@ const randomToken = require('random-token')
 
 const userController = require('./userController')
 const roomController = require('./roomController')
+const ticketController = require('./ticketController')
 
 const verifyUser = function (req) {
   return !!req.userLogged
@@ -210,6 +211,8 @@ const newRoom = async function(req, res) {
     })
 }
 const listRoom = async function(req, res) {
+
+  let needReloadForStatus = false
   
   // if user is not logged
   if(!verifyUser(req)) return res.redirect('/main')
@@ -234,24 +237,20 @@ const listRoom = async function(req, res) {
           .count('Users_has_Rooms.Rooms_uuid_room', { as: 'count' })
           .innerJoin('Users', 'Users.pk_uuid', '=', 'Users_has_Rooms.Users_pk_uuid')
           .innerJoin('Type_Of_User', 'Users.Type_Of_User_uuid_type_of_users', '=', 'Type_Of_User.uuid_type_of_users')
+          .innerJoin('Rooms', 'Rooms.uuid_room', '=', 'Users_has_Rooms.Rooms_uuid_room')
+          .innerJoin('Tickets', 'Tickets.Rooms_uuid_room', '=', 'Rooms.uuid_room')
+          .innerJoin('Ticket_Options', 'Ticket_Options.uuid_ticket_options', '=', 'Tickets.Ticket_Options_uuid_ticket_options')
           .where('Users_has_Rooms.Rooms_uuid_room', `${elem.uuid_room}`)
-          .where('Type_Of_User.type', '=', 'Técnico')
-          .then(response => {
-           if (response[0].count) {
-             console.log("Need update!")
-           }
+          .andWhere('Ticket_Options.ticket_option_designation', '=', 'Técnico pendente')
+          .andWhere('Type_Of_User.type', '=', 'Técnico')
+          .then(async response => {
+            if (response[0].count) {
+              await ticketController.updateTicketByRoomAndTicketOptions(elem.uuid_room, '2')
+            }
           })
 
         return elem
       })
-
-      return res.render('index', 
-        { title:  'Lista de salas | SyncReady', 
-          page: 'dashboard', 
-          data, 
-          userLogged: req.userLogged,
-          subPage: 'rooms/list_room' 
-        })
     })
 }
 

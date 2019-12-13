@@ -9,6 +9,22 @@ const getUUIDTicketOptionsByID = function(id) {
     })
 }
 
+const updateTicketByRoomAndTicketOptions = async function(uuid_room, ticketId) {
+
+  let ticketOptionUUID = {}
+
+  await getUUIDTicketOptionsByID(`${ticketId}`)
+    .then(data => ticketOptionUUID = data[0].uuid_ticket_options)
+
+  console.log(ticketOptionUUID)
+
+  await db('Tickets')
+    .update({
+      Ticket_Options_uuid_ticket_options: ticketOptionUUID
+    })
+    .where('Tickets.Rooms_uuid_room', '=', `${uuid_room}`)
+}
+
 const newTicket = async function(req, id, roomUUID) {
 
   let ticketOptionUUID = ''
@@ -36,6 +52,7 @@ const post = async function(req, res) {
 }
 
 module.exports = {
+  updateTicketByRoomAndTicketOptions,
   newTicket,
   post
 }
