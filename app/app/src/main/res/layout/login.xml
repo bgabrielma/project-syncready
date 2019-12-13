@@ -36,7 +36,7 @@
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
         app:cardUseCompatPadding="true"
-        android:layout_marginTop="15dp"
+        android:layout_margin="10dp"
         >
 
         <LinearLayout
@@ -49,7 +49,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
                 android:layout_weight="2"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp"
+                >
 
                 <TextView
                     android:id="@+id/txtUserName"
@@ -92,12 +94,12 @@
 
                 <Button
                     android:id="@+id/btnEntrar"
-                    android:layout_width="wrap_content"
+                    android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/btn_rounded"
-                    android:text="@string/btnEntra_name"
+                    android:text="@string/Entra_name"
                     android:elevation="10dp"
                     />
 
@@ -112,12 +114,12 @@
 
                 <Button
                     android:id="@+id/btnRegistar"
-                    android:layout_width="wrap_content"
+                    android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/btn_rounded"
-                    android:text="@string/btnRegista_name"
+                    android:text="@string/Regista_name"
                     android:elevation="10dp"
                     />
             </LinearLayout>

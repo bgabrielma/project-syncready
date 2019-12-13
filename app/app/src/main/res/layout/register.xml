@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryLight">
+    android:background="@color/colorPrimaryLight"
+    >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_viewRegister"
@@ -12,27 +13,31 @@
         app:cardBackgroundColor="@color/colorCard"
         app:cardUseCompatPadding="true"
         app:cardCornerRadius="10dp"
-        app:cardElevation="10dp"
-        android:layout_marginTop="10dp"
+        app:cardElevation="5dp"
+        android:layout_margin="10dp"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
                 android:layout_weight="2"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp"
+                >
 
                 <TextView
                     android:id="@+id/txtFullName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
                     android:text="Nome Completo"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textSize="15sp" />
@@ -83,6 +88,93 @@
                     android:inputType="text"
                     android:theme="@style/EditTextTheme"
                     android:textColor="@color/EditText_TextColor"/>
+
+                <TextView
+                    android:id="@+id/txtPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Telemóvel"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/editTextPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="phone"
+                    android:theme="@style/EditTextTheme"
+                    android:textColor="@color/EditText_TextColor"/>
+
+                <TextView
+                    android:id="@+id/txtUserRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Nome de utilizador"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/editTextUserRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:theme="@style/EditTextTheme"
+                    android:textColor="@color/EditText_TextColor"/>
+
+                <TextView
+                    android:id="@+id/txtPassRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Palavra-passe"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/editTextPassRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPassword"
+                    android:theme="@style/EditTextTheme"
+                    android:textColor="@color/EditText_TextColor"/>
+
+                <TextView
+                    android:id="@+id/txtConfirmPassRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Confirmar palavra-passe"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/editTextConfirmPassRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPassword"
+                    android:theme="@style/EditTextTheme"
+                    android:textColor="@color/EditText_TextColor"/>
+
+                <Button
+                    android:id="@+id/btnCriarConta"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="35dp"
+                    android:background="@drawable/btn_rounded"
+                    android:text="@string/CriarConta_name"
+                    android:elevation="10dp"
+                    />
             </LinearLayout>
         </LinearLayout>
 
