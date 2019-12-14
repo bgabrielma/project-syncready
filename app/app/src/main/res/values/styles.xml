@@ -20,4 +20,7 @@
         <item name="colorControlActivated">@color/colorPrimaryDark</item>
         <item name="colorControlHighlight">@color/colorEditText</item>
     </style>
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
 </resources>

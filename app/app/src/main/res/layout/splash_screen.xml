@@ -28,15 +28,15 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name" />
 
-    <TextView
-        android:layout_marginBottom="30dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/splash_app_year"
-        android:gravity="center"
-        android:textColor="@color/colorWhite"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/app_year" />
+            <TextView
+                android:layout_marginBottom="30dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/splash_app_year"
+                android:gravity="center"
+                android:textColor="@color/colorWhite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_year" />
 
 </RelativeLayout>
