@@ -106,6 +106,13 @@ const findUUIDByID = async function(id) {
       .where('pk_user', id)
 }
 
+const findCompanyUUIDById = function(id) {
+  return db('Companies')
+    .where({
+      pk_companies: id
+    })
+}
+
 const findCompanyByUUID = async function(uuid) {
   return db('Users_has_Companies')
     .join('Companies', 'Users_has_Companies.Companies_uuid_company', '=', 'Companies.uuid_company')
@@ -267,8 +274,8 @@ const del = async function(req, res) {
   await db('Users')
     .where({ pk_uuid })
     .del()
-    .then(res.send({ ok: true }))
-    .catch(err => res.send({ err, ok: false }))
+    .then(res.status(200).send({ ok: true }))
+    .catch(err => res.status(500).send({ err, ok: false }))
 }
 
 module.exports = {
@@ -279,8 +286,10 @@ module.exports = {
   del,
   validateNewUser,
   saveUser,
+  getUserType,
   messageErrorOnInsert,
   findCompanyByUUID,
   registerToCompany,
-  findUUIDByID
+  findUUIDByID,
+  findCompanyUUIDById
 }

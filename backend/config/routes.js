@@ -12,6 +12,7 @@ const TypeUserController = require('../controllers/typeUserController')
 const RoomController = require('../controllers/roomController')
 const TicketOptionsController = require('../controllers/ticketOptionsController')
 const UserRoomController = require('../controllers/usersRoomsController')
+const CompanyController = require('../controllers/companyController')
 const JsonWebTokenController = require('../controllers/jsonWebTokenController')
 
 router.use(function(req, res, next) {
@@ -46,13 +47,14 @@ router.get('/dashboard/room/new', DashboardController.newRoom)
 router.post('/dashboard/room/new', multer(multerConfig).single('newFile'), DashboardController.registerRoom)
 router.get('/dashboard/room/list', DashboardController.listRoom)
 
-/* Tickets */
-router.get('/dashboard/ticket/new', DashboardController.newTicket)
-router.get('/dashboard/ticket/list', DashboardController.listTicket)
-
 /* Alerts */
 router.get('/dashboard/alert/new', DashboardController.newAlert)
 router.get('/dashboard/alert/list', DashboardController.listAlert)
+
+/* Companies */
+router.get('/dashboard/company/new', DashboardController.newCompany)
+router.get('/dashboard/company/list', DashboardController.listCompanies)
+router.post('/dashboard/company/new', DashboardController.registerCompany)
 
 /* API REST */
 
@@ -73,6 +75,9 @@ router.post('/room', RoomController.post)
 
 // ticket option
 router.get('/ticket/option/status', TicketOptionsController.get)
+
+// companies
+router.delete('/company', CompanyController.del)
 
 router.get('/cookies', function(req, res) {
   res.send(req.cookies)

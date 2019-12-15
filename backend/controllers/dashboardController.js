@@ -274,36 +274,6 @@ const registerRoom = async function(req, res) {
     })
 }
 
-const newTicket = function(req, res) {
-
-  // if user is not logged
-  if(!verifyUser(req)) return res.redirect('/main')
-
-  return res.render('index', 
-    { 
-      title:  'Registar novo ticket | SyncReady', 
-      page: 'dashboard', 
-      data: {},
-      userLogged: req.userLogged, 
-      subPage: 'tickets/new_ticket_form' 
-    })
-}
-
-const listTicket = function(req, res) {
-
-  // if user is not logged
-  if(!verifyUser(req)) return res.redirect('/main')
-
-  return res.render('index', 
-    { 
-      title:  'Lista de tickets | SyncReady', 
-      page: 'dashboard', 
-      data: {},
-      userLogged: req.userLogged, 
-      subPage: 'tickets/list_ticket' 
-    })
-}
-
 const newAlert = function(req, res) {
 
   // if user is not logged
@@ -334,6 +304,93 @@ const listAlert = function(req, res) {
     })
 }
 
+const newCompany = function(req, res) {
+
+  // Admin+ user of SyncReady is required to access this page/operation
+  if(req.userLogged.company.name != 'SyncReady') return res.redirect('/dashboard')
+
+  res.render('index', 
+    { 
+      title:  'Lista de empresas parceiras | SyncReady', 
+      page: 'dashboard', 
+      data: {},
+      userLogged: req.userLogged,
+      subPage: 'company/new_company_form' 
+    })
+}
+
+const registerCompany = async function(req, res) {
+  
+  // Admin+ user of SyncReady is required to access this page/operation
+  if(req.userLogged.company.name != 'SyncReady') return res.redirect('/dashboard')
+
+  const { name, username, companyAddress, companyTelephone, companyCC, companyEmail, password } = req.body
+
+  await db('Companies')
+    .insert({
+      name,
+      company_address: companyAddress,
+      company_telephone: companyTelephone,
+      company_email: companyEmail
+    })
+    .then(async data => {
+
+      /* create user process for entity */
+      let userTypeUUID = ''
+      let userUUID = ''
+      let companyUUID = ''
+
+      await userController.getUserType('Entidade').then(response => userTypeUUID = response[0].uuid_type_of_users)
+      await userController.findCompanyUUIDById(data[0]).then(response => companyUUID = response[0].uuid_company)
+
+      await db('Users')
+        .insert({
+          nickname: username,
+          fullname: name,
+          address: companyAddress,
+          email: companyEmail,
+          telephone: companyTelephone,
+          citizencard: companyCC,
+          password,
+          Type_Of_User_uuid_type_of_users: userTypeUUID
+        })
+        .then(async response => {
+
+          // get uuid for user
+          await userController.findUUIDByID(response[0]).then(response => userUUID = response[0].pk_uuid)
+        })
+
+        /* create relation User_Has_Companies */
+        await db('Users_has_Companies')
+          .insert({
+            Users_pk_uuid: userUUID,
+            Companies_uuid_company: companyUUID
+          })
+          .then(_ => res.redirect('/dashboard/company/list'))
+    })
+}
+
+const listCompanies = async function(req, res) {
+
+  // Admin+ user of SyncReady is required to access this page/operation
+  if(req.userLogged.company.name != 'SyncReady') return res.redirect('/dashboard')
+
+  // if user is not logged
+  if(!verifyUser(req)) return res.redirect('/main')
+    
+  await db('Companies')
+    .then(data => {
+      return res.render('index', 
+      { 
+        title: 'Lista de empresas parceiras | SyncReady', 
+        page: 'dashboard', 
+        data, 
+        userLogged: req.userLogged,
+        subPage: 'company/list_company'
+      })
+    })
+}
+
 module.exports = {
   dashboard,
   newUser,
@@ -344,7 +401,8 @@ module.exports = {
   registerRoom,
   newAlert,
   listAlert,
-  newTicket,
-  listTicket,
+  newCompany,
+  listCompanies,
+  registerCompany,
   logout,
 }
