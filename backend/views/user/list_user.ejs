@@ -107,6 +107,9 @@
               // empty type's select
               types.empty()
 
+              // prevent show 'Entidade' option
+              allTypes = allTypes.filter(elem => elem.type != 'Entidade')
+
               allTypes.forEach(elem => {
                 if(elem.uuid_type_of_users === typeUser)
                   types.append(`<option value="${elem.uuid_type_of_users}" selected>${elem.type}</option>`)

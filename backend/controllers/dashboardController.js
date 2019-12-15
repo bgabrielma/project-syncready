@@ -149,6 +149,7 @@ const listUsers = async function(req, res) {
     .join('Users_has_Companies', 'Users_has_Companies.Users_pk_uuid', '=', 'Users.pk_uuid')
     .join('Companies', 'Companies.uuid_company', '=', 'Users_has_Companies.Companies_uuid_company')
     .where('Companies.uuid_company', '=', companyUUID)
+    .where('Type_Of_User.type', '!=', 'Entidade')
     .then(data => {
       return res.render('index', 
       { 
@@ -250,6 +251,15 @@ const listRoom = async function(req, res) {
           })
 
         return elem
+      })
+
+      return res.render('index', 
+      { 
+        title:  'Lista de salas | SyncReady', 
+        page: 'dashboard', 
+        data, 
+        userLogged: req.userLogged,
+        subPage: 'rooms/list_room' 
       })
     })
 }

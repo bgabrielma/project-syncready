@@ -12,6 +12,16 @@ const TypeUserController = require('../controllers/typeUserController')
 const RoomController = require('../controllers/roomController')
 const TicketOptionsController = require('../controllers/ticketOptionsController')
 const UserRoomController = require('../controllers/usersRoomsController')
+const JsonWebTokenController = require('../controllers/jsonWebTokenController')
+
+router.use(function(req, res, next) {
+  const access = ['main', 'auth', 'logout', 'register'] // backend
+
+  const urlFormatted = req.originalUrl.split('?').shift().split('/')
+  
+  if(access.includes(urlFormatted[1]) || req.cookies['SYNCREADY_COOKIE_LOGIN']) next()
+
+})
 
 /* index */
 router.get('/', IndexController.loginOrRegister)
