@@ -43,6 +43,6 @@ VALUES
 /* CRIAR UM UTILIZADOR DO TIPO ENTIDADE CHAMADO SYNCREADY */
 INSERT INTO `Users` (`pk_user`, `pk_uuid`, `nickname`, `fullname`, `address`, `email`, `telephone`, `citizencard`, `password`, `created_at`, `update_at`, `Type_Of_User_uuid_type_of_users`) 
 VALUES (NULL, '944e4117-19f2-11ea-b615-30d16bf72dc4', 'syncready', 'SyncReady Company', 'SyncReady - Portugal', 'entity@syncready.pt', 
-'999999999', '191994073ZV4', '123', current_timestamp(), current_timestamp(), ATENÇÃO - SUBSTITUIR COM O UUID DO TYPE_OF_USER QUE SEJA ENTIDADE);
+'999999999', '191994073ZV4', 'syncready', current_timestamp(), current_timestamp(), ATENÇÃO - SUBSTITUIR COM O UUID DO TYPE_OF_USER QUE SEJA ENTIDADE);
 
 /* CRIAR UM REGISTO NA TABELA Users_has_Companies colocando o UUID da syncready com o UUID da companie syncready*/
