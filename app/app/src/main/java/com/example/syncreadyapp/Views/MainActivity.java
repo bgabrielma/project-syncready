@@ -36,11 +36,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(LoginModel loginModel) {
                 if (TextUtils.isEmpty(Objects.requireNonNull(loginModel).getUsername())) {
-                    loginBinding.editTextNameLogin.setError("Empty field!");
+                    loginBinding.editTextNameLogin.setError("Campo vazio!");
                     loginBinding.editTextNameLogin.requestFocus();
                 }
                 if (TextUtils.isEmpty(Objects.requireNonNull(loginModel).getPassword())) {
-                    loginBinding.editTextPassLogin.setError("Empty field!");
+                    loginBinding.editTextPassLogin.setError("Campo vazio!");
                     loginBinding.editTextPassLogin.requestFocus();
                 }
             }
