@@ -1,6 +1,0 @@
- docker system prune --force --volumes --all
-
- docker-compose up / down 
-
- docker rm -f $(docker ps -aq) or docker rm $(docker ps -a -f status=exited -q)
- docker rmi $(docker images -aq)
