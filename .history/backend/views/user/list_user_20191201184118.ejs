@@ -1,0 +1,88 @@
+<div class="container-fluid p-4">
+  <div class="table-responsive-lg">
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Nome de utilizador</th>
+        <th>E-mail</th>
+        <th>Cartão de cidadão</th>
+        <th>Data de criação</th>
+        <th>Data da ultima atualização</th>
+        <th>Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% data.forEach(elem => { %>
+          <tr>
+            <th scope="row"><%- elem.pk_uuid %></th>
+            <td><%- elem.fullname %></td>
+            <td><%- elem.nickname %></td>
+            <td><%- elem.email %></td>
+            <td><%- elem.citizencard %></td>
+            <td><%- elem.created_at %></td>
+            <td><%- elem.update_at %></td>
+            <td>
+              <button class="btn btn-light" data-toggle="tooltip" 
+              data-placement="bottom" title="Editar">
+                  <i class="fas fa-edit"></i>
+              </button>
+              <% if(userLogged.pk_uuid != elem.pk_uuid) { %>
+                <button class="btn btn-danger" name="listButtonDelete" data-userValue="<%- elem.pk_uuid -%>" data-toggle="tooltip" 
+                data-placement="bottom" title="Apagar">
+                    <i class="fas fa-trash"></i>
+                </button>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  $(function() {
+    $(document).on('click', 'button[name="listButtonDelete"]', function(e) {
+      const btn = $(this)
+      const uuid = btn.attr('data-userValue')
+
+      const deleteModal = $(document).find('#modalDeleteDialog')
+
+      // set secret uuid key
+      $(document).find('#modalDeleteDialogSecret').val('2')
+
+      alert(uuid)
+    })
+  })
+</script>
+
+<!-- Modals  -->
+
+<!-- Delete dialog  -->
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalDeleteDialog">
+  Launch demo modal
+</button>
+
+<div class="modal fade" id="modalDeleteDialog" tabindex="-1" role="dialog" aria-labelledby="modalDeleteDialog" aria-hidden="true">
+  <input type="hidden" id="modalDeleteDialogSecret" value="secret">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Remoção de utilizador</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Deseja realmente apagar o utilizador x?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary">Confirmar operação</button>
+      </div>
+    </div>
+  </div>
+</div>

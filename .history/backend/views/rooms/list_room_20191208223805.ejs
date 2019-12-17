@@ -1,0 +1,34 @@
+<div class="container-fluid p-4">
+  <div class="table-responsive-lg">
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>UUID</th>
+        <th>Identificador da sala</th>
+        <th>Nome da sala</th>
+        <th>Data de criação</th>
+        <th>Data de última atualização</th>
+        <th>Data de validade</th>
+        <th>Descrição</th>
+        <th>Ficheiro pdf</th>
+        <th>Status da sala</th>
+        <th>Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% data.forEach(elem => { %>
+        <tr>
+          <th scope="row"><%- elem.uuid_room %></th>
+          <td><%- elem.name_room %></td>
+          <td><%- elem.created_at %></td>
+          <td><%- elem.updated_at %></td>
+          <td><%- elem.until_at %></td>
+          <td><%- elem.description %></td>
+          <td><%- elem.designation %></td>
+          <td><%- elem.ticket_option_designation %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,143 @@
+<!-- Image and text -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top shadow" style="background-color: #e4d530;">
+    <a class="navbar-brand" href="/dashboard">
+      <img src="/images/logo-syncready-vector-shadow.png" width="30" height="30" class="d-inline-block align-top mr-2" alt="">
+      SyncReady
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-5 mr-auto">
+          <span class="navbar-text">
+              <a class="font-weight-bold text-black-50 mr-4"><%- userLogged.fullname %> | <small class="text-muted "><%- userLogged.type %></small></a>
+              <a class="text-black-50" href="/logout">
+                <i class="fas fa-sign-out-alt mr-2 text-black-50"></i>
+                Fechar sessão
+              </a>
+          </span>
+      </ul>
+      <span class="navbar-text">
+          <a class="font-weight-bold text-black-50 mr-4"><%- userLogged.fullname %> | <small class="text-muted "><%- userLogged.type %></small></a>
+          <a class="text-black-50" href="/logout">
+            <i class="fas fa-sign-out-alt mr-2 text-black-50"></i>
+            Fechar sessão
+          </a>
+      </span>
+    </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 sidebar border-right" style="background-color: #F8F9FA">
+      <div class="sidebar-sticky mt-5">
+
+        <!-- label com icon -->
+        <h6 class="sidebar-heading d-flex align-items-center px-3 mt-4 mb-1 text-dark">
+          <i class="fas fa-home mr-2"></i>
+          <a class="d-flex align-items-center text-dark" href="/dashboard">
+              <span>Homepage</span>
+          </a>
+        </h6>
+
+        <!-- label com icon -->
+        <h6 class="sidebar-heading d-flex align-items-center px-3 mt-4 mb-1 text-dark">
+          <a class="d-flex align-items-center text-dark">
+              <i class="fas fa-user mr-2"></i>
+          </a>
+          <span>Utilizadores</span>
+        </h6>
+        <ul class="nav flex-column ml-3 mr-1">
+
+          <% if(userLogged.type !== 'Cliente' && userLogged.type !== 'Técnico') { %>
+            <li class="nav-item">
+              <a class="nav-link text-black-50" href="/dashboard/user/new">
+                <i class="fas fa-plus mr-2"></i>
+                Registar novo utilizador
+              </a>
+            </li>
+          <% } %>
+
+          <li class="nav-item">
+            <a class="nav-link text-black-50 " href="/dashboard/user/list">
+              <i class="fas fa-list mr-2"></i>
+              Listar utilizadores
+            </a>
+          </li>
+        </ul>
+
+        <!-- label com icon -->
+        <h6 class="sidebar-heading d-flex align-items-center px-3 mt-4 mb-1 text-dark">
+          <a class="d-flex align-items-center text-dark">
+              <i class="fas fa-comments mr-2"></i>
+          </a>
+          <span>Salas</span>
+        </h6>
+        <ul class="nav flex-column ml-3">
+          
+          <% if(userLogged.type !== 'Cliente' && userLogged.type !== 'Técnico') { %>
+            <li class="nav-item">
+              <a class="nav-link text-black-50 " href="/dashboard/room/new">
+                <i class="fas fa-plus mr-2"></i>
+                Registar nova sala
+              </a>
+            </li>
+          <% } %>
+
+          <li class="nav-item">
+            <a class="nav-link text-black-50 " href="/dashboard/room/list">
+              <i class="fas fa-list mr-2"></i>
+              Listar salas
+            </a>
+          </li>
+        </ul>
+
+        <!-- label com icon -->
+        <h6 class="sidebar-heading d-flex align-items-center px-3 mt-4 mb-1 text-dark">
+          <a class="d-flex align-items-center text-dark">
+              <i class="fas fa-exclamation-circle mr-2"></i>
+          </a>
+          <span>Alertas</span>
+        </h6>
+        <ul class="nav flex-column ml-3">
+          <li class="nav-item">
+            <a class="nav-link text-black-50 " href="/dashboard/alert/new">
+              <i class="fas fa-plus mr-2"></i>
+              Registar novo alerta
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-black-50 " href="/dashboard/alert/list">
+              <i class="fas fa-list mr-2  "></i>
+              Listar alertas
+            </a>
+          </li>
+        </ul>
+        <h6 class="sidebar-heading d-flex align-items-center px-3 mt-4 mb-1 text-dark">
+          <a class="d-flex align-items-center text-dark">
+              <i class="fas fa-ticket-alt mr-2"></i>
+          </a>
+          <span>Tickets</span>
+        </h6>
+        <ul class="nav flex-column ml-3">
+          <li class="nav-item">
+            <a class="nav-link text-black-50 " href="/dashboard/ticket/new">
+              <i class="fas fa-plus mr-2"></i>
+              Registar novo ticket
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-black-50 " href="/dashboard/ticket/list">
+              <i class="fas fa-list mr-2  "></i>
+              Listar tickets
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="col-md-10 border-top mt-5">
+      <!-- formulários -->
+      <%- include(subPage) %>
+    </div>
+  </div>
+</div>

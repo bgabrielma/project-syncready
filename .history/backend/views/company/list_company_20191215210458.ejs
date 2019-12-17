@@ -1,0 +1,28 @@
+<div class="container-fluid p-4">
+  <div class="table-responsive-lg">
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>UUID</th>
+        <th>Nome da empresa</th>
+        <th>Localização</th>
+        <th>Contacto</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% data.forEach(elem => { %>
+          <tr>
+            <th scope="row"><%- elem.uuid_company %></th>
+            <td><%- elem.fullname %></td>
+            <td><%- elem.nickname %></td>
+            <td><%- elem.email %></td>
+            <td><%- elem.citizencard %></td>
+            <td><%- elem.name %></td>
+            <td><%- elem.type %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

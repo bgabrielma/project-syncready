@@ -1,0 +1,34 @@
+<div class="container-fluid p-4 ">
+  <div class="dashboard-forms-alert">
+      <h2>
+          Registar novo alerta
+          <i class="fas fa-exclamation-circle ml-2 fa-1x"></i>
+      </h2>
+      <form class="border shadow-sm">
+          <div class="form-group">
+              <label for="exampleInputEmail1">Nome do alerta</label>
+              <input type="text" class="form-control" id="exampleInputFullName" aria-describedby="emailHelp" placeholder="Nome do alerta">
+          </div>
+          <div class="form-group">
+              <label for="alertDesc">Descrição do alerta</label>
+              <textarea class="form-control" id="alertDesc" rows="3" placeholder="Descrição do alerta"></textarea>
+          </div>
+          <div class="form-group">
+              <label for="type">Alerta visível para</label>
+              <select name="type" class="selectpicker show-tick form-control border" multiples>
+                  <optgroup label="Tipos de utilizador">
+                      <option>Cliente</option>
+                      <option>Técnico</option>
+                      <option>Administrador</option>
+                  </optgroup>
+                  <optgroup label="Planetas nunca vistos">
+                      <option>Pesquisa por Jupiturno</option>
+                      <option>Pesquisa por Terrercurio</option>
+                      <option>Pesquisa por Venarte</option>
+                  </optgroup>
+              </select>
+          </div>
+          <button type="submit" class="btn btn-block">Registar</button>
+      </form>
+  </div>
+</div>

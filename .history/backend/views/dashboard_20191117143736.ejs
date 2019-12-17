@@ -1,0 +1,112 @@
+<!-- Image and text -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top shadow" style="background-color: #e4d530;">
+    <a class="navbar-brand" href="#">
+      <img src="/images/logo-syncready-vector-shadow.png" width="30" height="30" class="d-inline-block align-top mr-2" alt="">
+      SyncReady
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-5 mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pricing</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+      <span class="navbar-text">
+          <a class="text-black-50" href="#">
+            <i class="fas fa-sign-out-alt mr-2 text-black-50"></i>
+            Fechar sessão
+          </a>
+      </span>
+    </div>
+  </nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 sidebar border-right" style="background-color: #F8F9FA">
+      <div class="sidebar-sticky mt-5">
+
+        <!-- label com icon -->
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-dark">
+          <a class="d-flex align-items-center text-dark" href="#">
+              <i class="fas fa-user mr-2"></i>
+          </a>
+          <span>Utilizadores</span>
+        </h6>
+        <ul class="nav flex-column ml-3">
+          <li class="nav-item">
+            <a class="nav-link text-black-50 " href="#">
+              <i class="fas fa-plus mr-2 text-black-50"></i>
+              Inserir novo utilizador
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-black-50 " href="#">
+              <i class="fas fa-list mr-2 text-black-50"></i>
+              Listar utilizadores
+            </a>
+          </li>
+        </ul>
+
+        <!-- label com icon -->
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-dark">
+          <a class="d-flex align-items-center text-dark" href="#">
+              <i class="fas fa-comments"></i>
+          </a>
+          <span>Salas</span>
+        </h6>
+        <ul class="nav flex-column ml-3">
+          <li class="nav-item">
+            <a class="nav-link text-black-50 " href="#">
+              <i class="fas fa-plus mr-2 text-black-50"></i>
+              Registar nova sala
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-black-50 " href="#">
+              <i class="fas fa-list mr-2 text-black-50"></i>
+              Listar salas
+            </a>
+          </li>
+        </ul>
+
+        <!-- label com icon -->
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-dark">
+          <a class="d-flex align-items-center text-dark" href="#">
+              <i class="fas fa-exclamation-circle"></i>
+          </a>
+          <span>Alertas</span>
+        </h6>
+        <ul class="nav flex-column ml-3">
+          <li class="nav-item">
+            <a class="nav-link text-black-50 " href="#">
+              <i class="fas fa-plus mr-2 text-black-50"></i>
+              Registar um novo alerta
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-black-50 " href="#">
+              <i class="fas fa-list mr-2 text-black-50"></i>
+              Listar alertas
+            </a>
+          </li>
+        </ul>
+
+      </div>
+    </nav>
+    <div class="col-md-10 border-top mt-5">
+      <!-- formulários -->
+      <%- include('user/list_user') %>
+    </div>
+  </div>
+</div>

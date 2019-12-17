@@ -1,0 +1,70 @@
+<!-- Image and text -->
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e4d530;">
+  <a class="navbar-brand" href="#">
+    <img src="/images/logo-syncready-vector-shadow.png" width="30" height="30" class="d-inline-block align-top mr-2" alt="">
+    SyncReady
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-5">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Features</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Pricing</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 sidebar vh-100" style="background-color: #F8F9FA">
+        <!-- label com icon -->
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-dark">
+          <span>Utilizadores</span>
+          <a class="d-flex align-items-center text-dark" href="#">
+            <span data-feather="plus-circle"></span>
+          </a>
+        </h6>
+
+        <ul class="nav flex-column ml-3">
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#">
+              <span data-feather="bar-chart-2"></span>
+              Inserir novo utilizador
+            </a>
+          </li>
+        </ul>
+
+        <!-- label com icon -->
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-light">
+          <span>Salas</span>
+          <a class="d-flex align-items-center text-light" href="#">
+            <span data-feather="plus-circle"></span>
+          </a>
+        </h6>
+
+        <ul class="nav flex-column ml-3">
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#">
+              <span data-feather="file-text"></span>
+              Adicionar nova sala
+            </a>
+          </li>
+        </ul>
+    </nav>
+    <div class="col-md-10">
+      <!-- formulários -->
+      <%- include('user/list_user') %>
+    </div>
+  </div>
+</div>

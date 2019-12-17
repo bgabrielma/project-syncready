@@ -1,0 +1,272 @@
+<div class="container-fluid p-4">
+  <div class="table-responsive-lg">
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>UUID</th>
+        <th>Identificador da sala</th>
+        <th>Nome da sala</th>
+        <th>Data de criação</th>
+        <th>Data de última atualização</th>
+        <th>Data de validade</th>
+        <th>Descrição</th>
+        <th>Ficheiro pdf</th>
+        <th>Status da sala</th>
+        <th>Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% data.forEach(elem => { %>
+        <tr>
+          <th scope="row"><%- elem.uuid_room %></th>
+          <td><%- elem.room_code %></td>
+          <td><%- elem.name_room %></td>
+          <td><%- elem.created_at.toISOString().split('T')[0] %></td>
+          <td><%- elem.updated_at.toISOString().split('T')[0] %></td>
+          <td><%- elem.until_at.toISOString().split('T')[0] %></td>
+          <td><%- elem.description %></td>
+          <td>
+            <a class="btn btn-light" href="/public/files/<%- elem.designation %>" download>
+              <i class="fas fa-download"></i>Descarregar ficheiro
+            </a>
+          </td>
+          <td><%- elem.ticket_option_designation %></td>
+          <td>
+            <button class="btn btn-light" name="listButtonEdit" data-userValue="<%- elem.uuid_room -%>" data-toggle="tooltip" 
+            data-placement="bottom" title="Editar">
+                <i class="fas fa-edit"></i>
+            </button>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<script>
+  $(function() {
+    
+    $(document).on('click', 'button[name="listButtonEdit"]', function() {
+      const btn = $(this)
+      const uuid = btn.attr('data-userValue')
+      
+      // prepare dialog
+      const editModal = $(document).find('#modalEditDialog')
+
+      // set secret uuid key
+      $(document).find('#modalEditDialogSecret').val(uuid)
+
+      // load data
+      const form = editModal.find('form')
+
+      const status = form.find('select[name="status"]')
+      const nameRoom = form.find('input[name="nameRoom"]')
+      const untilAt = form.find('input[name="untilAt"]')
+      const description = form.find('textarea[name="description"]')
+      const members = form.find('select[name="members"]')
+
+      $.ajax({
+        url: '/room',
+        method: 'GET',
+        data: { uuid },
+        success: function(room) {
+          const data = room[0]
+          const { uuid_ticket_options } = data
+
+          // select
+          $.ajax({
+            url: '/ticket/option/status',
+            method: 'GET',
+            data: {},
+            success: function(allStatus) {
+              
+              // empty status's select
+              status.empty()
+
+              allStatus.forEach(elem => {
+                if (elem.uuid_ticket_options == uuid_ticket_options)
+                  status.append(`<option value="${elem.uuid_ticket_options}" selected>${elem.ticket_option_designation}</option>`)
+                else
+                  status.append(`<option value="${elem.uuid_ticket_options}">${elem.ticket_option_designation}</option>`)
+              })
+              
+              // inputs
+              nameRoom.val(data.name_room)
+              untilAt.val(new Date(data.until_at).toISOString().split('T')[0])
+              description.val(data.description)
+
+              // select for members
+
+              $.ajax({
+                url: '/user/type',
+                method: 'GET',
+                data: {},
+                success: function(allTypes) {
+                  $.ajax({
+                    url: '/user',
+                    method: 'GET',
+                    data: {},
+                    success: function(allUsers) {
+
+                      // empty members's select
+                      members.empty()
+
+                      $.ajax({
+                        url: '/user/room',
+                        method: 'GET',
+                        data: {
+                          roomUUID: uuid
+                        },
+                        success: function(usersRooms) {
+                          let optgroupHTML = ''
+                          allTypes.forEach(type => {
+                            optgroup = `<optgroup label=${type.type}>`
+                              allUsers.forEach(user => {
+                                if(user.Type_Of_User_uuid_type_of_users === type.uuid_type_of_users && type.type) {
+                                    
+                                  let isEntity = type.type === 'Entidade'
+                                  let wasInserted = false
+
+                                  // check verification
+                                  usersRooms.forEach(usersRoom => {
+                                    if(user.pk_uuid == usersRoom.Users_pk_uuid) {
+                                      wasInserted = true
+                                      optgroup += `<option data-icon="fa fa-user-tie mr-1" data-subtext="${type.type}" value="${user.pk_uuid}" selected ${isEntity ? 'disabled': ''}><strong>${user.fullname}</option>`
+                                    }
+                                  })
+
+                                  if(!wasInserted) {
+                                    optgroup += `<option data-icon="fa fa-user-tie mr-1" data-subtext="${type.type}" value="${user.pk_uuid}"><strong>${user.fullname}</option>`
+                                  } else wasInserted = false
+                                }
+                              })
+
+                            // insert optgroupt
+                            optgroup += `</optgroup>`
+                            members.append(optgroup)
+
+                            // refresh selectpicker
+                            $('select[name="members"]').selectpicker("refresh");
+                          })
+                        }
+                      })
+                    }
+                  })
+                } 
+              })
+            }
+          })
+        },
+        
+      })
+
+      $(editModal).modal('show')
+    })
+  
+    $(document).on('click', '#modalEditBtnConf', function() {
+    
+      // get editModal
+      const editModal = $(document).find('#modalEditDialog')
+
+      // load data
+      const form = editModal.find('form')
+
+      const secretUUIDToUpdate = $(document).find('#modalEditDialogSecret').val()
+      const status = form.find('select[name="status"]').val()
+      const nameRoom = form.find('input[name="nameRoom"]').val()
+      const untilAt = form.find('input[name="untilAt"]').val()
+      const description = form.find('textarea[name="description"]').val()
+      const members = form.find('select[name="members"]').val()
+
+      console.log($(document).find('option[disabled]').val())
+      return
+
+      $.ajax({
+        url: '/room',
+        method: 'POST',
+        data: {
+          secretUUIDToUpdate,
+          statusRoom: status,
+          nameRoom,
+          untilAtRoom: untilAt,
+          descriptionRoom: description,
+          membersRoom: members
+        },
+        success: function(result) {
+          if(result.ok) {
+            alert('Utilizador atualizado com sucesso')
+            location.reload()
+          } else {
+            alert('An error occurred!')
+          }
+        },
+        error: function(err) {
+            alert('An error occurred!')
+        }
+      })
+    })
+  
+  })
+</script>
+
+<!-- Modals  -->
+
+<!-- Edit dialog  -->
+
+<div class="modal fade" id="modalEditDialog" tabindex="-1" role="dialog" aria-labelledby="modalEditDialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Edição de dados</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="background-color: #F8F9FA">
+        <form method="POST" action="">
+          <input type="hidden" name="secretUUIDToUpdate" id="modalEditDialogSecret" value="secret">
+          <div class="form-group col-12">
+              <label for="status">Status da sala</label>
+              <select name="status" class="custom-select">
+              </select>
+          </div>
+          <div class="form-group col-lg-12">
+            <label for="nameRoom">Nome da sala</label>
+            <input
+                type="text" 
+                name="nameRoom"
+                class="form-control" 
+                aria-describedby="nameRoom" 
+                placeholder="Nome da sala" required>
+          </div>
+          <div class="form-group col-lg-12">
+            <label for="untilAt">Data de validade</label>
+            <input
+                type="date" 
+                name="untilAt"
+                class="form-control" 
+                aria-describedby="untilAt" 
+                placeholder="Data de validade" required>
+          </div>
+          <div class="form-group col-lg-12">
+              <label for="description">Descrição da sala</label>
+              <textarea class="form-control" name="description" rows="3" placeholder="Descrição da sala" required></textarea>
+          </div>
+          <div class="form-group col-lg-12">
+                <label for="members">Membros do grupo</label>
+                <select name="members" class="selectpicker show-tick form-control border" data-live-search="true" data-header="<i class='fas fa-user-plus m-2'></i>Adicionar membros ao grupo" required multiple>
+                   <optgroup label="123">
+                  </optgroup>
+                </select>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" id="modalEditBtnConf" class="btn text-white" style="background-color: #E4D530">Confirmar operação</button>
+      </div>
+    </div>
+  </div>
+</div>

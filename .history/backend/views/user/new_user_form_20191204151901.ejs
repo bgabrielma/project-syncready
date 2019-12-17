@@ -1,0 +1,168 @@
+<div class="container-fluid p-4">
+    <div class="dashboard-forms-users">
+        <h2>
+            Registar novo utilizador
+            <i class="fas fa-user ml-2 fa-1x"></i>
+        </h2>
+        <form class="border shadow-sm" action="/dashboard/user/new" method="POST">
+            <% if(!!errors && Object.keys(errors).length > 0) { %>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Holy guacamole!</strong>
+                        <%- !!errors.errorOnInsert ? errors.errorOnInsert.message : 'Veja os erros abaixo' %>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <% } %>
+
+            <div class="form-group col-12">
+                <label for="type">Tipo de utilizador</label>
+                <select name="type" class="custom-select">
+                    <% types.forEach(elem => { %>
+                        <option value="<%- elem.uuid_type_of_users %>"><%- elem.type %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="form-group col-lg-12">
+                <label class="" for="exampleInputName1">Nome completo</label>
+                <input
+                    value="<%- !!predata.fullname ? predata.fullname : '' %>"
+                    type="text" 
+                    name="fullname"
+                    class="form-control <%- !!errors.fullname ? 'is-invalid' : '' %>" 
+                    aria-describedby="emailHelp" 
+                    placeholder="Nome completo">
+
+                <% if(!!errors.fullname) { %>
+                    <div class="invalid-feedback">
+                        <%- errors.fullname.message %>
+                    </div>
+                <% } %>
+
+            </div>
+            <div class="form-group col-lg-12">
+                <label class="" for="exampleInputName1">Local de residência</label>
+                <input
+                    value="<%- !!predata.address ? predata.address : '' %>"
+                    type="text" 
+                    name="address"
+                    class="form-control <%- !!errors.address ? 'is-invalid' : '' %>" 
+                    aria-describedby="emailHelp" 
+                    placeholder="Localidade">
+
+                <% if(!!errors.address) { %>
+                    <div class="invalid-feedback">
+                        <%- errors.address.message %>
+                    </div>
+                <% } %>
+
+            </div>
+            <div class="form-group col-lg-12">
+                <label for="exampleInputEmail1">E-mail</label>
+                <input 
+                    value="<%- !!predata.email ? predata.email : '' %>"
+                    type="email" 
+                    class="form-control <%- !!errors.email ? 'is-invalid' : '' %>" 
+                    name="email" 
+                    placeholder="E-mail">
+
+                <% if(!!errors.email) { %>
+                    <div class="invalid-feedback">
+                        <%- errors.email.message %>
+                    </div>
+                <% } %>
+
+            </div>
+            <div class="form-group col-lg-9">
+                <label for="exampleInputTel1">Telemóvel</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                      <select id="disabledSelect" class="form-control input-group-text">
+                        <option>+351</option>
+                      </select>
+                    </div>
+                   <input
+                        value="<%- !!predata.contacto ? predata.contacto : '' %>" 
+                        type="tel" 
+                        class="form-control <%- !!errors.contacto ? 'is-invalid' : '' %>" 
+                        name="contacto" 
+                        placeholder="Telemóvel">
+
+                    <% if(!!errors.contacto) { %>
+                        <div class="invalid-feedback">
+                            <%- errors.contacto.message %>
+                        </div>
+                    <% } %>
+                </div> 
+            </div>
+            <div class="form-group col-lg-12">
+                <label for="exampleInputCC1">Cartão de cidadão</label>
+                <input 
+                    value="<%- !!predata.cc ? predata.cc : '' %>" 
+                    type="text" 
+                    class="form-control <%- !!errors.cc ? 'is-invalid' : '' %>" 
+                    name="cc" 
+                    placeholder="Cartão de cidadão">
+
+                <% if(!!errors.cc) { %>
+                    <div class="invalid-feedback">
+                        <%- errors.cc.message %>
+                    </div>
+                <% } %>
+                
+            </div>
+            <div class="form-group col-lg-12">
+                <label for="exampleInputUsername1">Nome de utilizador</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroupPrepend">@</span>
+                    </div>
+                <input
+                    value="<%- !!predata.username ? predata.username : '' %>"  
+                    type="text" 
+                    class="form-control <%- !!errors.username ? 'is-invalid' : '' %>" 
+                    name="username" 
+                    placeholder="Nome de utilizador">
+
+                <% if(!!errors.username) { %>
+                    <div class="invalid-feedback">
+                        <%- errors.username.message %>
+                    </div>
+                <% } %>
+                    
+            </div>
+            </div>
+            <div class="form-group col-lg-12">
+                <label for="exampleInputPassword1">Palavra-passe</label>
+                <input 
+                    type="password" 
+                    class="form-control <%- !!errors.password ? 'is-invalid' : '' %>" 
+                    name="password" 
+                    placeholder="Palavra-passe">
+
+                <% if(!!errors.password) { %>
+                    <div class="invalid-feedback">
+                        <%- errors.password.message %>
+                    </div>
+                <% } %>
+                        
+            </div>
+            <div class="form-group col-lg-12">
+                <label for="exampleInputConfirm1">Confirmar palavra-passe</label>
+                <input 
+                    type="password" 
+                    class="form-control <%- !!errors.repeatpassword ? 'is-invalid' : '' %>"  
+                    name="repeatpassword" 
+                    placeholder="Confirmar palavra-passe">
+
+                <% if(!!errors.repeatpassword) { %>
+                    <div class="invalid-feedback">
+                        <%- errors.repeatpassword.message %>
+                    </div>
+                <% } %>
+                           
+            </div>
+            <button type="submit" class="btn-form btn btn-block shadow-sm mt-4">Registar</button>
+        </form>
+    </div>
+</div>

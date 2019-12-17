@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  db:
+  image: postgres:9.6
+  volumes:
+  # Volume dos dados
+  - dados:/var/lib/postgresql/data
+  # Scripts
+  - ./scripts:/scripts
+  - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+  
+  app:
+  image: python:3.6
+  volumes:
+  # Aplicação
+  - ./app:/app
+  working_dir: /app
+  command: bash ./app.sh
+  
+  depends_on:   
+    - db

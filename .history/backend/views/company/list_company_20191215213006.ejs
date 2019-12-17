@@ -1,0 +1,54 @@
+<div class="container-fluid p-4">
+  <div class="table-responsive-lg">
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>UUID</th>
+        <th>Nome da empresa</th>
+        <th>Localização</th>
+        <th>Contacto</th>
+        <th>Email</th>
+        <th>Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% data.forEach(elem => { %>
+          <tr>
+            <th scope="row"><%- elem.uuid_company %></th>
+            <td><%- elem.name %></td>
+            <td><%- elem.company_address %></td>
+            <td><%- elem.company_telephone %></td>
+            <td><%- elem.company_email %></td>
+            <td>
+                <button class="btn btn-danger" name="listButtonDelete" data-userValue="<%- elem.pk_uuid -%>" data-toggle="tooltip" 
+                data-placement="bottom" title="Apagar">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  $(function() {
+    $(document).on('click', 'button[name="listButtonDelete"]', function() {
+      const btn = $(this)
+      const uuid = btn.attr('data-userValue')
+
+      // prepare dialog
+      const deleteModal = $(document).find('#modalDeleteDialog')
+
+      // set secret uuid key
+      $(document).find('#modalDeleteDialogSecret').val(uuid)
+
+      // set modal's text
+      deleteModal.find('div[class="modal-body"]').html(`Pretende realmente remover este utilizador?<br /><br /><strong>uuid:</strong> ${uuid}`)
+
+      // call modal
+      deleteModal.modal('show')
+    })
+  })
+</script>
