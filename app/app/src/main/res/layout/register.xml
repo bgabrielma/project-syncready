@@ -5,18 +5,14 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryLight"
     >
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_viewRegister"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/colorCard"
-        app:cardUseCompatPadding="true"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="5dp"
-        android:layout_margin="10dp"
-        >
-
+        android:layout_marginLeft="@dimen/mtrl_card_spacing"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="@dimen/mtrl_card_spacing"
+        android:minHeight="200dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,138 +28,116 @@
                 android:padding="10dp"
                 >
 
-                <TextView
-                    android:id="@+id/txtFullName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Nome Completo"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="15sp" />
-
-                <EditText
-                    android:id="@+id/editTextFullName"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtInputNameRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:theme="@style/EditTextTheme"
-                    android:textColor="@color/EditText_TextColor"/>
+                    android:hint="@string/FullName"
+                    >
 
-                <TextView
-                    android:id="@+id/txtEmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:text="E-mail"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="15sp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextNameRegister"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        />
 
-                <EditText
-                    android:id="@+id/editTextEmail"
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtInputEmailRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textEmailAddress"
-                    android:theme="@style/EditTextTheme"
-                    android:textColor="@color/EditText_TextColor"/>
+                    android:hint="@string/Email"
+                    android:layout_marginTop="10dp">
 
-                <TextView
-                    android:id="@+id/txtCC"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Nº Cartão de Cidadão"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="15sp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextEmailRegister"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        />
 
-                <EditText
-                    android:id="@+id/editTextCC"
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtInputCCRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="text"
-                    android:theme="@style/EditTextTheme"
-                    android:textColor="@color/EditText_TextColor"/>
+                    android:hint="@string/NumCC"
+                    android:layout_marginTop="10dp">
 
-                <TextView
-                    android:id="@+id/txtPhone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Telemóvel"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="15sp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextCCRegister"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        />
 
-                <EditText
-                    android:id="@+id/editTextPhone"
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtInputTelRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="phone"
-                    android:theme="@style/EditTextTheme"
-                    android:textColor="@color/EditText_TextColor"/>
+                    android:hint="@string/tele"
+                    android:layout_marginTop="10dp">
 
-                <TextView
-                    android:id="@+id/txtUserRegister"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Nome de utilizador"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="15sp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextTelRegister"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        />
 
-                <EditText
-                    android:id="@+id/editTextUserRegister"
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtInputUserRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:theme="@style/EditTextTheme"
-                    android:textColor="@color/EditText_TextColor"/>
+                    android:hint="@string/User_name"
+                    android:layout_marginTop="10dp">
 
-                <TextView
-                    android:id="@+id/txtPassRegister"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Palavra-passe"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="15sp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextUserRegister"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        />
 
-                <EditText
-                    android:id="@+id/editTextPassRegister"
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtInputPassRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPassword"
-                    android:theme="@style/EditTextTheme"
-                    android:textColor="@color/EditText_TextColor"/>
+                    android:hint="@string/Password"
+                    android:layout_marginTop="10dp">
 
-                <TextView
-                    android:id="@+id/txtConfirmPassRegister"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Confirmar palavra-passe"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="15sp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextPassRegister"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        />
 
-                <EditText
-                    android:id="@+id/editTextConfirmPassRegister"
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtInputConfirmarPassRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPassword"
-                    android:theme="@style/EditTextTheme"
-                    android:textColor="@color/EditText_TextColor"/>
+                    android:hint="@string/ConfirmPass"
+                    android:layout_marginTop="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextConfirmarPassRegister"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
                     android:id="@+id/btnCriarConta"
@@ -177,7 +151,6 @@
                     />
             </LinearLayout>
         </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

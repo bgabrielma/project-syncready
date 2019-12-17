@@ -6,7 +6,7 @@
     <color name="colorPrimaryDark">#DDDD36</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorCard">#e8e8e8</color>
+    <color name="colorCard">#F7F7F7</color>
     <color name="colorEditText">#4C4CFF</color>
     <color name="colorEditNormal">#000</color>
     <color name="EditText_TextColor">#7F7F7F</color>

@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(R.layout.register);
 
-        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+        /*loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         loginBinding = DataBindingUtil.setContentView(MainActivity.this, R.layout.login);
 
         loginBinding.setLifecycleOwner(this);
@@ -36,14 +36,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(LoginModel loginModel) {
                 if (TextUtils.isEmpty(Objects.requireNonNull(loginModel).getUsername())) {
-                    loginBinding.editTextNameLogin.setError("Campo vazio!");
-                    loginBinding.editTextNameLogin.requestFocus();
+                    loginBinding.editTextUserLogin.setError("Campo vazio!");
+                    loginBinding.editTextUserLogin.requestFocus();
                 }
                 if (TextUtils.isEmpty(Objects.requireNonNull(loginModel).getPassword())) {
                     loginBinding.editTextPassLogin.setError("Campo vazio!");
                     loginBinding.editTextPassLogin.requestFocus();
                 }
             }
-        });
+        });*/
     }
 }

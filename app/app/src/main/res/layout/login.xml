@@ -37,16 +37,14 @@
         android:textColor="@color/colorWhite"
         />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_viewLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/colorCard"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="10dp"
-        app:cardUseCompatPadding="true"
-        android:layout_margin="10dp"
-        >
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/colorCard"
+            android:layout_marginLeft="@dimen/mtrl_card_spacing"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="@dimen/mtrl_card_spacing"
+            android:minHeight="200dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,46 +60,32 @@
                 android:padding="10dp"
                 >
 
-                <TextView
-                    android:id="@+id/txtUserName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="20dp"
-                    android:text="Nome de utilizador"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="15sp" />
-
-                <EditText
-                    android:text="@={LoginViewModel.username}"
-                    android:id="@+id/editTextNameLogin"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtInputUserLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:theme="@style/EditTextTheme"
-                    android:textColor="@color/EditText_TextColor"
-                    />
+                    android:hint="@string/User_name">
 
-                <TextView
-                    android:id="@+id/txtPass"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Palavra-passe"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="15sp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextUserLogin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
 
-                <EditText
-                    android:text="@={LoginViewModel.password}"
-                    android:id="@+id/editTextPassLogin"
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtInputPassLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPassword"
-                    android:theme="@style/EditTextTheme"
-                    android:textColor="@color/EditText_TextColor"/>
+                    android:hint="@string/Password"
+                    android:layout_marginTop="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextPassLogin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
                     android:onClick="@{LoginViewModel::onClick}"
@@ -138,7 +122,7 @@
             </LinearLayout>
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 
 </LinearLayout>

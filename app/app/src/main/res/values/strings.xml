@@ -2,7 +2,12 @@
     <string name="app_name">SyncReady</string>
     <string name="app_year">2019</string>
     <string name="User_name">Nome de utilizador</string>
+    <string name="FullName">Nome completo</string>
+    <string name="Email">E-mail</string>
+    <string name="NumCC">Nº Cartão de Cidadão</string>
+    <string name="tele">Telemóvel</string>
     <string name="Password">Palavra-passe</string>
+    <string name="ConfirmPass">Confirmar palavra-passe</string>
     <string name="Entra_name">Entrar</string>
     <string name="NTemConta">Não tem conta?</string>
     <string name="Regista_name">Registar</string>
