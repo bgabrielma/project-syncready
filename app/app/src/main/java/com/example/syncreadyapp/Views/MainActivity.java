@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register);
+        setContentView(R.layout.login);
 
         /*loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         loginBinding = DataBindingUtil.setContentView(MainActivity.this, R.layout.login);

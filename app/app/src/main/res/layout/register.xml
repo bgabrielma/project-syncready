@@ -9,9 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/colorCard"
-        android:layout_marginLeft="@dimen/mtrl_card_spacing"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="@dimen/mtrl_card_spacing"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="15dp"
         android:minHeight="200dp">
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,6 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/FullName"
+                    style="@style/TextFieldStyle"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -40,6 +41,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName"
+                        android:textSize="16sp"
+                        android:textCursorDrawable="@drawable/cursorcolor"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -48,13 +51,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/Email"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    style="@style/TextFieldStyle"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextEmailRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textEmailAddress"
+                        android:textSize="16sp"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -64,13 +70,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/NumCC"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    style="@style/TextFieldStyle"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextCCRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName"
+                        android:textSize="16sp"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -80,13 +89,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/tele"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    style="@style/TextFieldStyle"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextTelRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="phone"
+                        android:textSize="16sp"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -96,13 +108,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/User_name"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    style="@style/TextFieldStyle"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextUserRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName"
+                        android:textSize="16sp"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -112,13 +127,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/Password"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    app:passwordToggleEnabled="true"
+                    style="@style/TextFieldStyle"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextPassRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
+                        android:textSize="16sp"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -128,13 +147,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/ConfirmPass"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    app:passwordToggleEnabled="true"
+                    style="@style/TextFieldStyle"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextConfirmarPassRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
+                        android:textSize="16sp"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -144,7 +167,8 @@
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="35dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="5dp"
                     android:background="@drawable/btn_rounded"
                     android:text="@string/CriarConta_name"
                     android:elevation="10dp"

@@ -41,10 +41,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/colorCard"
-            android:layout_marginLeft="@dimen/mtrl_card_spacing"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="40dp"
-            android:layout_marginRight="@dimen/mtrl_card_spacing"
-            android:minHeight="200dp">
+            android:layout_marginRight="15dp"
+            android:minHeight="200dp"
+            android:elevation="10dp"
+            >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,12 +66,17 @@
                     android:id="@+id/txtInputUserLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/User_name">
+                    android:hint="@string/User_name"
+                    style="@style/TextFieldStyle"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextUserLogin"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textCursorDrawable="@drawable/cursorcolor"
+                        />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,12 +85,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/Password"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    app:passwordToggleEnabled="true"
+                    style="@style/TextFieldStyle"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextPassLogin"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:textSize="16sp"
+                        android:textCursorDrawable="@drawable/cursorcolor"
+                        />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,6 +108,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
+                    android:layout_marginBottom="5dp"
                     android:background="@drawable/btn_rounded"
                     android:text="@string/Entra_name"
                     android:elevation="10dp"
