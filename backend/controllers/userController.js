@@ -1,5 +1,6 @@
 const db = require('../config/db')
 const validadorCC = require('../utils/validadorCC')
+const jsonWebTokenController = require('./JsonWebTokenController')
 
 const messageErrorOnInsert = { message: 'Ocorreu um erro ao realizar o seu pedido - tente mais tarde :(' }
 
@@ -156,11 +157,6 @@ const register = async function(req, res) {
         errors.errorOnInsert = messageErrorOnInsert
         return res.render('index', { title: 'SyncReady', page: 'main/register', errors , predata: { } } )
       })
-
-
-
-    // Login username
-    // login(predata.email, predata.password, req, res)
   }
 }
 
@@ -259,12 +255,14 @@ const post = async function(req, res) {
 
 const get = async function(req, res) {
   const instance = db('Users')
+                .select('Users.*', 'Type_Of_User.type')
+                .innerJoin('Type_Of_User', 'Users.Type_Of_User_uuid_type_of_users', '=', 'Type_Of_User.uuid_type_of_users')
 
   if (req.query.uuid)
     instance.where({ pk_uuid: req.query.uuid })
 
   instance
-    .then(data => res.status(200).send(data))
+    .then(data => res.status(200).send({ ok: true, data }))
     .catch(err => res.status(500).send(err))
 }
 
@@ -278,12 +276,47 @@ const del = async function(req, res) {
     .catch(err => res.status(500).send({ err, ok: false }))
 }
 
+const authApi = async function(req, res) {
+
+  const { email, password } = req.body
+
+  if(!email || !password) return res.status(403).send({
+    isEmailValid: !!email,
+    isPasswordValid: !!password
+  }) 
+
+  await db('Users')
+    .select('pk_uuid')
+    .where({ 
+      email,
+      password
+     })
+     .then(response => {
+       if(!response.length) return res.status(401).send({ err: 'User not found' })
+
+       const payload = {
+         ...response[0],
+         email
+       }
+
+       const newToken = jsonWebTokenController.generate(payload)
+
+       const data = {
+         ...payload,
+         newToken
+       }
+         
+       return res.status(200).send({ ok: true, response: data })
+     })
+}
+
 module.exports = {
   register,
   auth,
   get,
   post,
   del,
+  authApi,
   validateNewUser,
   saveUser,
   getUserType,

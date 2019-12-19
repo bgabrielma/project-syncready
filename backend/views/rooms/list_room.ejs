@@ -123,7 +123,7 @@
                           let optgroupHTML = ''
                           allTypes.forEach(type => {
                             optgroup = `<optgroup label=${type.type}>`
-                              allUsers.forEach(user => {
+                              allUsers.data.forEach(user => {
                                 if(user.Type_Of_User_uuid_type_of_users === type.uuid_type_of_users && type.type) {
                                     
                                   let isEntity = type.type === 'Entidade'

@@ -8,8 +8,8 @@ const get = async function(req, res) {
   if (roomUUID && !userUUID)
     instance.where('Users_has_Rooms.Rooms_uuid_room', '=', `${roomUUID}`)
   else if (!roomUUID && userUUID)
-    instance.where('Users_has_Rooms.Users.pk_uuid', '=', `${userUUID}`)
-  else instance.where('Users_has_Rooms.Rooms_uuid_room', '=', `${roomUUID}`).andWhere('Users_has_Rooms.Users.pk_uuid', '=', `${userUUID}`)
+    instance.where('Users_has_Rooms.Users_pk_uuid', '=', `${userUUID}`)
+  else instance.where('Users_has_Rooms.Rooms_uuid_room', '=', `${roomUUID}`).andWhere('Users_has_Rooms.Users_pk_uuid', '=', `${userUUID}`)
   
   instance
     .then(data => res.status(200).send(data))

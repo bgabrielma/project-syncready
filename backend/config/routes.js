@@ -16,11 +16,21 @@ const CompanyController = require('../controllers/companyController')
 const JsonWebTokenController = require('../controllers/jsonWebTokenController')
 
 router.use(function(req, res, next) {
-  const access = ['main', 'auth', 'logout', 'register'] // backend
-
+  const access = ['main', 'auth', 'logout', 'register', 'authApi'] // backend
   const urlFormatted = req.originalUrl.split('?').shift().split('/')
   
-  if(access.includes(urlFormatted[1]) || req.cookies['SYNCREADY_COOKIE_LOGIN']) next()
+  if(access.includes(urlFormatted[1]) || req.cookies['SYNCREADY_COOKIE_LOGIN']) return next()
+
+  // api access detection by api_key in bearer
+  if(req.headers.authorization) {
+      const token = req.headers.authorization.split(' ')[1]
+      
+      // validate token
+      if(JsonWebTokenController.verify(token)) return next()
+  }
+  
+  // return 401 Unauthorized status
+  return res.status(401).send({ access: 'denied' })
 
 })
 
@@ -62,6 +72,7 @@ router.post('/dashboard/company/new', DashboardController.registerCompany)
 router.get('/user', UserController.get)
 router.post('/user', UserController.post)
 router.delete('/user', UserController.del)
+router.get('/authApi', UserController.authApi)
 
 // type user
 router.get('/user/type', TypeUserController.get)

@@ -94,7 +94,7 @@
         type: 'GET',
         data: { uuid },
         success: function(user) {
-          const data = user[0]
+          const data = user.data[0]
           const { Type_Of_User_uuid_type_of_users: typeUser } = data
 
           // select
