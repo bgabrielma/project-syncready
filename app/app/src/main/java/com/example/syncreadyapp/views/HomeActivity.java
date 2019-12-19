@@ -1,4 +1,4 @@
-package com.example.syncreadyapp.Views;
+package com.example.syncreadyapp.views;
 
 public class HomeActivity {
 }

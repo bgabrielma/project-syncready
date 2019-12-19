@@ -1,4 +1,4 @@
-package com.example.syncreadyapp.Views;
+package com.example.syncreadyapp.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 

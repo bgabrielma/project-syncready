@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
-            name="LoginViewModel"
-            type="com.example.syncreadyapp.LoginViewModel" />
+            name="UserLoggedViewModel"
+            type="com.example.syncreadyapp.viewmodels.UserLoggedViewModel" />
     </data>
 
     <LinearLayout
@@ -62,10 +61,10 @@
                 android:padding="10dp"
                 >
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/txtInputUserLogin"
+                    android:id="@+id/txtInputLayoutEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/User_name"
+                    android:hint="@string/User_email"
                     app:errorEnabled="true"
                     style="@style/TextFieldStyle"
                     >
@@ -76,13 +75,13 @@
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:textCursorDrawable="@drawable/cursorcolor"
-                        android:text="@={LoginViewModel.username}"
+                        android:text="@={UserLoggedViewModel.email}"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/txtInputPassLogin"
+                    android:id="@+id/txtInputLayoutPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/Password"
@@ -98,14 +97,14 @@
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
                         android:textSize="16sp"
-                        android:text="@={LoginViewModel.password}"
+                        android:text="@={UserLoggedViewModel.password}"
                         android:textCursorDrawable="@drawable/cursorcolor"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
-                    android:onClick="@{LoginViewModel::onClick}"
+                    android:onClick="@{UserLoggedViewModel::onClick}"
                     android:id="@+id/btnEntrar"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"

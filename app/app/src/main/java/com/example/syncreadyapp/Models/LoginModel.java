@@ -1,18 +1,16 @@
-package com.example.syncreadyapp.Models;
-
-import android.util.Patterns;
+package com.example.syncreadyapp.models;
 
 public class LoginModel {
-    private String username;
+    private String email;
     private String password;
 
-    public LoginModel(String username, String password) {
-        this.username = username;
+    public LoginModel(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
     public String getPassword() {

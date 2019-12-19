@@ -72,7 +72,7 @@ router.post('/dashboard/company/new', DashboardController.registerCompany)
 router.get('/user', UserController.get)
 router.post('/user', UserController.post)
 router.delete('/user', UserController.del)
-router.get('/authApi', UserController.authApi)
+router.post('/authApi', UserController.authApi)
 
 // type user
 router.get('/user/type', TypeUserController.get)
