@@ -17,8 +17,8 @@
 
 
     <style name="HintText" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@color/colorEditNormal</item>
-    </style>1
+        <item name="android:textColor">#B1A12B</item>
+    </style>
 
     <style name="TextFieldStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/colorPrimaryLightSaturate</item>

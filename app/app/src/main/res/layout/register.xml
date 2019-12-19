@@ -33,6 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/FullName"
+                    app:errorEnabled="true"
                     style="@style/TextFieldStyle"
                     >
 
@@ -51,6 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/Email"
+                    app:errorEnabled="true"
                     android:layout_marginTop="10dp"
                     style="@style/TextFieldStyle"
                     >
@@ -70,6 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/NumCC"
+                    app:errorEnabled="true"
                     android:layout_marginTop="10dp"
                     style="@style/TextFieldStyle"
                     >
@@ -89,6 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/tele"
+                    app:errorEnabled="true"
                     android:layout_marginTop="10dp"
                     style="@style/TextFieldStyle"
                     >
@@ -108,6 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/User_name"
+                    app:errorEnabled="true"
                     android:layout_marginTop="10dp"
                     style="@style/TextFieldStyle"
                     >
@@ -127,6 +132,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/Password"
+                    app:errorEnabled="true"
                     android:layout_marginTop="10dp"
                     app:passwordToggleEnabled="true"
                     style="@style/TextFieldStyle"
@@ -147,6 +153,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/ConfirmPass"
+                    app:errorEnabled="true"
                     android:layout_marginTop="10dp"
                     app:passwordToggleEnabled="true"
                     style="@style/TextFieldStyle"

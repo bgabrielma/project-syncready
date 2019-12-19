@@ -61,12 +61,12 @@
                 android:orientation="vertical"
                 android:padding="10dp"
                 >
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/txtInputUserLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/User_name"
+                    app:errorEnabled="true"
                     style="@style/TextFieldStyle"
                     >
 
@@ -76,6 +76,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:textCursorDrawable="@drawable/cursorcolor"
+                        android:text="@={LoginViewModel.username}"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -87,6 +88,7 @@
                     android:hint="@string/Password"
                     android:layout_marginTop="10dp"
                     app:passwordToggleEnabled="true"
+                    app:errorEnabled="true"
                     style="@style/TextFieldStyle"
                     >
 
@@ -96,6 +98,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
                         android:textSize="16sp"
+                        android:text="@={LoginViewModel.password}"
                         android:textCursorDrawable="@drawable/cursorcolor"
                         />
 
@@ -138,7 +141,5 @@
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
-
-
 </LinearLayout>
 </layout>

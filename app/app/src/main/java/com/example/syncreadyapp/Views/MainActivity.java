@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        /*loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         loginBinding = DataBindingUtil.setContentView(MainActivity.this, R.layout.login);
 
         loginBinding.setLifecycleOwner(this);
@@ -36,14 +36,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(LoginModel loginModel) {
                 if (TextUtils.isEmpty(Objects.requireNonNull(loginModel).getUsername())) {
-                    loginBinding.editTextUserLogin.setError("Campo vazio!");
-                    loginBinding.editTextUserLogin.requestFocus();
+                    loginBinding.txtInputUserLogin.setError("Invalid field value!");
                 }
+                else loginBinding.txtInputUserLogin.setErrorEnabled(false);
                 if (TextUtils.isEmpty(Objects.requireNonNull(loginModel).getPassword())) {
-                    loginBinding.editTextPassLogin.setError("Campo vazio!");
-                    loginBinding.editTextPassLogin.requestFocus();
+                    loginBinding.txtInputPassLogin.setError("Invalid field value!");
                 }
+                else loginBinding.txtInputPassLogin.setErrorEnabled(false);
             }
-        });*/
+        });
     }
 }
