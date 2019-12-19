@@ -1,6 +1,6 @@
 const db = require('../config/db')
 const validadorCC = require('../utils/validadorCC')
-const jsonWebTokenController = require('./JsonWebTokenController')
+const jsonWebTokenController = require('./jsonWebTokenController')
 
 const messageErrorOnInsert = { message: 'Ocorreu um erro ao realizar o seu pedido - tente mais tarde :(' }
 
