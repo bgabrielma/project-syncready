@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="UserLoggedViewModel"
-            type="com.example.syncreadyapp.viewmodels.UserLoggedViewModel" />
+            name="MainActivityViewModel"
+            type="com.example.syncreadyapp.viewmodels.MainActivityViewModel" />
     </data>
 
     <LinearLayout
@@ -75,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:textCursorDrawable="@drawable/cursorcolor"
-                        android:text="@={UserLoggedViewModel.email}"
+                        android:text="@={MainActivityViewModel.email}"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -97,14 +97,14 @@
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
                         android:textSize="16sp"
-                        android:text="@={UserLoggedViewModel.password}"
+                        android:text="@={MainActivityViewModel.password}"
                         android:textCursorDrawable="@drawable/cursorcolor"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
-                    android:onClick="@{UserLoggedViewModel::onClick}"
+                    android:onClick="@{MainActivityViewModel::onClick}"
                     android:id="@+id/btnEntrar"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"

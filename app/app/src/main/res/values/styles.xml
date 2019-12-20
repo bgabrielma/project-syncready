@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorPrimaryLightSaturate</item>
     </style>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -22,7 +22,7 @@
 
     <style name="TextFieldStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/colorPrimaryLightSaturate</item>
-        <item name="boxStrokeWidth">0.5dp</item>
+        <item name="boxStrokeWidth">0.6dp</item>
         <item name="hintTextAppearance">@style/HintText</item>
     </style>
 </resources>

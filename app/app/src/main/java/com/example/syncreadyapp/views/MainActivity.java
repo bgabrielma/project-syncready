@@ -5,44 +5,39 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.widget.Toast;
 
 import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.databinding.LoginBinding;
-import com.example.syncreadyapp.models.LoginModel;
-import com.example.syncreadyapp.models.userLogged.ResponseUserLogged;
-import com.example.syncreadyapp.services.RetrofitInstance;
-import com.example.syncreadyapp.services.SyncReadyMobileDataService;
-import com.example.syncreadyapp.viewmodels.UserLoggedViewModel;
+import com.example.syncreadyapp.models.loginModel.LoginModel;
+import com.example.syncreadyapp.models.userLogged.UserLogged;
+import com.example.syncreadyapp.viewmodels.MainActivityViewModel;
 
 import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
     private LoginBinding loginBinding;
-    private UserLoggedViewModel userLoggedViewModel;
+    private MainActivityViewModel mainActivityViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        userLoggedViewModel = ViewModelProviders.of(this).get(UserLoggedViewModel.class);
+        mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
         loginBinding = DataBindingUtil.setContentView(MainActivity.this, R.layout.login);
         loginBinding.setLifecycleOwner(this);
 
-        loginBinding.setUserLoggedViewModel(userLoggedViewModel);
+        loginBinding.setMainActivityViewModel(mainActivityViewModel);
 
-        userLoggedViewModel.getUser().observe(this, new Observer<LoginModel>() {
+        mainActivityViewModel.validateUserFields().observe(this, new Observer<LoginModel>() {
             @Override
             public void onChanged(LoginModel loginModel) {
+
                 if (TextUtils.isEmpty(Objects.requireNonNull(loginModel).getEmail())) {
                     loginBinding.txtInputLayoutEmail.setError("Campo em falta");
                     loginBinding.txtInputLayoutEmail.requestFocus();
@@ -54,21 +49,25 @@ public class MainActivity extends AppCompatActivity {
                 } else loginBinding.txtInputLayoutPassword.setErrorEnabled(false);
 
                 if (!TextUtils.isEmpty(Objects.requireNonNull(loginModel).getEmail()) && !TextUtils.isEmpty(Objects.requireNonNull(loginModel).getPassword())) {
-                    // login phase
 
-                    SyncReadyMobileDataService syncReadyMobileDataService = RetrofitInstance.getService();
+                    // disable temporarily button
+                    loginBinding.btnEntrar.setEnabled(false);
 
-                    Call<ResponseUserLogged> call = syncReadyMobileDataService.login(userLoggedViewModel.getUser().getValue());
-
-                    call.enqueue(new Callback<ResponseUserLogged>() {
+                    mainActivityViewModel.getUserLogged().observe(MainActivity.this, new Observer<UserLogged>() {
                         @Override
-                        public void onResponse(Call<ResponseUserLogged> call, Response<ResponseUserLogged> response) {
-                            Toast.makeText(getApplicationContext(), response.message(), Toast.LENGTH_LONG).show();
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseUserLogged> call, Throwable t) {
-                            Toast.makeText(getApplicationContext(), t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                    public void onChanged(UserLogged userLogged) {
+                            if(userLogged == null) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                builder.setTitle("Email e/ou password incorreto(s)");
+                                builder.setMessage("Verifique as credencias e tente novamente.");
+                                builder.setPositiveButton("123", null).show();
+                            } else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                builder.setTitle("Bem vindo " + userLogged.getPkUuid());
+                                builder.setMessage("Chave de acesso: " + userLogged.getNewToken());
+                                builder.setPositiveButton("123", null).show();
+                            }
+                            loginBinding.btnEntrar.setEnabled(true);
                         }
                     });
                 }
