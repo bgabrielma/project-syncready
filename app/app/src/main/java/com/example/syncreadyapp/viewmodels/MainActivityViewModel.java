@@ -1,7 +1,6 @@
 package com.example.syncreadyapp.viewmodels;
 
 import android.app.Application;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -11,11 +10,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.models.loginModel.LoginModel;
 import com.example.syncreadyapp.models.repositories.UserLoggedRepository;
+import com.example.syncreadyapp.models.repositoryresponse.RepositoryResponse;
 import com.example.syncreadyapp.models.userLogged.UserLogged;
 import com.example.syncreadyapp.views.fragments.RegisterFragment;
 
@@ -44,7 +43,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         return loginUserMutableLiveData;
     }
 
-    public LiveData<UserLogged> getUserLogged() {
+    public LiveData<RepositoryResponse> getUserLogged() {
         return userLoggedRepository.getUserLogged(loginUserMutableLiveData.getValue());
     }
     /* --- */

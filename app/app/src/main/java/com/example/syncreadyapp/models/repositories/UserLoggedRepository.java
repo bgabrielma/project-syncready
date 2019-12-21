@@ -2,12 +2,12 @@ package com.example.syncreadyapp.models.repositories;
 
 import android.app.Application;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.syncreadyapp.models.loginModel.LoginModel;
+import com.example.syncreadyapp.models.repositoryresponse.RepositoryResponse;
 import com.example.syncreadyapp.models.userLogged.ResponseUserLogged;
 import com.example.syncreadyapp.models.userLogged.UserLogged;
 import com.example.syncreadyapp.services.RetrofitInstance;
@@ -19,14 +19,19 @@ import retrofit2.Response;
 
 public class UserLoggedRepository {
     private MutableLiveData<UserLogged> userLoggedMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isNetworkTroubleLiveData = new MutableLiveData<>();
     private Application application;
+
+    private MutableLiveData<RepositoryResponse> repositoryResponseMutableLiveData = new MutableLiveData<>();
 
     public UserLoggedRepository(@NonNull Application application) {
         this.application = application;
     }
 
-    public MutableLiveData<UserLogged> getUserLogged(LoginModel loginModelInstance) {
+    public MutableLiveData<RepositoryResponse> getUserLogged(LoginModel loginModelInstance) {
         SyncReadyMobileDataService syncReadyMobileDataService = RetrofitInstance.getService();
+
+        isNetworkTroubleLiveData.setValue(false);
 
         Call<ResponseUserLogged> call = syncReadyMobileDataService.login(loginModelInstance);
         call.enqueue(new Callback<ResponseUserLogged>() {
@@ -38,12 +43,18 @@ public class UserLoggedRepository {
                 } else {
                     userLoggedMutableLiveData.setValue(null);
                 }
+
+                repositoryResponseMutableLiveData.setValue(new RepositoryResponse(userLoggedMutableLiveData, isNetworkTroubleLiveData));
             }
 
             @Override
             public void onFailure(Call<ResponseUserLogged> call, Throwable t) {
+                userLoggedMutableLiveData.setValue(null);
+                isNetworkTroubleLiveData.setValue(true);
+
+                repositoryResponseMutableLiveData.setValue(new RepositoryResponse(userLoggedMutableLiveData, isNetworkTroubleLiveData));
             }
         });
-        return userLoggedMutableLiveData;
+        return repositoryResponseMutableLiveData;
     }
 }

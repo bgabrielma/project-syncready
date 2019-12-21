@@ -6,7 +6,4 @@
     <include
         android:id="@+id/includeToolbarHome"
         layout="@layout/toolbar"/>
-
-
-
 </LinearLayout>
