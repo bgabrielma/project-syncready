@@ -2,6 +2,8 @@ package com.example.syncreadyapp.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -18,6 +20,8 @@ import com.example.syncreadyapp.models.userLogged.UserLogged;
 import com.example.syncreadyapp.services.RetrofitInstance;
 import com.example.syncreadyapp.services.SyncReadyMobileDataService;
 import com.example.syncreadyapp.viewmodels.MainActivityViewModel;
+import com.example.syncreadyapp.views.fragments.LoginFragment;
+import com.example.syncreadyapp.views.fragments.RegisterFragment;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -29,57 +33,30 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private LoginBinding loginBinding;
-    private MainActivityViewModel mainActivityViewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
-
-        mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
-
-        loginBinding = DataBindingUtil.setContentView(MainActivity.this, R.layout.login);
-        loginBinding.setLifecycleOwner(this);
-
-        loginBinding.setMainActivityViewModel(mainActivityViewModel);
-
-        final Observer<UserLogged> observer = new Observer<UserLogged>() {
-            @Override
-            public void onChanged(UserLogged userLogged) {
-                if (userLogged != null) {
-                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                } else {
-                    Snackbar.make(loginBinding.getRoot(), "Email e/ou password inválido(s)", Snackbar.LENGTH_LONG).show();
-                }
-            }
-        };
-
-        mainActivityViewModel.validateUserFields().observe(this, new Observer<LoginModel>() {
-            @Override
-            public void onChanged(LoginModel loginModel) {
-
-                if (TextUtils.isEmpty(Objects.requireNonNull(loginModel).getEmail())) {
-                    loginBinding.txtInputLayoutEmail.setError("Campo em falta");
-                    loginBinding.txtInputLayoutEmail.requestFocus();
-                } else loginBinding.txtInputLayoutEmail.setErrorEnabled(false);
-
-                if (TextUtils.isEmpty(Objects.requireNonNull(loginModel).getPassword())) {
-                    loginBinding.txtInputLayoutPassword.setError("Campo em falta");
-                    loginBinding.txtInputLayoutPassword.requestFocus();
-                } else loginBinding.txtInputLayoutPassword.setErrorEnabled(false);
-
-                if (!TextUtils.isEmpty(Objects.requireNonNull(loginModel).getEmail()) && !TextUtils.isEmpty(Objects.requireNonNull(loginModel).getPassword())) {
-
-                    mainActivityViewModel.getUserLogged().observe(loginBinding.getLifecycleOwner(), observer);
-                }
-            }
-        });
+        setContentView(R.layout.loginregister);
+        changeFragment(R.layout.login);
     }
+   public void changeFragment(int layoutId) {
+       Fragment selectedFragment = null;
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
+       switch (layoutId) {
+           case R.layout.login:
+               selectedFragment = new LoginFragment();
+               break;
+           case R.layout.register:
+               selectedFragment = new RegisterFragment();
+               break;
+       }
+
+       if(selectedFragment != null) {
+           getSupportFragmentManager().beginTransaction()
+                   .replace(R.id.loginRegisterFragmentZone, selectedFragment)
+                   .setTransition( FragmentTransaction.TRANSIT_FRAGMENT_FADE )
+                   .show(selectedFragment)
+                   .commit();
+       }
+   }
 }

@@ -104,7 +104,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
-                    android:onClick="@{MainActivityViewModel::onClick}"
+                    android:onClick="@{MainActivityViewModel::loginButtonClick}"
                     android:id="@+id/btnEntrar"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
@@ -126,6 +126,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <Button
+                    android:onClick="@{MainActivityViewModel::registerButtonClick}"
                     android:id="@+id/btnRegistar"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"

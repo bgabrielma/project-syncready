@@ -5,14 +5,19 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.models.loginModel.LoginModel;
 import com.example.syncreadyapp.models.repositories.UserLoggedRepository;
 import com.example.syncreadyapp.models.userLogged.UserLogged;
+import com.example.syncreadyapp.views.fragments.RegisterFragment;
 
 public class MainActivityViewModel extends AndroidViewModel {
     // UI Properties
@@ -45,8 +50,21 @@ public class MainActivityViewModel extends AndroidViewModel {
     /* --- */
 
     // UI Click event property
-    public void onClick(View view) {
+    public void loginButtonClick(View view) {
         LoginModel loginUser = new LoginModel(email.getValue(), password.getValue());
         loginUserMutableLiveData.setValue(loginUser);
+    }
+
+    public void registerButtonClick(View view) {
+
+        Fragment fragment = new RegisterFragment();
+
+        ((AppCompatActivity) view.getContext()).getSupportFragmentManager().beginTransaction()
+                .replace(R.id.loginRegisterFragmentZone, fragment)
+                .addToBackStack("registerFragment")
+                .setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN )
+                .setTransition( FragmentTransaction.TRANSIT_FRAGMENT_CLOSE )
+                .show(fragment)
+                .commit();
     }
 }

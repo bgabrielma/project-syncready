@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">SyncReady</string>
+    <string name="register_fragment">Registar nova conta</string>
     <string name="app_year">2019</string>
     <string name="User_name">Nome de utilizador</string>
     <string name="User_email">Email</string>
