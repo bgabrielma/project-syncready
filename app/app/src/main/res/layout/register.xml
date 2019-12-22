@@ -1,219 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimaryLight"
-    >
+<layout>
+    <data>
+        <variable
+            name="MainActivityViewModel"
+            type="com.example.syncreadyapp.viewmodels.MainActivityViewModel" />
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryLight"
+        >
 
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        android:fillViewport="true">
-
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:scrollbars="vertical"
+            android:fillViewport="true">
 
-            <ImageView
-                android:id="@+id/logoSyncReadyLogin"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                app:srcCompat="@drawable/ic_logo_syncready_vector" />
-
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/register_fragment"
-                android:textSize="20sp"
-                android:textColor="@color/colorWhite"
-                />
+                android:orientation="vertical">
 
-                <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/colorCard"
-                android:layout_margin="15dp"
-                android:minHeight="200dp">
-                <LinearLayout
+                <ImageView
+                    android:id="@+id/logoSyncReadyLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
+                    app:srcCompat="@drawable/ic_logo_syncready_vector" />
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
+                    android:textAlignment="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/register_fragment"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorWhite"
+                    />
 
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorCard"
+                    android:layout_margin="15dp"
+                    android:minHeight="200dp">
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="12dp"
-                        android:layout_weight="2"
-                        android:orientation="vertical"
-                        android:padding="10dp"
+                        android:orientation="horizontal"
                         >
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/txtInputNameRegister"
-                            android:layout_width="match_parent"
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:hint="@string/FullName"
-                            app:errorEnabled="true"
-                            style="@style/TextFieldStyle"
+                            android:layout_margin="12dp"
+                            android:layout_weight="2"
+                            android:orientation="vertical"
+                            android:padding="10dp"
                             >
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/editTextNameRegister"
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/txtInputNameRegister"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="textPersonName"
-                                android:textSize="16sp"
-                                android:textCursorDrawable="@drawable/cursorcolor"
-                                />
+                                android:hint="@string/FullName"
+                                app:errorEnabled="true"
+                                style="@style/TextFieldStyle"
+                                >
 
-                        </com.google.android.material.textfield.TextInputLayout>
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/txtInputEmailRegister"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/Email"
-                            app:errorEnabled="true"
-                            android:layout_marginTop="10dp"
-                            style="@style/TextFieldStyle"
-                            >
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTextNameRegister"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textPersonName"
+                                    android:textSize="16sp"
+                                    android:text="@={MainActivityViewModel.fullname}"
+                                    />
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/editTextEmailRegister"
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/txtInputEmailRegister"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="textEmailAddress"
-                                android:textSize="16sp"
-                                />
+                                android:hint="@string/Email"
+                                app:errorEnabled="true"
+                                android:layout_marginTop="10dp"
+                                style="@style/TextFieldStyle"
+                                >
 
-                        </com.google.android.material.textfield.TextInputLayout>
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTextEmailRegister"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textEmailAddress"
+                                    android:textSize="16sp"
+                                    android:text="@={MainActivityViewModel.email}"
+                                    />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/txtInputCCRegister"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/NumCC"
-                            app:errorEnabled="true"
-                            android:layout_marginTop="10dp"
-                            style="@style/TextFieldStyle"
-                            >
+                            </com.google.android.material.textfield.TextInputLayout>
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/editTextCCRegister"
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/txtInputAddressRegister"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="textPersonName"
-                                android:textSize="16sp"
-                                />
+                                android:hint="@string/Address"
+                                app:errorEnabled="true"
+                                android:layout_marginTop="10dp"
+                                style="@style/TextFieldStyle"
+                                >
 
-                        </com.google.android.material.textfield.TextInputLayout>
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTextAddressRegister"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textEmailAddress"
+                                    android:textSize="16sp"
+                                    android:text="@={MainActivityViewModel.address}"
+                                    />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/txtInputTelRegister"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/tele"
-                            app:errorEnabled="true"
-                            android:layout_marginTop="10dp"
-                            style="@style/TextFieldStyle"
-                            >
+                            </com.google.android.material.textfield.TextInputLayout>
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/editTextTelRegister"
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/txtInputCCRegister"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="phone"
-                                android:textSize="16sp"
-                                />
+                                android:hint="@string/NumCC"
+                                app:errorEnabled="true"
+                                android:layout_marginTop="10dp"
+                                style="@style/TextFieldStyle"
+                                >
 
-                        </com.google.android.material.textfield.TextInputLayout>
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTextCCRegister"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textPersonName"
+                                    android:textSize="16sp"
+                                    android:text="@={MainActivityViewModel.cc}"
+                                    />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/txtInputUserRegister"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/User_name"
-                            app:errorEnabled="true"
-                            android:layout_marginTop="10dp"
-                            style="@style/TextFieldStyle"
-                            >
+                            </com.google.android.material.textfield.TextInputLayout>
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/editTextUserRegister"
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/txtInputTelRegister"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="textPersonName"
-                                android:textSize="16sp"
-                                />
+                                android:hint="@string/tele"
+                                app:errorEnabled="true"
+                                android:layout_marginTop="10dp"
+                                style="@style/TextFieldStyle"
+                                >
 
-                        </com.google.android.material.textfield.TextInputLayout>
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTextTelRegister"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="phone"
+                                    android:textSize="16sp"
+                                    android:text="@={MainActivityViewModel.contacto}"
+                                    />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/txtInputPassRegister"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/Password"
-                            app:errorEnabled="true"
-                            android:layout_marginTop="10dp"
-                            app:passwordToggleEnabled="true"
-                            style="@style/TextFieldStyle"
-                            >
+                            </com.google.android.material.textfield.TextInputLayout>
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/editTextPassRegister"
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/txtInputUserRegister"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="textPassword"
-                                android:textSize="16sp"
-                                />
+                                android:hint="@string/User_name"
+                                app:errorEnabled="true"
+                                android:layout_marginTop="10dp"
+                                style="@style/TextFieldStyle"
+                                >
 
-                        </com.google.android.material.textfield.TextInputLayout>
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTextUserRegister"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textPersonName"
+                                    android:textSize="16sp"
+                                    android:text="@={MainActivityViewModel.username}"
+                                    />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/txtInputConfirmarPassRegister"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/ConfirmPass"
-                            app:errorEnabled="true"
-                            android:layout_marginTop="10dp"
-                            app:passwordToggleEnabled="true"
-                            style="@style/TextFieldStyle"
-                            >
+                            </com.google.android.material.textfield.TextInputLayout>
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/editTextConfirmarPassRegister"
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/txtInputPassRegister"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="textPassword"
-                                android:textSize="16sp"
+                                android:hint="@string/Password"
+                                app:errorEnabled="true"
+                                android:layout_marginTop="10dp"
+                                app:passwordToggleEnabled="true"
+                                style="@style/TextFieldStyle"
+                                >
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTextPassRegister"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textPassword"
+                                    android:textSize="16sp"
+                                    android:text="@={MainActivityViewModel.password}"
+                                    />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/txtInputConfirmarPassRegister"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/ConfirmPass"
+                                app:errorEnabled="true"
+                                android:layout_marginTop="10dp"
+                                app:passwordToggleEnabled="true"
+                                style="@style/TextFieldStyle"
+                                >
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTextConfirmarPassRegister"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textPassword"
+                                    android:textSize="16sp"
+                                    android:text="@={MainActivityViewModel.confirmPassword}"
+                                    />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <Button
+                                android:onClick="@{MainActivityViewModel::registerOperationClick}"
+                                android:id="@+id/btnCriarConta"
+                                android:layout_width="170dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/btn_rounded"
+                                android:text="@string/CriarConta_name"
+                                android:elevation="10dp"
                                 />
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <Button
-                            android:id="@+id/btnCriarConta"
-                            android:layout_width="170dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="5dp"
-                            android:background="@drawable/btn_rounded"
-                            android:text="@string/CriarConta_name"
-                            android:elevation="10dp"
-                            />
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                </com.google.android.material.card.MaterialCardView>
 
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

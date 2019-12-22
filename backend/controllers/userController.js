@@ -1,6 +1,7 @@
 const db = require('../config/db')
 const validadorCC = require('../utils/validadorCC')
 const jsonWebTokenController = require('./jsonWebTokenController')
+const dashboardController = require('./dashboardController')
 
 const messageErrorOnInsert = { message: 'Ocorreu um erro ao realizar o seu pedido - tente mais tarde :(' }
 
@@ -237,9 +238,10 @@ const post = async function(req, res) {
   if(!req.body.secretUUIDToUpdate) {
     const { errors } = await validateNewUser(req)
 
-    if(Object.keys(errors).length > 0) {
+    if(Object.keys(errors).length > 0 && dashboardController.verifyUser(req)) {
       return res.status(401).send(errors)
     } 
+    
     await saveUser(req)
       .then(data => res.status(200).send({ lastIdInserted: data[0], ok: true }))
       .catch(err => res.status(500).send({ err, ok: false }))

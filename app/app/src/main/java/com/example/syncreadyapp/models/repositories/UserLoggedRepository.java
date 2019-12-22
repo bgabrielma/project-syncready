@@ -1,15 +1,14 @@
 package com.example.syncreadyapp.models.repositories;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.syncreadyapp.models.loginModel.LoginModel;
+import com.example.syncreadyapp.models.loginmodel.LoginModel;
 import com.example.syncreadyapp.models.repositoryresponse.RepositoryResponse;
-import com.example.syncreadyapp.models.userLogged.ResponseUserLogged;
-import com.example.syncreadyapp.models.userLogged.UserLogged;
+import com.example.syncreadyapp.models.userlogged.ResponseUserLogged;
+import com.example.syncreadyapp.models.userlogged.UserLogged;
 import com.example.syncreadyapp.services.RetrofitInstance;
 import com.example.syncreadyapp.services.SyncReadyMobileDataService;
 

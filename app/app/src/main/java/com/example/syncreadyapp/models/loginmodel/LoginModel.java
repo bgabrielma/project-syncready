@@ -1,4 +1,4 @@
-package com.example.syncreadyapp.models.loginModel;
+package com.example.syncreadyapp.models.loginmodel;
 
 public class LoginModel {
     private String email;

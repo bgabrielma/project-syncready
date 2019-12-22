@@ -405,4 +405,5 @@ module.exports = {
   listCompanies,
   registerCompany,
   logout,
+  verifyUser
 }

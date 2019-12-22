@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -23,9 +22,9 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.databinding.LoginBinding;
-import com.example.syncreadyapp.models.loginModel.LoginModel;
+import com.example.syncreadyapp.models.loginmodel.LoginModel;
 import com.example.syncreadyapp.models.repositoryresponse.RepositoryResponse;
-import com.example.syncreadyapp.models.userLogged.UserLogged;
+import com.example.syncreadyapp.models.userlogged.UserLogged;
 import com.example.syncreadyapp.viewmodels.MainActivityViewModel;
 import com.example.syncreadyapp.views.HomeActivity;
 import com.google.android.material.snackbar.Snackbar;
@@ -51,15 +50,12 @@ public class LoginFragment extends Fragment {
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
         loginBinding = DataBindingUtil.inflate(inflater, R.layout.login, container, false);
-
         loginBinding.setLifecycleOwner(this);
-
         loginBinding.setMainActivityViewModel(mainActivityViewModel);
 
         mainActivityViewModel.validateUserFields().observe(this, new Observer<LoginModel>() {
             @Override
             public void onChanged(LoginModel loginModel) {
-
                 if (TextUtils.isEmpty(Objects.requireNonNull(loginModel).getEmail())) {
                     loginBinding.txtInputLayoutEmail.setError("Campo em falta");
                     loginBinding.txtInputLayoutEmail.requestFocus();

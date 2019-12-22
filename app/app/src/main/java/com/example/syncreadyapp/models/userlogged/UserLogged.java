@@ -1,4 +1,4 @@
-package com.example.syncreadyapp.models.userLogged;
+package com.example.syncreadyapp.models.userlogged;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

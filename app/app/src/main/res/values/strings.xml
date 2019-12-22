@@ -6,6 +6,7 @@
     <string name="User_email">Email</string>
     <string name="FullName">Nome completo</string>
     <string name="Email">E-mail</string>
+    <string name="Address">Morada</string>
     <string name="NumCC">Nº Cartão de Cidadão</string>
     <string name="tele">Telemóvel</string>
     <string name="Password">Palavra-passe</string>
