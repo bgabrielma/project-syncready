@@ -15,7 +15,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.models.loginmodel.LoginModel;
 import com.example.syncreadyapp.models.registermodel.RegisterModel;
-import com.example.syncreadyapp.models.repositories.UserLoggedRepository;
+import com.example.syncreadyapp.models.repositories.UserRepository;
 import com.example.syncreadyapp.models.repositoryresponse.RepositoryResponse;
 import com.example.syncreadyapp.views.fragments.RegisterFragment;
 
@@ -37,11 +37,11 @@ public class MainActivityViewModel extends AndroidViewModel {
     public MutableLiveData<RegisterModel> registerUserMutableLiveData;
 
     // Repository declaration
-    public UserLoggedRepository userLoggedRepository;
+    public UserRepository userRepository;
 
     public MainActivityViewModel(@NonNull Application application) {
         super(application);
-        userLoggedRepository = new UserLoggedRepository(application);
+        userRepository = new UserRepository(application);
     }
 
     /* Observables */
@@ -62,7 +62,11 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     public LiveData<RepositoryResponse> getUserLogged() {
-        return userLoggedRepository.getUserLogged(loginUserMutableLiveData.getValue());
+        return userRepository.getUserLogged(loginUserMutableLiveData.getValue());
+    }
+
+    public LiveData<RepositoryResponse> getUserInsert() {
+        return userRepository.getUserInsert(registerUserMutableLiveData.getValue());
     }
     /* --- */
 

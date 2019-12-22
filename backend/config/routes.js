@@ -16,7 +16,7 @@ const CompanyController = require('../controllers/companyController')
 const JsonWebTokenController = require('../controllers/jsonWebTokenController')
 
 router.use(function(req, res, next) {
-  const access = ['main', 'auth', 'logout', 'register', 'authApi'] // backend
+  const access = ['main', 'auth', 'logout', 'register'] // backend
   const urlFormatted = req.originalUrl.split('?').shift().split('/')
   
   if(access.includes(urlFormatted[1]) || req.cookies['SYNCREADY_COOKIE_LOGIN']) return next()
@@ -27,6 +27,9 @@ router.use(function(req, res, next) {
       
       // validate token
       if(JsonWebTokenController.verify(token)) return next()
+  } else {
+    const accessWithoutApiNeeded = ['authApi', 'user']
+    if(accessWithoutApiNeeded.includes(urlFormatted[1]) && req.method == 'POST') return next()
   }
   
   // return 401 Unauthorized status
