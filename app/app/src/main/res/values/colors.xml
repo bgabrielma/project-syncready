@@ -10,4 +10,6 @@
     <color name="colorEditText">#4C4CFF</color>
     <color name="colorEditNormal">#000</color>
     <color name="EditText_TextColor">#7F7F7F</color>
+    <color name="colorSilver">#C0C0C0</color>
+    <color name="colorDimGrey">#696969</color>
 </resources>

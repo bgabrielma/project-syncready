@@ -21,12 +21,6 @@
             android:layout_gravity="center"
             android:src="@drawable/ic_logo_syncready_vector" />
 
-        <Button
-            android:id="@+id/btnQR"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

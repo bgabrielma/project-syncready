@@ -7,6 +7,11 @@
     android:background="@color/colorPrimaryLight"
     android:layout_gravity="bottom"
     android:layout_alignParentBottom="true"
+    app:itemIconTint="@drawable/bottom_nav_colors"
+    app:itemTextColor="@drawable/bottom_nav_colors"
+    app:menu="@menu/bottom_nav"
+    app:labelVisibilityMode="labeled"
+
     >
 
 </com.google.android.material.bottomnavigation.BottomNavigationView>

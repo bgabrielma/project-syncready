@@ -1,4 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item
+        android:id="@+id/HomeIcon"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:title="Início"
+        />
+
+    <item
+        android:id="@+id/ChatIcon"
+        android:enabled="true"
+        android:icon="@drawable/ic_chat"
+        android:title="Conversas"
+    />
+
+    <item
+        android:id="@+id/AlertIcon"
+        android:enabled="true"
+        android:icon="@drawable/ic_notifications"
+        android:title="Alertas"
+        />
+
+    <item
+        android:id="@+id/UserIcon"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_user"
+        android:title="Eu"
+        />
 </menu>
