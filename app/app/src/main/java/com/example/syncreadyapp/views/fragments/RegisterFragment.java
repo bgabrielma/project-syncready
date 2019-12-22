@@ -1,5 +1,6 @@
 package com.example.syncreadyapp.views.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.syncreadyapp.R;
+import com.example.syncreadyapp.Utils;
 import com.example.syncreadyapp.databinding.LoginBinding;
 import com.example.syncreadyapp.databinding.RegisterBinding;
 import com.example.syncreadyapp.models.registermodel.RegisterModel;
@@ -140,25 +142,24 @@ public class RegisterFragment extends Fragment {
             Boolean isNetworkTrouble = registerUserMutableLiveData.getIsNetworkLiveData().getValue();
 
             if (responseUserInsert.getOk()) {
-                Log.d("SUCCESS", "CREATED!");
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setIcon(R.drawable.ic_action_add);
+                builder.setCancelable(false);
+                builder.setTitle("Utilizador inserido");
+                builder.setMessage("O utilizador foi criado com sucesso. Verifque o seu email para continuar");
+                builder.setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        getActivity().getSupportFragmentManager().popBackStack();
+                    }
+                });
+                builder.show();
             } else if (!isNetworkTrouble.booleanValue()) {
-                Snackbar.make(registerBinding.getRoot(), "Email e/ou password inválido(s)", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(registerBinding.getRoot(), "Ocorreu um erro interno ao tentar registar o utilizador", Snackbar.LENGTH_LONG).show();
             }
 
             if (isNetworkTrouble.booleanValue()) {
-
-                Drawable unwrappedDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.ic_check);
-                Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
-                DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(getContext(), R.color.colorPrimaryLightSaturate));
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Oops");
-                builder.setMessage("No momento não é possivel estabelecer conexão com os servidores da SyncReady.");
-                builder.setIcon(R.drawable.ic_error);
-                builder.setPositiveButton("Entendido", null);
-                builder.setPositiveButtonIcon(ContextCompat.getDrawable(getContext(), R.drawable.ic_check));
-                builder.setCancelable(false);
-                builder.show();
+                Utils.showInternalUnavailableConnectionToServerAlert(getActivity());
             }
             registerBinding.btnCriarConta.setEnabled(true);
         }

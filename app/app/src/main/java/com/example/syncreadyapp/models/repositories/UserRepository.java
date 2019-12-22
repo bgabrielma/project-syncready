@@ -73,8 +73,6 @@ public class UserRepository {
             public void onResponse(Call<ResponseUserInsert> call, Response<ResponseUserInsert> response) {
                 ResponseUserInsert responseUserInsert = response.body();
 
-                Log.d("AAA", "" + response.message());
-
                 if(responseUserInsert != null) {
                     userInsertMutableLiveData.setValue(responseUserInsert);
                 } else {

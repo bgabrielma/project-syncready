@@ -21,6 +21,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.syncreadyapp.R;
+import com.example.syncreadyapp.Utils;
 import com.example.syncreadyapp.databinding.LoginBinding;
 import com.example.syncreadyapp.models.loginmodel.LoginModel;
 import com.example.syncreadyapp.models.repositoryresponse.RepositoryResponse;
@@ -94,19 +95,7 @@ public class LoginFragment extends Fragment {
             }
 
             if(isNetworkTrouble.booleanValue()) {
-
-                Drawable unwrappedDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.ic_check);
-                Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
-                DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(getContext(), R.color.colorPrimaryLightSaturate));
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Oops");
-                builder.setMessage("No momento não é possivel estabelecer conexão com os servidores da SyncReady.");
-                builder.setIcon(R.drawable.ic_error);
-                builder.setPositiveButton("Entendido", null);
-                builder.setPositiveButtonIcon(ContextCompat.getDrawable(getContext(), R.drawable.ic_check));
-                builder.setCancelable(false);
-                builder.show();
+                Utils.showInternalUnavailableConnectionToServerAlert(getActivity());
             }
             loginBinding.btnEntrar.setEnabled(true);
         }
