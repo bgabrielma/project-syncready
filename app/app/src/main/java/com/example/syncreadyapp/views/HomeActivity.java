@@ -1,6 +1,7 @@
 package com.example.syncreadyapp.views;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,10 +11,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -35,14 +36,14 @@ public class HomeActivity extends AppCompatActivity {
         homeActivityViewModel = ViewModelProviders.of(this).get(HomeActivityViewModel.class);
         homeBinding = DataBindingUtil.setContentView(this, R.layout.home);
 
-        // set click listeners for toolbars
+        // set click listeners for toolbars7
         setToolbarClickListeners();
 
         // set click listeners for bottom navigation's item
         setBottomNavClickListeners();
     }
 
-    private void setToolbarClickListeners() {
+  private void setToolbarClickListeners() {
         homeBinding.ToolbarHome.toolbarMain.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -75,7 +76,17 @@ public class HomeActivity extends AppCompatActivity {
         homeBinding.BottomNavHome.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Toast.makeText(getApplicationContext(), "You clicked on " + item.toString(), Toast.LENGTH_LONG).show();
+
+                switch (item.getItemId()) {
+                    case R.id.ChatIcon: {
+                        Intent roomIntent = new Intent(getApplicationContext(), RoomActivity.class);
+                        startActivity(roomIntent);
+                        break;
+                    }
+                    default: {
+                        Toast.makeText(getApplicationContext(), "You clicked on " + item.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
                 return true;
             }
         });

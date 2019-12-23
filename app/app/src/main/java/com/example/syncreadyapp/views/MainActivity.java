@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.views.fragments.LoginFragment;
@@ -14,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loginregister);
         changeFragment(R.layout.login);

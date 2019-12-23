@@ -6,6 +6,7 @@
     <color name="colorPrimaryDark">#DDDD36</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBackground">#F3F3F3</color>
     <color name="colorCard">#F7F7F7</color>
     <color name="colorEditText">#4C4CFF</color>
     <color name="colorEditNormal">#000</color>

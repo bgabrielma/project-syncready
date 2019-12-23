@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/toolbar_menu_action_logout"
-        android:title="Fechar sessão"
-        app:showAsAction="withText">
+        android:icon="@drawable/ic_action_search"
+        android:title="Procurar salas"
+        app:showAsAction="always">
     </item>
 </menu>

@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:iconTint="@color/colorWhite"
         android:id="@+id/toolbar_qrcode_action_scan"
         android:enabled="true"
-        android:icon="@drawable/ic_qr_code"
-        android:title="Fechar sessão"
+        android:icon="@drawable/ic_action_barcode_2"
+        android:iconTint="@color/colorWhite"
+        android:title="Nova sala"
         app:showAsAction="always"
         />
 </menu>

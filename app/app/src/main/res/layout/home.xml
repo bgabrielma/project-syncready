@@ -10,9 +10,22 @@
         <include
             android:id="@+id/ToolbarHome"
             layout="@layout/toolbar"/>
-        <include
-            android:id="@+id/BottomNavHome"
-            layout="@layout/bottomnav"
-            />
+        <FrameLayout
+            android:background="@color/colorBackground"
+            android:layout_below="@id/ToolbarHome"
+            android:layout_above="@+id/bottomNavHomeZone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
+        <RelativeLayout
+            android:id="@+id/bottomNavHomeZone"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include
+                android:id="@+id/BottomNavHome"
+                layout="@layout/bottomnav"
+                />
+        </RelativeLayout>
     </RelativeLayout>
 </layout>
