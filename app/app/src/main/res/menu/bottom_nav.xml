@@ -27,6 +27,6 @@
         android:id="@+id/UserIcon"
         android:enabled="true"
         android:icon="@drawable/ic_action_user"
-        android:title="Eu"
+        android:title="Conta"
         />
 </menu>
