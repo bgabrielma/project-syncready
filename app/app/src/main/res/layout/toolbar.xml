@@ -27,6 +27,7 @@
             app:menu="@menu/toolbar_menu">
 
             <LinearLayout
+                android:layout_marginRight="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
