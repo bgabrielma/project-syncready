@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/MoreOptionsIcon"
+        android:icon="@drawable/ic_more_vert"
+        android:title=""
+        android:iconTint="@color/colorWhite"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/toolbar_menu_action_logout"
+                android:icon="@drawable/ic_action_exit"
+                android:title="Dar ghost"
+                app:showAsAction="ifRoom" />
+        </menu>
+    </item>
+</menu>

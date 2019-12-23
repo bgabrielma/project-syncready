@@ -47,11 +47,11 @@ public class MainActivityViewModel extends AndroidViewModel {
     /* Observables */
     public MutableLiveData<LoginModel> validateUserFields() {
         if (loginUserMutableLiveData == null) {
-            loginUserMutableLiveData = new MutableLiveData<>();
-        }
+        loginUserMutableLiveData = new MutableLiveData<>();
+    }
 
         return loginUserMutableLiveData;
-    }
+}
 
     public MutableLiveData<RegisterModel> validadeRegisterFields() {
         if (registerUserMutableLiveData == null) {

@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.bottomnavigation.BottomNavigationView
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorPrimaryLight"
-    android:layout_gravity="bottom"
-    android:layout_alignParentBottom="true"
-    app:itemIconTint="@drawable/bottom_nav_colors"
-    app:itemTextColor="@drawable/bottom_nav_colors"
-    app:menu="@menu/bottom_nav"
-    app:labelVisibilityMode="labeled"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    >
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryLight"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        app:itemIconTint="@drawable/bottom_nav_colors"
+        app:itemTextColor="@drawable/bottom_nav_colors"
+        app:menu="@menu/bottom_nav"
+        app:labelVisibilityMode="labeled"
+        >
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-</com.google.android.material.bottomnavigation.BottomNavigationView>
+</layout>
