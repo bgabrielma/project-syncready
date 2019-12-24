@@ -19,4 +19,14 @@ public class Utils {
         builder.setCancelable(false);
         builder.show();
     }
+
+    public static void showPermissionDeniedAlert(Activity activity) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Oops");
+        builder.setMessage("Deverá aceitar estas permissões para utilizar a aplicação.");
+        builder.setIcon(R.drawable.ic_block);
+        builder.setPositiveButton("Ok", null);
+        builder.setCancelable(false);
+        builder.show();
+    }
 }

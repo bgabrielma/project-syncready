@@ -1,5 +1,6 @@
 package com.example.syncreadyapp.views;
 
+import android.Manifest;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,9 +20,16 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.syncreadyapp.R;
+import com.example.syncreadyapp.Utils;
 import com.example.syncreadyapp.databinding.HomeBinding;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.zip.Inflater;
 
@@ -43,7 +51,7 @@ public class HomeActivity extends AppCompatActivity {
         setBottomNavClickListeners();
     }
 
-  private void setToolbarClickListeners() {
+    private void setToolbarClickListeners() {
         homeBinding.ToolbarHome.toolbarMain.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -62,10 +70,13 @@ public class HomeActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.toolbar_qrcode_action_scan: {
-                        Toast.makeText(getApplicationContext(), "Scan option clicked!", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), ScannerActivity.class);
+                        startActivity(intent);
+
                         break;
                     }
                 }
+
                 return false;
             }
         });
