@@ -1,6 +1,8 @@
 package com.example.syncreadyapp.models.repositories;
 
 import android.app.Application;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -14,6 +16,9 @@ import com.example.syncreadyapp.services.RetrofitInstance;
 import com.example.syncreadyapp.services.SyncReadyMobileDataService;
 import com.example.syncreadyapp.userregistervalidate.ResponseValidateRegister;
 import com.example.syncreadyapp.userregistervalidate.ValidateRegisterModel;
+import com.example.syncreadyapp.viewmodels.MainActivityViewModel;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,6 +30,7 @@ public class UserRepository {
     private MutableLiveData<ResponseUserInsert> userInsertMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Boolean> isNetworkTroubleLiveData = new MutableLiveData<>();
     private Application application;
+    private MainActivityViewModel mainActivityViewModel;
 
     private MutableLiveData<RepositoryResponse> repositoryResponseMutableLiveData = new MutableLiveData<>();
 
@@ -62,7 +68,7 @@ public class UserRepository {
         return repositoryResponseMutableLiveData;
     }
 
-    public MutableLiveData<RepositoryResponse> getUserInsert(RegisterModel registerModel) {
+    public MutableLiveData<ResponseUserInsert> getUserInsert(RegisterModel registerModel) {
         SyncReadyMobileDataService syncReadyMobileDataService = RetrofitInstance.getService();
 
         isNetworkTroubleLiveData.setValue(false);
@@ -79,19 +85,15 @@ public class UserRepository {
                 } else {
                     userInsertMutableLiveData.setValue(null);
                 }
-                repositoryResponseMutableLiveData.setValue(new RepositoryResponse(userInsertMutableLiveData, isNetworkTroubleLiveData));
             }
 
             @Override
             public void onFailure(Call<ResponseUserInsert> call, Throwable t) {
                 userInsertMutableLiveData.setValue(null);
-                isNetworkTroubleLiveData.setValue(true);
-
-                repositoryResponseMutableLiveData.setValue(new RepositoryResponse(userInsertMutableLiveData, isNetworkTroubleLiveData));
             }
         });
 
-        return repositoryResponseMutableLiveData;
+        return userInsertMutableLiveData;
     }
 
     public MutableLiveData<RepositoryResponse> getValidateRegister(ValidateRegisterModel validateRegisterModel) {

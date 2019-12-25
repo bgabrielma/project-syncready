@@ -3,9 +3,11 @@ package com.example.syncreadyapp.views.fragments;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,8 +22,9 @@ import com.example.syncreadyapp.Utils;
 import com.example.syncreadyapp.databinding.RegisterBinding;
 import com.example.syncreadyapp.models.registermodel.RegisterModel;
 import com.example.syncreadyapp.models.repositories.RepositoryResponse;
+import com.example.syncreadyapp.models.repositories.UserRepository;
 import com.example.syncreadyapp.models.userinsert.ResponseUserInsert;
-import com.example.syncreadyapp.userregistervalidate.ValidateRegisterModel;
+import com.example.syncreadyapp.userregistervalidate.ResponseValidateRegister;
 import com.example.syncreadyapp.viewmodels.MainActivityViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -44,59 +47,67 @@ public class RegisterFragment extends Fragment {
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
         registerBinding = DataBindingUtil.inflate(inflater, R.layout.register, container, false);
-        registerBinding.setLifecycleOwner(this);
         registerBinding.setMainActivityViewModel(mainActivityViewModel);
+        registerBinding.setLifecycleOwner(this);
 
         mainActivityViewModel.validadeRegisterFields().observe(this, new Observer<RegisterModel>() {
             @Override
             public void onChanged(RegisterModel registerModel) {
                 boolean hasError = false;
 
-                if(TextUtils.isEmpty(registerModel.getFullname())) {
+                registerBinding.btnCriarConta.setEnabled(false);
+
+                if (TextUtils.isEmpty(registerModel.getFullname())) {
                     registerBinding.txtInputNameRegister.setError("Campo em falta");
                     registerBinding.txtInputNameRegister.requestFocus();
                     hasError = true;
                 } else registerBinding.txtInputNameRegister.setErrorEnabled(false);
 
-                if(TextUtils.isEmpty(registerModel.getEmail())) {
+                if (TextUtils.isEmpty(registerModel.getEmail())) {
                     registerBinding.txtInputEmailRegister.setError("Campo em falta");
                     registerBinding.txtInputEmailRegister.requestFocus();
                     hasError = true;
-                } else registerBinding.txtInputEmailRegister.setErrorEnabled(false);
+                } else {
+                    if (!Utils.isEmailPreValid(registerModel.getEmail())) {
+                        registerBinding.txtInputEmailRegister.setError("O email introduzido encontra-se num formato inválido!");
+                        registerBinding.txtInputEmailRegister.requestFocus();
+                        hasError = true;
+                    } else registerBinding.txtInputEmailRegister.setErrorEnabled(false);
+                }
 
-                if(TextUtils.isEmpty(registerModel.getAddress())) {
+                if (TextUtils.isEmpty(registerModel.getAddress())) {
                     registerBinding.txtInputAddressRegister.setError("Campo em falta");
                     registerBinding.txtInputAddressRegister.requestFocus();
                     hasError = true;
                 } else registerBinding.txtInputAddressRegister.setErrorEnabled(false);
 
-                if(TextUtils.isEmpty(registerModel.getCc())) {
+                if (TextUtils.isEmpty(registerModel.getCc())) {
                     registerBinding.txtInputCCRegister.setError("Campo em falta");
                     registerBinding.txtInputCCRegister.requestFocus();
                     hasError = true;
                 } else registerBinding.txtInputCCRegister.setErrorEnabled(false);
 
-                if(TextUtils.isEmpty(registerModel.getContacto())) {
+                if (TextUtils.isEmpty(registerModel.getContacto())) {
                     registerBinding.txtInputTelRegister.setError("Campo em falta");
                     registerBinding.txtInputTelRegister.requestFocus();
                     hasError = true;
                 } else registerBinding.txtInputTelRegister.setErrorEnabled(false);
 
-                if(TextUtils.isEmpty(registerModel.getUsername())) {
+                if (TextUtils.isEmpty(registerModel.getUsername())) {
                     registerBinding.txtInputUserRegister.setError("Campo em falta");
                     registerBinding.txtInputUserRegister.requestFocus();
                     hasError = true;
                 } else registerBinding.txtInputUserRegister.setErrorEnabled(false);
 
-                if(TextUtils.isEmpty(registerModel.getPassword())) {
+                if (TextUtils.isEmpty(registerModel.getPassword())) {
                     registerBinding.txtInputPassRegister.setError("Campo em falta");
                     registerBinding.txtInputPassRegister.requestFocus();
                     hasError = true;
                 } else {
-                    registerBinding.txtInputUserRegister.setErrorEnabled(false);
+                    registerBinding.txtInputPassRegister.setErrorEnabled(false);
                 }
 
-                if(TextUtils.isEmpty(registerModel.getConfirmPassword())) {
+                if (TextUtils.isEmpty(registerModel.getConfirmPassword())) {
                     registerBinding.txtInputConfirmarPassRegister.setError("Campo em falta");
                     registerBinding.txtInputConfirmarPassRegister.requestFocus();
                     hasError = true;
@@ -104,32 +115,18 @@ public class RegisterFragment extends Fragment {
                     registerBinding.txtInputConfirmarPassRegister.setErrorEnabled(false);
                 }
 
-                /*
-                if(registerModel.getPassword() != registerModel.getConfirmPassword()) {
+                if (!TextUtils.equals(registerModel.getPassword(), registerModel.getConfirmPassword())) {
 
                     registerBinding.txtInputPassRegister.setError("A password não coincide com a confirmação");
                     registerBinding.txtInputConfirmarPassRegister.setError("A confirmação não coincide com a palavra-passe");
 
                     registerBinding.txtInputConfirmarPassRegister.requestFocus();
                     hasError = true;
-                } */
-                if(!hasError) {
-
-                    mainActivityViewModel.getValidateRegister().observe(registerBinding.getLifecycleOwner(), new Observer<RepositoryResponse>() {
-                        @Override
-                        public void onChanged(RepositoryResponse repositoryResponse) {
-                            ValidateRegisterModel validateRegisterModel = (ValidateRegisterModel) repositoryResponse.getGenericMutableLiveData().getValue();
-
-                            if(!Boolean.valueOf(validateRegisterModel.getCc())) {
-                                registerBinding.txtInputCCRegister.setError("O número do cartão de contribuinte é inválido!");
-                                registerBinding.txtInputCCRegister.requestFocus();
-                            }
-                        }
-                    });
-
-                    // mainActivityViewModel.getUserInsert().observe(registerBinding.getLifecycleOwner(), observer);
-                    // registerBinding.btnCriarConta.setEnabled(false);
                 }
+
+                if (!hasError) {
+                    mainActivityViewModel.getValidateRegister().observe(RegisterFragment.this, observerVerifyFields);
+                } else registerBinding.btnCriarConta.setEnabled(true);
             }
         });
 
@@ -139,13 +136,43 @@ public class RegisterFragment extends Fragment {
         return registerBinding.getRoot();
     }
 
-    final Observer<RepositoryResponse> observer = new Observer<RepositoryResponse>() {
+    final Observer<RepositoryResponse> observerVerifyFields = new Observer<RepositoryResponse>() {
         @Override
-        public void onChanged(RepositoryResponse registerUserMutableLiveData) {
+        public void onChanged(RepositoryResponse repositoryResponse) {
+            ResponseValidateRegister validateRegisterModel = (ResponseValidateRegister) repositoryResponse.getGenericMutableLiveData().getValue();
+            boolean hasError = false;
 
-            ResponseUserInsert responseUserInsert = (ResponseUserInsert) registerUserMutableLiveData.getGenericMutableLiveData().getValue();
-            Boolean isNetworkTrouble = registerUserMutableLiveData.getIsNetworkLiveData().getValue();
+            if (validateRegisterModel != null) {
+                if (!validateRegisterModel.getIsCCValid()) {
+                    registerBinding.txtInputCCRegister.setError("O número do cartão de contribuinte é inválido!");
+                    registerBinding.txtInputCCRegister.requestFocus();
+                    hasError = true;
+                } else registerBinding.txtInputCCRegister.setErrorEnabled(false);
 
+                if (!validateRegisterModel.getIsEmailValid()) {
+                    registerBinding.txtInputEmailRegister.setError("O email indicado já se encontra em uso!");
+                    registerBinding.txtInputEmailRegister.requestFocus();
+                    hasError = true;
+                } else registerBinding.txtInputEmailRegister.setErrorEnabled(false);
+
+                if (!validateRegisterModel.getIsUsernameValid()) {
+                    registerBinding.txtInputUserRegister.setError("O username indicado já se encontra em uso!");
+                    registerBinding.txtInputUserRegister.requestFocus();
+                    hasError = true;
+                } else registerBinding.txtInputUserRegister.setErrorEnabled(false);
+
+                if (!hasError)
+                    mainActivityViewModel.getUserInsert().observe(registerBinding.getLifecycleOwner(), responseUserInsertObserver);
+            }
+            else Utils.showInternalUnavailableConnectionToServerAlert(getActivity());
+
+            registerBinding.btnCriarConta.setEnabled(true);
+        }
+    };
+
+    final Observer<ResponseUserInsert> responseUserInsertObserver = new Observer<ResponseUserInsert>() {
+        @Override
+        public void onChanged(ResponseUserInsert responseUserInsert) {
             if (responseUserInsert.getOk()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setIcon(R.drawable.ic_action_add);
@@ -159,14 +186,7 @@ public class RegisterFragment extends Fragment {
                     }
                 });
                 builder.show();
-            } else if (!isNetworkTrouble.booleanValue()) {
-                Snackbar.make(registerBinding.getRoot(), "Ocorreu um erro interno ao tentar registar o utilizador", Snackbar.LENGTH_LONG).show();
             }
-
-            if (isNetworkTrouble.booleanValue()) {
-                Utils.showInternalUnavailableConnectionToServerAlert(getActivity());
-            }
-            registerBinding.btnCriarConta.setEnabled(true);
         }
     };
 }

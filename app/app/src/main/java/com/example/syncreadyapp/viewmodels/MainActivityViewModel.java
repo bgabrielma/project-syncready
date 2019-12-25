@@ -17,6 +17,7 @@ import com.example.syncreadyapp.models.loginmodel.LoginModel;
 import com.example.syncreadyapp.models.registermodel.RegisterModel;
 import com.example.syncreadyapp.models.repositories.UserRepository;
 import com.example.syncreadyapp.models.repositories.RepositoryResponse;
+import com.example.syncreadyapp.models.userinsert.ResponseUserInsert;
 import com.example.syncreadyapp.userregistervalidate.ValidateRegisterModel;
 import com.example.syncreadyapp.views.fragments.RegisterFragment;
 
@@ -48,11 +49,11 @@ public class MainActivityViewModel extends AndroidViewModel {
     /* Observables */
     public MutableLiveData<LoginModel> validateUserFields() {
         if (loginUserMutableLiveData == null) {
-        loginUserMutableLiveData = new MutableLiveData<>();
-    }
+            loginUserMutableLiveData = new MutableLiveData<>();
+        }
 
         return loginUserMutableLiveData;
-}
+    }
 
     public MutableLiveData<RegisterModel> validadeRegisterFields() {
         if (registerUserMutableLiveData == null) {
@@ -66,14 +67,12 @@ public class MainActivityViewModel extends AndroidViewModel {
         return userRepository.getUserLogged(loginUserMutableLiveData.getValue());
     }
 
-    public LiveData<RepositoryResponse> getUserInsert() {
-        return userRepository.getUserInsert(registerUserMutableLiveData.getValue());
+    public LiveData<RepositoryResponse> getValidateRegister() {
+        return userRepository.getValidateRegister(new ValidateRegisterModel(email.getValue(), cc.getValue(), username.getValue()));
     }
 
-    public LiveData<RepositoryResponse> getValidateRegister() {
-        return userRepository.getValidateRegister(new ValidateRegisterModel(
-                registerUserMutableLiveData.getValue().getEmail(), registerUserMutableLiveData.getValue().getCc(), registerUserMutableLiveData.getValue().getUsername()
-        ));
+    public LiveData<ResponseUserInsert> getUserInsert() {
+        return userRepository.getUserInsert(registerUserMutableLiveData.getValue());
     }
 
     /* --- */
