@@ -312,6 +312,44 @@ const authApi = async function(req, res) {
      })
 }
 
+const validateMobileRegister = async function(req, res) {
+  const { cc, email, username } = req.body
+  
+  if(!cc || !email || !username) return res.status(403).send({ ok: false, response: 'missing data' })
+
+  const isCCValid = validadorCC(cc) == 1
+  let isEmailValid = true
+  let isUsernameValid = true
+
+  // validate email
+  await db('Users')
+    .count('email', { as: 'count' })
+    .where('email', email)
+    .then(r => { 
+      if (r[0].count) {
+        isEmailValid = false
+      }
+    })
+    .catch(err => {
+      return res.status(500).send({ err, ok: false })
+    })
+
+  // validate user
+  await db('Users').count('nickname', { as: 'count' })
+  .where('nickname', username)
+  .then(r => { 
+    if (r[0].count) {
+      isUsernameValid = false
+    }
+  })
+  .catch(err => {
+    return res.status(500).send({ err, ok: false })
+  })
+
+
+  return res.status(200).send({ ok: true, response: { isCCValid, isEmailValid, isUsernameValid } })
+}
+
 module.exports = {
   register,
   auth,
@@ -326,5 +364,6 @@ module.exports = {
   findCompanyByUUID,
   registerToCompany,
   findUUIDByID,
-  findCompanyUUIDById
+  findCompanyUUIDById,
+  validateMobileRegister
 }

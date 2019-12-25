@@ -183,7 +183,7 @@ const get = function(req, res) {
     instance.where({ uuid_room: req.query.uuid })
 
   instance
-    .then(data => res.status(200).send(data))
+    .then(data => res.status(200).send({ ok: true, response: data }))
     .catch(err => res.status(500).send(err))
 }
 

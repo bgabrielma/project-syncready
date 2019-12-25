@@ -76,6 +76,7 @@ router.get('/user', UserController.get)
 router.post('/user', UserController.post)
 router.delete('/user', UserController.del)
 router.post('/authApi', UserController.authApi)
+router.post('/mobile/validate/register', UserController.validateMobileRegister)
 
 // type user
 router.get('/user/type', TypeUserController.get)
