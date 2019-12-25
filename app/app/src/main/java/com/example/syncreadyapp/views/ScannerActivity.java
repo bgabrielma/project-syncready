@@ -1,11 +1,14 @@
 package com.example.syncreadyapp.views;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.syncreadyapp.R;
@@ -15,9 +18,11 @@ import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.karumi.dexter.listener.single.PermissionListener;
 
@@ -38,37 +43,13 @@ public class ScannerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scanner);
 
         scannerView = findViewById(R.id.scannerView);
-        scannerResult = findViewById(R.id.scannerResult);
 
         // configure scanner
         configureScanner();
 
-        // request permissions
-        requestAllPermissionsNeeded();
-    }
+        // start camera
+        scannerView.startCamera();
 
-    private void requestAllPermissionsNeeded() {
-        Dexter.withActivity(this)
-                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.INTERNET)
-                .withListener(new MultiplePermissionsListener() {
-                    @Override
-                    public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        scannerView.setResultHandler(new ZXingScannerView.ResultHandler() {
-                            @Override
-                            public void handleResult(Result rawResult) {
-                                scannerResult.setText(rawResult.getText());
-                                scannerView.resumeCameraPreview(this);
-                            }
-                        });
-                        scannerView.startCamera();
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-
-                    }
-                })
-                .check();
     }
 
     private void configureScanner() {
@@ -77,6 +58,17 @@ public class ScannerActivity extends AppCompatActivity {
         scannerView.setFormats(barcodeFormats);
 
         scannerView.setAspectTolerance(0.5f);
+
+        scannerView.setResultHandler(new ZXingScannerView.ResultHandler() {
+            @Override
+            public void handleResult(Result rawResult) {
+                // do something
+                // ...
+
+                //recursive method
+                scannerView.resumeCameraPreview(this);
+            }
+        });
     }
 
     @Override

@@ -3,26 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorEditNormal"
     tools:context=".views.ScannerActivity">
 
     <me.dm7.barcodescanner.zxing.ZXingScannerView
-        android:layout_above="@+id/scannerResultLayout"
         android:id="@+id/scannerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-    <LinearLayout
-        android:id="@+id/scannerResultLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:padding="8dp"
-        android:background="@color/colorPrimaryDark">
-        <TextView
-            android:id="@+id/scannerResult"
-            android:gravity="center"
-            android:textSize="24sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
 </RelativeLayout>
