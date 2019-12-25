@@ -347,7 +347,7 @@ const validateMobileRegister = async function(req, res) {
   })
 
 
-  return res.status(200).send({ ok: true, response: { isCCValid, isEmailValid, isUsernameValid } })
+  return res.status(200).send({ response: { isCCValid, isEmailValid, isUsernameValid } })
 }
 
 module.exports = {

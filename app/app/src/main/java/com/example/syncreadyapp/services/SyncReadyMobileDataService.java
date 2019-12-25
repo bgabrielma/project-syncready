@@ -15,4 +15,6 @@ public interface SyncReadyMobileDataService {
 
     @POST("/user")
     Call<ResponseUserInsert> register(@Body RegisterModel body);
+
+    // @POST("/mobile/validate/register")
 }
