@@ -1,19 +1,19 @@
 package com.example.syncreadyapp.models.repositories;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.syncreadyapp.models.loginmodel.LoginModel;
 import com.example.syncreadyapp.models.registermodel.RegisterModel;
-import com.example.syncreadyapp.models.repositoryresponse.RepositoryResponse;
 import com.example.syncreadyapp.models.userinsert.ResponseUserInsert;
 import com.example.syncreadyapp.models.userlogged.ResponseUserLogged;
 import com.example.syncreadyapp.models.userlogged.UserLogged;
 import com.example.syncreadyapp.services.RetrofitInstance;
 import com.example.syncreadyapp.services.SyncReadyMobileDataService;
+import com.example.syncreadyapp.userregistervalidate.ResponseValidateRegister;
+import com.example.syncreadyapp.userregistervalidate.ValidateRegisterModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,6 +21,7 @@ import retrofit2.Response;
 
 public class UserRepository {
     private MutableLiveData<UserLogged> userLoggedMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<ResponseValidateRegister> validateRegisterModelMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<ResponseUserInsert> userInsertMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Boolean> isNetworkTroubleLiveData = new MutableLiveData<>();
     private Application application;
@@ -92,4 +93,50 @@ public class UserRepository {
 
         return repositoryResponseMutableLiveData;
     }
+
+    public MutableLiveData<RepositoryResponse> getValidateRegister(ValidateRegisterModel validateRegisterModel) {
+        SyncReadyMobileDataService syncReadyMobileDataService = RetrofitInstance.getService();
+
+        isNetworkTroubleLiveData.setValue(false);
+
+        Call<ResponseValidateRegister> call = syncReadyMobileDataService.mobileValidateRegister(validateRegisterModel);
+
+        call.enqueue(new Callback<ResponseValidateRegister>() {
+            @Override
+            public void onResponse(Call<ResponseValidateRegister> call, Response<ResponseValidateRegister> response) {
+                ResponseValidateRegister responseValidateRegister = response.body();
+
+                if(responseValidateRegister != null) {
+                    validateRegisterModelMutableLiveData.setValue(responseValidateRegister);
+                } else {
+                    validateRegisterModelMutableLiveData.setValue(null);
+                }
+                repositoryResponseMutableLiveData.setValue(new RepositoryResponse(validateRegisterModelMutableLiveData, isNetworkTroubleLiveData));
+            }
+
+            @Override
+            public void onFailure(Call<ResponseValidateRegister> call, Throwable t) {
+                validateRegisterModelMutableLiveData.setValue(null);
+                isNetworkTroubleLiveData.setValue(true);
+
+                repositoryResponseMutableLiveData.setValue(new RepositoryResponse(validateRegisterModelMutableLiveData, isNetworkTroubleLiveData));
+            }
+        });
+
+        return repositoryResponseMutableLiveData;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

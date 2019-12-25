@@ -1,4 +1,4 @@
-package com.example.syncreadyapp.models;
+package com.example.syncreadyapp.userregistervalidate;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

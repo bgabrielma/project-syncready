@@ -1,6 +1,5 @@
-package com.example.syncreadyapp.models.repositoryresponse;
+package com.example.syncreadyapp.models.repositories;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 public class RepositoryResponse {

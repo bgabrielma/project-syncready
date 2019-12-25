@@ -1,11 +1,8 @@
 package com.example.syncreadyapp.views.fragments;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +10,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -23,14 +17,12 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.Utils;
-import com.example.syncreadyapp.databinding.LoginBinding;
 import com.example.syncreadyapp.databinding.RegisterBinding;
 import com.example.syncreadyapp.models.registermodel.RegisterModel;
-import com.example.syncreadyapp.models.repositoryresponse.RepositoryResponse;
+import com.example.syncreadyapp.models.repositories.RepositoryResponse;
 import com.example.syncreadyapp.models.userinsert.ResponseUserInsert;
-import com.example.syncreadyapp.models.userlogged.UserLogged;
+import com.example.syncreadyapp.userregistervalidate.ValidateRegisterModel;
 import com.example.syncreadyapp.viewmodels.MainActivityViewModel;
-import com.example.syncreadyapp.views.HomeActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 public class RegisterFragment extends Fragment {
@@ -122,8 +114,21 @@ public class RegisterFragment extends Fragment {
                     hasError = true;
                 } */
                 if(!hasError) {
-                    mainActivityViewModel.getUserInsert().observe(registerBinding.getLifecycleOwner(), observer);
-                    registerBinding.btnCriarConta.setEnabled(false);
+
+                    mainActivityViewModel.getValidateRegister().observe(registerBinding.getLifecycleOwner(), new Observer<RepositoryResponse>() {
+                        @Override
+                        public void onChanged(RepositoryResponse repositoryResponse) {
+                            ValidateRegisterModel validateRegisterModel = (ValidateRegisterModel) repositoryResponse.getGenericMutableLiveData().getValue();
+
+                            if(!Boolean.valueOf(validateRegisterModel.getCc())) {
+                                registerBinding.txtInputCCRegister.setError("O número do cartão de contribuinte é inválido!");
+                                registerBinding.txtInputCCRegister.requestFocus();
+                            }
+                        }
+                    });
+
+                    // mainActivityViewModel.getUserInsert().observe(registerBinding.getLifecycleOwner(), observer);
+                    // registerBinding.btnCriarConta.setEnabled(false);
                 }
             }
         });

@@ -16,7 +16,8 @@ import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.models.loginmodel.LoginModel;
 import com.example.syncreadyapp.models.registermodel.RegisterModel;
 import com.example.syncreadyapp.models.repositories.UserRepository;
-import com.example.syncreadyapp.models.repositoryresponse.RepositoryResponse;
+import com.example.syncreadyapp.models.repositories.RepositoryResponse;
+import com.example.syncreadyapp.userregistervalidate.ValidateRegisterModel;
 import com.example.syncreadyapp.views.fragments.RegisterFragment;
 
 public class MainActivityViewModel extends AndroidViewModel {
@@ -68,6 +69,13 @@ public class MainActivityViewModel extends AndroidViewModel {
     public LiveData<RepositoryResponse> getUserInsert() {
         return userRepository.getUserInsert(registerUserMutableLiveData.getValue());
     }
+
+    public LiveData<RepositoryResponse> getValidateRegister() {
+        return userRepository.getValidateRegister(new ValidateRegisterModel(
+                registerUserMutableLiveData.getValue().getEmail(), registerUserMutableLiveData.getValue().getCc(), registerUserMutableLiveData.getValue().getUsername()
+        ));
+    }
+
     /* --- */
 
     // UI Click event property

@@ -16,7 +16,7 @@ const CompanyController = require('../controllers/companyController')
 const JsonWebTokenController = require('../controllers/jsonWebTokenController')
 
 router.use(function(req, res, next) {
-  const access = ['main', 'auth', 'logout', 'register'] // backend
+  const access = ['main', 'auth', 'logout', 'register', 'mobileValidateRegister'] // backend
   const urlFormatted = req.originalUrl.split('?').shift().split('/')
   
   if(access.includes(urlFormatted[1]) || req.cookies['SYNCREADY_COOKIE_LOGIN']) return next()
@@ -76,7 +76,7 @@ router.get('/user', UserController.get)
 router.post('/user', UserController.post)
 router.delete('/user', UserController.del)
 router.post('/authApi', UserController.authApi)
-router.post('/mobile/validate/register', UserController.validateMobileRegister)
+router.post('/mobileValidateRegister', UserController.validateMobileRegister)
 
 // type user
 router.get('/user/type', TypeUserController.get)
