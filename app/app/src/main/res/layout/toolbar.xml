@@ -15,7 +15,7 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.Toolbar
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="5dp"
             android:id="@+id/toolbar_qrcode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

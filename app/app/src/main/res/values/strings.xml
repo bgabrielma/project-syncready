@@ -15,4 +15,8 @@
     <string name="NTemConta">Não tem conta?</string>
     <string name="Regista_name">Registar</string>
     <string name="CriarConta_name">Criar Conta</string>
+    <string name="NInscricoes">Número de inscrições:</string>
+    <string name="Grupos">10 grupos</string>
+    <string name="UltAtividade">Data da última atividade:</string>
+    <string name="dataUlt">Segunda-feira, 25 de dezembro de 2019</string>
 </resources>
