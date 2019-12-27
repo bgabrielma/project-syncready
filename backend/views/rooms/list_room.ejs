@@ -72,7 +72,8 @@
         method: 'GET',
         data: { uuid },
         success: function(room) {
-          const data = room[0]
+          const data = room.response[0]
+
           const { uuid_ticket_options } = data
 
           // select

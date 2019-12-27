@@ -350,6 +350,38 @@ const validateMobileRegister = async function(req, res) {
   return res.status(200).send({ isCCValid, isEmailValid, isUsernameValid })
 }
 
+const getHomeDataFromUserMobile = async function(req, res) {
+
+  const uuid = req.query.uuid;
+  let messages, groups, activeGroups;
+
+  if(!uuid) return res.status(401).send({ ok: false })
+
+  await db('Messages_has_Users').count('Messages_uuid_message', { as: 'count' })
+    .where('Messages_has_Users.Users_pk_uuid', uuid)
+    .then(r => {
+      messages = r[0].count
+    })
+
+  await db('Users_has_Rooms').count('Users_pk_uuid', { as: 'count' })
+    .where('Users_has_Rooms.Users_pk_uuid', uuid)
+    .then(r => {
+      groups = r[0].count
+    })
+
+  await db('Users_has_Rooms').count('Users_has_Rooms.Users_pk_uuid', { as: 'count' })
+    .innerJoin('Rooms', 'Users_has_Rooms.Rooms_uuid_room', '=', 'Rooms.uuid_room')
+    .innerJoin('Tickets', 'Rooms.uuid_room', '=', 'Tickets.Rooms_uuid_room')
+    .innerJoin('Ticket_Options', 'Ticket_Options.uuid_ticket_options', '=', 'Tickets.Ticket_Options_uuid_ticket_options')
+    .whereIn('ticket_option_designation', ['Em funcionamento', 'Técnico pendente'])
+    .andWhere('Users_has_Rooms.Users_pk_uuid', uuid)
+    .then(r => {
+      activeGroups = r[0].count
+    })
+
+  return res.status(200).send({ ok: true, messages, groups, activeGroups })
+}
+
 module.exports = {
   register,
   auth,
@@ -365,5 +397,6 @@ module.exports = {
   registerToCompany,
   findUUIDByID,
   findCompanyUUIDById,
-  validateMobileRegister
+  validateMobileRegister,
+  getHomeDataFromUserMobile
 }
