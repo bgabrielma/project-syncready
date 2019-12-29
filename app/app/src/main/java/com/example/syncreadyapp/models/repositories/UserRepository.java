@@ -12,6 +12,8 @@ import com.example.syncreadyapp.models.registermodel.RegisterModel;
 import com.example.syncreadyapp.models.userinsert.ResponseUserInsert;
 import com.example.syncreadyapp.models.userlogged.ResponseUserLogged;
 import com.example.syncreadyapp.models.userlogged.UserLogged;
+import com.example.syncreadyapp.models.usermodel.ResponseUser;
+import com.example.syncreadyapp.models.usermodel.User;
 import com.example.syncreadyapp.services.RetrofitInstance;
 import com.example.syncreadyapp.services.SyncReadyMobileDataService;
 import com.example.syncreadyapp.userregistervalidate.ResponseValidateRegister;
@@ -26,11 +28,16 @@ import retrofit2.Response;
 
 public class UserRepository {
     private MutableLiveData<UserLogged> userLoggedMutableLiveData = new MutableLiveData<>();
+
     private MutableLiveData<ResponseValidateRegister> validateRegisterModelMutableLiveData = new MutableLiveData<>();
+
     private MutableLiveData<ResponseUserInsert> userInsertMutableLiveData = new MutableLiveData<>();
+
+    private MutableLiveData<ResponseUser> responseUserMutableLiveData = new MutableLiveData<>();
+
     private MutableLiveData<Boolean> isNetworkTroubleLiveData = new MutableLiveData<>();
+
     private Application application;
-    private MainActivityViewModel mainActivityViewModel;
 
     private MutableLiveData<RepositoryResponse> repositoryResponseMutableLiveData = new MutableLiveData<>();
 
@@ -128,7 +135,32 @@ public class UserRepository {
         return repositoryResponseMutableLiveData;
     }
 
+    public MutableLiveData<ResponseUser> getUserDataByUuid(String uuid, String bearerToken) {
+        SyncReadyMobileDataService syncReadyMobileDataService = RetrofitInstance.getService();
+        isNetworkTroubleLiveData.setValue(false);
 
+        Call<ResponseUser> call = syncReadyMobileDataService.getUser(uuid, bearerToken);
+
+        call.enqueue(new Callback<ResponseUser>() {
+            @Override
+            public void onResponse(Call<ResponseUser> call, Response<ResponseUser> response) {
+                ResponseUser responseUser = response.body();
+
+                if(responseUser != null) {
+                    responseUserMutableLiveData.setValue(responseUser);
+                } else {
+                    responseUserMutableLiveData.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseUser> call, Throwable t) {
+                responseUserMutableLiveData.setValue(null);
+            }
+        });
+
+        return responseUserMutableLiveData;
+    }
 
 
 

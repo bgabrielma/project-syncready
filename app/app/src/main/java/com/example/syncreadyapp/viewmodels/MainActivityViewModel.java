@@ -18,6 +18,7 @@ import com.example.syncreadyapp.models.registermodel.RegisterModel;
 import com.example.syncreadyapp.models.repositories.UserRepository;
 import com.example.syncreadyapp.models.repositories.RepositoryResponse;
 import com.example.syncreadyapp.models.userinsert.ResponseUserInsert;
+import com.example.syncreadyapp.models.userlogged.UserLogged;
 import com.example.syncreadyapp.userregistervalidate.ValidateRegisterModel;
 import com.example.syncreadyapp.views.fragments.RegisterFragment;
 
@@ -25,6 +26,9 @@ public class MainActivityViewModel extends AndroidViewModel {
     // UI Properties - Login
     public MutableLiveData<String> email = new MutableLiveData<>();
     public MutableLiveData<String> password = new MutableLiveData<>();
+
+    // system storage
+    public MutableLiveData<UserLogged> userLoggedMutableLiveData = new MutableLiveData<>();
 
     // UI Properties - Register
     public MutableLiveData<String> fullname = new MutableLiveData<>();
@@ -64,7 +68,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     public LiveData<RepositoryResponse> getUserLogged() {
-        return userRepository.getUserLogged(loginUserMutableLiveData.getValue());
+       return userRepository.getUserLogged(loginUserMutableLiveData.getValue());
     }
 
     public LiveData<RepositoryResponse> getValidateRegister() {
