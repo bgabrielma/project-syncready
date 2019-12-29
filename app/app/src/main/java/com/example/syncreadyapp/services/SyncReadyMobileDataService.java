@@ -29,6 +29,6 @@ public interface SyncReadyMobileDataService {
     @GET("/user")
     Call<ResponseUser> getUser(@Query("uuid") String uuid, @Header("Authorization") String authHeader);
 
-    @GET("/mobile/home}")
+    @GET("/mobile/main}")
     Call<ResponseUser> getMobileHome(@Query("uuid") String uuid, @Header("Authorization") String authHeader);
 }

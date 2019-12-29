@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/ToolbarHome"
+            layout="@layout/toolbar"/>
+
+        <FrameLayout
+            android:id="@+id/mainContent"
+            android:background="@color/colorBackground"
+            android:layout_below="@id/ToolbarHome"
+            android:layout_above="@+id/bottomNavHomeZone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
+        <RelativeLayout
+            android:id="@+id/bottomNavHomeZone"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/BottomNavHome"
+                layout="@layout/bottomnav"
+                />
+
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

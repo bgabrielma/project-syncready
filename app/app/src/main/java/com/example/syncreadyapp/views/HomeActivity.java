@@ -2,7 +2,6 @@ package com.example.syncreadyapp.views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -11,21 +10,24 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.syncreadyapp.R;
-import com.example.syncreadyapp.databinding.HomeBinding;
+import com.example.syncreadyapp.databinding.MainBinding;
 import com.example.syncreadyapp.models.usermodel.ResponseUser;
 import com.example.syncreadyapp.models.usermodel.User;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
+import com.example.syncreadyapp.views.fragments.HomeFragment;
+import com.example.syncreadyapp.views.fragments.LoginFragment;
+import com.example.syncreadyapp.views.fragments.RegisterFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
     private HomeActivityViewModel homeActivityViewModel;
-    private HomeBinding homeBinding;
+    private MainBinding mainBinding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,22 +49,26 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public void onChanged(ResponseUser responseUser) {
 
-            if(responseUser.getData() != null) {
-               User user = responseUser.getData().get(0);
+            if (responseUser.getData() != null) {
+                User user = responseUser.getData().get(0);
 
-                homeBinding = DataBindingUtil.setContentView(HomeActivity.this, R.layout.home);
+                mainBinding = DataBindingUtil.setContentView(HomeActivity.this, R.layout.main);
 
                 // set click listeners for toolbars
                 setToolbarClickListeners();
 
                 // set click listeners for bottom navigation's item
                 setBottomNavClickListeners();
+
+                // configure fragments
+                changeFragments(R.id.HomeIcon);
             }
         }
     };
 
     private void setToolbarClickListeners() {
-        homeBinding.ToolbarHome.toolbarMain.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+
+        mainBinding.ToolbarHome.toolbarMain.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
@@ -75,14 +81,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        homeBinding.ToolbarHome.toolbarQrcode.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        mainBinding.ToolbarHome.toolbarQrcode.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.toolbar_qrcode_action_scan: {
                         Intent intent = new Intent(getApplicationContext(), ScannerActivity.class);
                         startActivity(intent);
-
                         break;
                     }
                 }
@@ -94,7 +99,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setBottomNavClickListeners() {
         // do stuff on future
-        homeBinding.BottomNavHome.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        mainBinding.BottomNavHome.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -104,6 +109,10 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(roomIntent);
                         break;
                     }
+                    case R.id.HomeIcon: {
+                        changeFragments(R.id.HomeIcon);
+                        break;
+                    }
                     default: {
                         Toast.makeText(getApplicationContext(), "You clicked on " + item.toString(), Toast.LENGTH_LONG).show();
                     }
@@ -111,5 +120,23 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void changeFragments(int layoutId) {
+        Fragment selectedFragment = null;
+
+        switch (layoutId) {
+            case R.id.HomeIcon:
+                selectedFragment = new HomeFragment();
+                break;
+        }
+
+        if (selectedFragment != null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mainContent, selectedFragment)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .show(selectedFragment)
+                    .commit();
+        }
     }
 }
