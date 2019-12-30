@@ -23,6 +23,7 @@ import com.example.syncreadyapp.models.repositories.RepositoryResponse;
 import com.example.syncreadyapp.models.userlogged.UserLogged;
 import com.example.syncreadyapp.viewmodels.MainActivityViewModel;
 import com.example.syncreadyapp.views.HomeActivity;
+import com.example.syncreadyapp.views.MainActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
@@ -83,8 +84,21 @@ public class LoginFragment extends Fragment {
             Boolean isNetworkTrouble = userLoggedRepositoryResponse.getIsNetworkLiveData().getValue();
 
             if (userLogged != null) {
+                // define userLoggedMutableLiveData as system storage
+                mainActivityViewModel.userLoggedMutableLiveData.setValue(userLogged);
+
                 Intent intent = new Intent(getActivity(), HomeActivity.class);
+                Bundle userAuthInformations = new Bundle();
+
+                userAuthInformations.putString("sycnready_user_uuid", userLogged.getPkUuid());
+                userAuthInformations.putString("syncready_user_token_access", userLogged.getNewToken());
+
+                intent.putExtras(userAuthInformations);
                 startActivity(intent);
+
+                // prevent user to access again this activity
+                getActivity().finish();
+
             } else if (!isNetworkTrouble.booleanValue()){
                 Snackbar.make(loginBinding.getRoot(), "Email e/ou password inválido(s)", Snackbar.LENGTH_LONG).show();
             }

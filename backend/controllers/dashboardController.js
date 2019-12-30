@@ -85,7 +85,6 @@ const registerUser = async function(req, res) {
     })
   }
 
-
   // getting uuid
   let uuid = ''
 
