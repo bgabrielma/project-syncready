@@ -19,4 +19,6 @@
     <string name="Grupos">10 grupos</string>
     <string name="UltAtividade">Data da última atividade:</string>
     <string name="dataUlt">Segunda-feira, 25 de dezembro de 2019</string>
+    <string name="TotalMensagens">Total de mensagens recebidas:</string>
+    <string name="NTotal">32000</string>
 </resources>
