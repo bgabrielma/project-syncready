@@ -3,6 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    
+    <data>
+        <variable
+            name="HomeActivityViewModel"
+            type="com.example.syncreadyapp.viewmodels.HomeActivityViewModel" />
+    </data>
 
     <LinearLayout
         android:padding="5dp"
@@ -48,7 +54,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/TextAppearance.MaterialComponents.Headline6"
-                            android:text="Bem vindo, Jorge :)"/>
+                            android:text="@{`Bem vindo, ` + HomeActivityViewModel.userMutableLiveData.fullname.split(` `)[0]}"/>
                         <TextView
                             android:layout_marginTop="7dp"
                             android:textAlignment="center"
@@ -95,7 +101,7 @@
                             android:layout_height="wrap_content"
                             style="@style/TextAppearance.MaterialComponents.Headline6"
                             android:textSize="20sp"
-                            android:text="20"/>
+                            android:text="@{HomeActivityViewModel.numInscricoes.toString()}"/>
                     </LinearLayout>
                     <ImageView
                         android:tint="@color/colorPrimaryLight"
@@ -133,7 +139,7 @@
                             android:layout_height="wrap_content"
                             style="@style/TextAppearance.MaterialComponents.Headline6"
                             android:textSize="20sp"
-                            android:text="20000"/>
+                            android:text="@{HomeActivityViewModel.mensagensEnvidas.toString()}"/>
                     </LinearLayout>
                     <ImageView
                         android:tint="@color/colorPrimaryLight"
@@ -180,7 +186,7 @@
                             android:layout_height="wrap_content"
                             style="@style/TextAppearance.MaterialComponents.Headline6"
                             android:textSize="20sp"
-                            android:text="69"/>
+                            android:text="@{HomeActivityViewModel.gruposAtivos.toString()}"/>
                     </LinearLayout>
                     <ImageView
                         android:tint="@color/colorPrimaryLight"

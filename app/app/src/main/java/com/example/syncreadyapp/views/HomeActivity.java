@@ -2,7 +2,10 @@ package com.example.syncreadyapp.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.Explode;
+import android.transition.Slide;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,15 +14,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.transition.Fade;
 
 import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.databinding.MainBinding;
 import com.example.syncreadyapp.models.usermodel.ResponseUser;
 import com.example.syncreadyapp.models.usermodel.User;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
+import com.example.syncreadyapp.views.fragments.AccountFragment;
 import com.example.syncreadyapp.views.fragments.HomeFragment;
 import com.example.syncreadyapp.views.fragments.LoginFragment;
 import com.example.syncreadyapp.views.fragments.RegisterFragment;
@@ -33,7 +40,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        homeActivityViewModel = ViewModelProviders.of(this).get(HomeActivityViewModel.class);
+        homeActivityViewModel = ViewModelProviders.of(HomeActivity.this).get(HomeActivityViewModel.class);
 
         Bundle bundle = this.getIntent().getExtras();
         homeActivityViewModel.uuidMutableLiveData.setValue(bundle.getString("sycnready_user_uuid", null));
@@ -50,7 +57,7 @@ public class HomeActivity extends AppCompatActivity {
         public void onChanged(ResponseUser responseUser) {
 
             if (responseUser.getData() != null) {
-                User user = responseUser.getData().get(0);
+                homeActivityViewModel.userMutableLiveData.setValue(responseUser.getData().get(0));
 
                 mainBinding = DataBindingUtil.setContentView(HomeActivity.this, R.layout.main);
 
@@ -60,8 +67,7 @@ public class HomeActivity extends AppCompatActivity {
                 // set click listeners for bottom navigation's item
                 setBottomNavClickListeners();
 
-                // configure fragments
-                changeFragments(R.id.HomeIcon);
+                mainBinding.BottomNavHome.bottomNavigationView.setSelectedItemId(R.id.HomeIcon);
             }
         }
     };
@@ -113,6 +119,10 @@ public class HomeActivity extends AppCompatActivity {
                         changeFragments(R.id.HomeIcon);
                         break;
                     }
+                    case R.id.UserIcon: {
+                        changeFragments(R.id.UserIcon);
+                        break;
+                    }
                     default: {
                         Toast.makeText(getApplicationContext(), "You clicked on " + item.toString(), Toast.LENGTH_LONG).show();
                     }
@@ -123,20 +133,34 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void changeFragments(int layoutId) {
-        Fragment selectedFragment = null;
+        Fragment fragment = null;
+        FragmentManager fManager = getSupportFragmentManager();
+        FragmentTransaction fTransaction = fManager.beginTransaction();
 
         switch (layoutId) {
             case R.id.HomeIcon:
-                selectedFragment = new HomeFragment();
+                fragment = fManager.findFragmentByTag(HomeFragment.class.getName());
+                if (fragment == null) {
+                    fTransaction.add(R.id.mainContent, new HomeFragment(), HomeFragment.class.getName());
+                }
+                else { // re-use the old fragment
+                    fTransaction.replace(R.id.mainContent, fragment, HomeFragment.class.getName());
+                }
+                break;
+            case R.id.UserIcon:
+                fragment = fManager.findFragmentByTag(AccountFragment.class.getName());
+                if (fragment == null) {
+                    fTransaction.add(R.id.mainContent, new AccountFragment(), AccountFragment.class.getName());
+                }
+                else { // re-use the old fragment
+                    fTransaction.replace(R.id.mainContent, fragment, AccountFragment.class.getName());
+                }
                 break;
         }
 
-        if (selectedFragment != null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.mainContent, selectedFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .show(selectedFragment)
-                    .commit();
-        }
+        fTransaction
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+            .commit();
     }
 }

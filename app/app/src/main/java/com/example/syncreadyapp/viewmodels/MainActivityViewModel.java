@@ -2,6 +2,7 @@ package com.example.syncreadyapp.viewmodels;
 
 import android.app.Application;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.transition.Fade;
+import androidx.transition.Visibility;
 
 import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.models.loginmodel.LoginModel;
@@ -89,14 +92,11 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     public void registerButtonClick(View view) {
 
-        Fragment fragment = new RegisterFragment();
-
         ((AppCompatActivity) view.getContext()).getSupportFragmentManager().beginTransaction()
-                .replace(R.id.loginRegisterFragmentZone, fragment)
+                .replace(R.id.loginRegisterFragmentZone, new RegisterFragment())
                 .addToBackStack("registerFragment")
-                .setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN )
-                .setTransition( FragmentTransaction.TRANSIT_FRAGMENT_CLOSE )
-                .show(fragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
     }
 

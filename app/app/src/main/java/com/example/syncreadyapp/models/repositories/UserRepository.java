@@ -1,53 +1,41 @@
 package com.example.syncreadyapp.models.repositories;
 
 import android.app.Application;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.syncreadyapp.models.homedata.ResponseHomeData;
 import com.example.syncreadyapp.models.loginmodel.LoginModel;
 import com.example.syncreadyapp.models.registermodel.RegisterModel;
 import com.example.syncreadyapp.models.userinsert.ResponseUserInsert;
 import com.example.syncreadyapp.models.userlogged.ResponseUserLogged;
 import com.example.syncreadyapp.models.userlogged.UserLogged;
 import com.example.syncreadyapp.models.usermodel.ResponseUser;
-import com.example.syncreadyapp.models.usermodel.User;
 import com.example.syncreadyapp.services.RetrofitInstance;
 import com.example.syncreadyapp.services.SyncReadyMobileDataService;
 import com.example.syncreadyapp.userregistervalidate.ResponseValidateRegister;
 import com.example.syncreadyapp.userregistervalidate.ValidateRegisterModel;
-import com.example.syncreadyapp.viewmodels.MainActivityViewModel;
-
-import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UserRepository {
-    private MutableLiveData<UserLogged> userLoggedMutableLiveData = new MutableLiveData<>();
-
-    private MutableLiveData<ResponseValidateRegister> validateRegisterModelMutableLiveData = new MutableLiveData<>();
-
-    private MutableLiveData<ResponseUserInsert> userInsertMutableLiveData = new MutableLiveData<>();
-
-    private MutableLiveData<ResponseUser> responseUserMutableLiveData = new MutableLiveData<>();
 
     private MutableLiveData<Boolean> isNetworkTroubleLiveData = new MutableLiveData<>();
+    private MutableLiveData<RepositoryResponse> repositoryResponseMutableLiveData = new MutableLiveData<>();
+
+    private SyncReadyMobileDataService syncReadyMobileDataService = RetrofitInstance.getService();
 
     private Application application;
-
-    private MutableLiveData<RepositoryResponse> repositoryResponseMutableLiveData = new MutableLiveData<>();
 
     public UserRepository(@NonNull Application application) {
         this.application = application;
     }
 
     public MutableLiveData<RepositoryResponse> getUserLogged(LoginModel loginModelInstance) {
-        SyncReadyMobileDataService syncReadyMobileDataService = RetrofitInstance.getService();
-
+        final MutableLiveData<UserLogged> userLoggedMutableLiveData = new MutableLiveData<>();
         isNetworkTroubleLiveData.setValue(false);
 
         Call<ResponseUserLogged> call = syncReadyMobileDataService.login(loginModelInstance);
@@ -76,8 +64,7 @@ public class UserRepository {
     }
 
     public MutableLiveData<ResponseUserInsert> getUserInsert(RegisterModel registerModel) {
-        SyncReadyMobileDataService syncReadyMobileDataService = RetrofitInstance.getService();
-
+        final MutableLiveData<ResponseUserInsert> userInsertMutableLiveData = new MutableLiveData<>();
         isNetworkTroubleLiveData.setValue(false);
 
         Call<ResponseUserInsert> call = syncReadyMobileDataService.register(registerModel);
@@ -87,7 +74,7 @@ public class UserRepository {
             public void onResponse(Call<ResponseUserInsert> call, Response<ResponseUserInsert> response) {
                 ResponseUserInsert responseUserInsert = response.body();
 
-                if(responseUserInsert != null) {
+                if (responseUserInsert != null) {
                     userInsertMutableLiveData.setValue(responseUserInsert);
                 } else {
                     userInsertMutableLiveData.setValue(null);
@@ -104,8 +91,7 @@ public class UserRepository {
     }
 
     public MutableLiveData<RepositoryResponse> getValidateRegister(ValidateRegisterModel validateRegisterModel) {
-        SyncReadyMobileDataService syncReadyMobileDataService = RetrofitInstance.getService();
-
+        final MutableLiveData<ResponseValidateRegister> validateRegisterModelMutableLiveData = new MutableLiveData<>();
         isNetworkTroubleLiveData.setValue(false);
 
         Call<ResponseValidateRegister> call = syncReadyMobileDataService.mobileValidateRegister(validateRegisterModel);
@@ -115,7 +101,7 @@ public class UserRepository {
             public void onResponse(Call<ResponseValidateRegister> call, Response<ResponseValidateRegister> response) {
                 ResponseValidateRegister responseValidateRegister = response.body();
 
-                if(responseValidateRegister != null) {
+                if (responseValidateRegister != null) {
                     validateRegisterModelMutableLiveData.setValue(responseValidateRegister);
                 } else {
                     validateRegisterModelMutableLiveData.setValue(null);
@@ -136,7 +122,7 @@ public class UserRepository {
     }
 
     public MutableLiveData<ResponseUser> getUserDataByUuid(String uuid, String bearerToken) {
-        SyncReadyMobileDataService syncReadyMobileDataService = RetrofitInstance.getService();
+        final MutableLiveData<ResponseUser> responseUserMutableLiveData = new MutableLiveData<>();
         isNetworkTroubleLiveData.setValue(false);
 
         Call<ResponseUser> call = syncReadyMobileDataService.getUser(uuid, bearerToken);
@@ -146,7 +132,7 @@ public class UserRepository {
             public void onResponse(Call<ResponseUser> call, Response<ResponseUser> response) {
                 ResponseUser responseUser = response.body();
 
-                if(responseUser != null) {
+                if (responseUser != null) {
                     responseUserMutableLiveData.setValue(responseUser);
                 } else {
                     responseUserMutableLiveData.setValue(null);
@@ -162,15 +148,29 @@ public class UserRepository {
         return responseUserMutableLiveData;
     }
 
+    public MutableLiveData<ResponseHomeData> getHomeData(String uuid, String bearerToken) {
+        final MutableLiveData<ResponseHomeData> responseHomeDataMutableLiveData = new MutableLiveData<>();
+        isNetworkTroubleLiveData.setValue(false);
+        Call<ResponseHomeData> call = syncReadyMobileDataService.getMobileHome(uuid, bearerToken);
 
+        call.enqueue(new Callback<ResponseHomeData>() {
+            @Override
+            public void onResponse(Call<ResponseHomeData> call, Response<ResponseHomeData> response) {
+                ResponseHomeData responseHomeData = response.body();
 
+                if (responseHomeData != null) {
+                    responseHomeDataMutableLiveData.setValue(responseHomeData);
+                } else {
+                    responseHomeDataMutableLiveData.setValue(null);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<ResponseHomeData> call, Throwable t) {
+                responseHomeDataMutableLiveData.setValue(null);
+            }
+        });
 
-
-
-
-
-
-
-
+        return responseHomeDataMutableLiveData;
+    }
 }
