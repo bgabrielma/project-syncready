@@ -38,11 +38,11 @@
                 >
 
                 <ImageView
-                    android:tint="@color/colorEditNormal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:contentDescription="User image"
-                    android:src="@drawable/ic_subscriptions" />
+                    android:contentDescription="Editar"
+                    android:src="@drawable/ic_action_edit"
+                    android:tint="@color/colorEditNormal" />
 
                 <TextView
                     android:id="@+id/txtNCompletoAccount"
