@@ -23,4 +23,9 @@
     <string name="dataUlt">Segunda-feira, 25 de dezembro de 2019</string>
     <string name="TotalMensagens">Total de mensagens recebidas:</string>
     <string name="NTotal">32000</string>
+    <string name="dtCriacao">Data de criação</string>
+    <string name="nomedodred">Jorge Penedo da Rocha Calhau</string>
+    <string name="userdodred">putojorgecrackudo99</string>
+    <string name="NCC">562923192</string>
+    <string name="dataC">24/08/2013</string>
 </resources>

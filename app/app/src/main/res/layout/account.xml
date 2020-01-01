@@ -18,6 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="70dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:elevation="10dp"
             >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -33,6 +36,86 @@
                 android:orientation="vertical"
                 android:padding="10dp"
                 >
+
+                <ImageView
+                    android:tint="@color/colorEditNormal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="User image"
+                    android:src="@drawable/ic_subscriptions" />
+
+                <TextView
+                    android:id="@+id/txtNCompletoAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/FullName"
+                    android:textSize="18sp"
+                    android:layout_marginTop="40dp"
+                    />
+
+                <TextView
+                    android:id="@+id/txtNomeAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nomedodred"
+                    android:textSize="14sp"
+                    android:layout_marginTop="2dp"
+                    />
+
+                <TextView
+                    android:id="@+id/txtNomeUtilizadorAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/User_name"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <TextView
+                    android:id="@+id/txtUNameAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/userdodred"
+                    android:textSize="14sp"
+                    android:layout_marginTop="2dp"
+                    />
+
+                <TextView
+                    android:id="@+id/txtCCAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/NumCC"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <TextView
+                    android:id="@+id/txtNumCCAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/NCC"
+                    android:textSize="14sp"
+                    android:layout_marginTop="2dp"
+                    />
+
+                <TextView
+                    android:id="@+id/txtCriacaoAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dtCriacao"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <TextView
+                    android:id="@+id/txtdataCriacaoAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dataC"
+                    android:textSize="14sp"
+                    android:layout_marginTop="2dp"
+                    />
+
             </LinearLayout>
             </LinearLayout>
 
