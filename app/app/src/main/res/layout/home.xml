@@ -3,13 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    
     <data>
         <variable
             name="HomeActivityViewModel"
             type="com.example.syncreadyapp.viewmodels.HomeActivityViewModel" />
     </data>
-
     <LinearLayout
         android:background="@color/colorBackground"
         android:padding="5dp"
