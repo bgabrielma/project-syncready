@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.transition.Explode;
 import android.transition.Slide;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Toast;
@@ -19,22 +20,21 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.transition.Fade;
 
 import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.databinding.MainBinding;
 import com.example.syncreadyapp.models.usermodel.ResponseUser;
-import com.example.syncreadyapp.models.usermodel.User;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
 import com.example.syncreadyapp.views.fragments.AccountFragment;
 import com.example.syncreadyapp.views.fragments.HomeFragment;
-import com.example.syncreadyapp.views.fragments.LoginFragment;
-import com.example.syncreadyapp.views.fragments.RegisterFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
     private HomeActivityViewModel homeActivityViewModel;
     private MainBinding mainBinding;
+
+    private MenuItem lastMenuItemClicked;
+    private boolean isRoomItemClicked;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -106,16 +106,27 @@ public class HomeActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.ChatIcon: {
+                        item.setCheckable(false);
+                        isRoomItemClicked = true;
+
                         Intent roomIntent = new Intent(getApplicationContext(), RoomActivity.class);
                         startActivity(roomIntent);
+
                         break;
                     }
                     case R.id.HomeIcon: {
+                        lastMenuItemClicked = item;
                         changeFragments(R.id.HomeIcon);
                         break;
                     }
                     case R.id.UserIcon: {
+                        lastMenuItemClicked = item;
                         changeFragments(R.id.UserIcon);
+                        break;
+                    }
+                    case R.id.AlertIcon: {
+                        lastMenuItemClicked = item;
+
                         break;
                     }
                     default: {
@@ -157,5 +168,19 @@ public class HomeActivity extends AppCompatActivity {
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
             .commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(mainBinding != null && isRoomItemClicked) {
+            if(lastMenuItemClicked == null) {
+                lastMenuItemClicked = mainBinding.BottomNavHome.bottomNavigationView.getMenu().getItem(0);
+            }
+
+            lastMenuItemClicked.setChecked(true);
+            isRoomItemClicked = false;
+        }
     }
 }
