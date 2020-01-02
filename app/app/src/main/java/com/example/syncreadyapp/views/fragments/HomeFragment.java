@@ -35,11 +35,12 @@ public class HomeFragment extends Fragment {
         homeActivityViewModel = ViewModelProviders.of(getActivity()).get(HomeActivityViewModel.class);
 
         homeBinding = DataBindingUtil.inflate(inflater, R.layout.home, container, false);
-        homeBinding.setLifecycleOwner(this);
+        homeBinding.setHomeActivityViewModel(homeActivityViewModel);
+
+        homeBinding.setLifecycleOwner(getActivity());
 
         homeActivityViewModel.getHomeData(homeActivityViewModel.uuidMutableLiveData.getValue(), homeActivityViewModel.tokenAccessMutableLiveData.getValue())
                 .observe(getViewLifecycleOwner(), getHomeDataBinding);
-        homeBinding.setHomeActivityViewModel(homeActivityViewModel);
 
         prevView = homeBinding.getRoot();
 

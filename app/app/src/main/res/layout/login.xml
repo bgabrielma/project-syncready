@@ -106,7 +106,7 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:onClick="@{MainActivityViewModel::loginButtonClick}"
                     android:id="@+id/btnEntrar"
                     android:layout_width="130dp"
@@ -114,9 +114,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="5dp"
-                    android:background="@drawable/btn_rounded"
                     android:text="@string/Entra_name"
-                    android:elevation="10dp"
                     />
 
                 <TextView
@@ -129,7 +127,7 @@
                     android:text="@string/NTemConta"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:onClick="@{MainActivityViewModel::registerButtonClick}"
                     android:id="@+id/btnRegistar"
                     android:layout_width="130dp"
@@ -137,9 +135,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="5dp"
-                    android:background="@drawable/btn_rounded"
                     android:text="@string/Regista_name"
-                    android:elevation="10dp"
                     />
             </LinearLayout>
 

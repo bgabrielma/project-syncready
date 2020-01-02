@@ -90,13 +90,8 @@ public class HomeActivity extends AppCompatActivity {
         mainBinding.ToolbarHome.toolbarQrcode.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.toolbar_qrcode_action_scan: {
-                        Intent intent = new Intent(getApplicationContext(), ScannerActivity.class);
-                        startActivity(intent);
-                        break;
-                    }
-                }
+                Intent intent = new Intent(getApplicationContext(), ScannerActivity.class);
+                startActivity(intent);
 
                 return false;
             }
