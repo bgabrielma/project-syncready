@@ -17,11 +17,6 @@ public class AccountFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        // testing observers xD
-       HomeActivityViewModel homeActivityViewModel = ViewModelProviders.of(getActivity()).get(HomeActivityViewModel.class);
-        homeActivityViewModel.numInscricoes.setValue(69);
-
         return inflater.inflate(R.layout.account, container, false);
     }
 }
