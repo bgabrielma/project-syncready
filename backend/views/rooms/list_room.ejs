@@ -121,6 +121,7 @@
                           roomUUID: uuid
                         },
                         success: function(usersRooms) {
+
                           let optgroupHTML = ''
                           allTypes.forEach(type => {
                             optgroup = `<optgroup label=${type.type}>`
@@ -131,8 +132,8 @@
                                   let wasInserted = false
 
                                   // check verification
-                                  usersRooms.forEach(usersRoom => {
-                                    if(user.pk_uuid == usersRoom.Users_pk_uuid) {
+                                  usersRooms.data.forEach(usersRoom => {
+                                    if(user.pk_uuid == usersRoom.pk_uuid) {
                                       wasInserted = true
                                       optgroup += `<option data-icon="fa fa-user-tie mr-1" data-subtext="${type.type}" value="${user.pk_uuid}" selected ${isEntity ? 'disabled': ''}><strong>${user.fullname}</option>`
                                     }
