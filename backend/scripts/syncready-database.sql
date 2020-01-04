@@ -145,7 +145,7 @@
   ENGINE = InnoDB;
 
   CREATE INDEX `name_room_UNIQUE` ON `Rooms` (`name_room` ASC);
-  ALTER TABLE Rooms ADD COLUMN image VARCHAR(255) NULL DEFAULT "default_group_image.png"
+  ALTER TABLE Rooms ADD COLUMN image VARCHAR(255) NULL DEFAULT "default_group_image.png";
 
 
   -- -----------------------------------------------------
