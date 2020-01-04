@@ -42,7 +42,7 @@
                     <% data.types.forEach(elem => { %>
                         <optgroup label="<%- elem.Type %>">
                             <% data.members.forEach(member => { %>
-                                <% if (elem.Type === member.type) {%>
+                                <% if (elem.Type === member.type && member.type == 'Entidade') {%>
                                     <option data-icon="fa fa-user-tie mr-1" data-subtext="<%- member.name || 'Cliente' %>" value="<%- member.pk_uuid %>"><strong><%- member.fullname %></option>
                                 <% } %>
                             <% }) %>
@@ -52,7 +52,7 @@
             </div>
             <div class="form-group">
                 <label for="untilAt">Data de validade do grupo</label>
-                <input type="date" class="form-control" name="untilAt" placeholder="Nome da sala">
+                <input type="date" class="form-control" name="untilAt" placeholder="Nome da sala" required>
             </div>
             <button type="submit" class="btn btn-block">Registar</button>
         </form>

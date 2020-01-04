@@ -157,8 +157,6 @@ const post = async function(req, res) {
           Rooms_uuid_room: secretUUIDToUpdate
         })
 
-      console.log(membersRoom)
-
       // and then insert them all again
       membersRoom.forEach(async memberRoom => {
         await db('Users_has_Rooms')
