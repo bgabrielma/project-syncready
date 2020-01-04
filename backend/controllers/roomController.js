@@ -178,13 +178,14 @@ const get = function(req, res) {
     .innerJoin('Datasheet', 'Datasheet.uuid_datasheet', '=', 'Rooms.Datasheet_uuid_datasheet')
     .innerJoin('Tickets', 'Tickets.Rooms_uuid_room', '=', 'Rooms.uuid_room')
     .innerJoin('Ticket_Options', 'Ticket_Options.uuid_ticket_options', '=', 'Tickets.Ticket_Options_uuid_ticket_options')
-    .innerJoin('Users_has_Rooms', 'Rooms.uuid_room', 'Users_has_Rooms.Rooms_uuid_room')
 
   if (req.query.roomUUID)
     instance.where({ uuid_room: req.query.roomUUID })
 
   if (req.query.userUUID)
-    instance.andWhere({ 'Users_has_Rooms.Users_pk_uuid': req.query.userUUID })
+    instance
+      .innerJoin('Users_has_Rooms', 'Rooms.uuid_room', 'Users_has_Rooms.Rooms_uuid_room')
+      .andWhere({ 'Users_has_Rooms.Users_pk_uuid': req.query.userUUID })
 
   instance
     .then(data => res.status(200).send({ ok: true, response: data }))
