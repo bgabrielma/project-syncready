@@ -280,7 +280,7 @@
   ENGINE = InnoDB;
 
   CREATE UNIQUE INDEX `pk_uuid_UNIQUE` ON `Users` (`pk_uuid` ASC);
-  ALTER TABLE `Users` MODIFY COLUMN image VARCHAR(255) NULL DEFAULT "default_user_image.png";
+  ALTER TABLE `Users` ADD COLUMN image VARCHAR(255) NULL DEFAULT "default_user_image.png";
 
 
   -- -----------------------------------------------------
