@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+   <com.google.android.material.card.MaterialCardView
+       android:layout_width="50dp"
+       android:layout_height="50dp"
+       app:cardCornerRadius="25dp"
+       app:strokeWidth="1dp"
+       app:strokeColor="@color/colorPrimaryLight">
+       <ImageView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:src="@drawable/default_user_image"
+           android:scaleType="centerCrop" />
+   </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

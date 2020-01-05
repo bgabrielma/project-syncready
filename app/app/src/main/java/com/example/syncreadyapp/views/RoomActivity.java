@@ -25,7 +25,7 @@ public class RoomActivity extends AppCompatActivity {
         homeActivityViewModel.uuidMutableLiveData.setValue(bundle.getString("sycnready_user_uuid", null));
         homeActivityViewModel.tokenAccessMutableLiveData.setValue("Bearer " + bundle.getString("syncready_user_token_access", null));
 
-        setContentView(R.layout.room);
+        setContentView(R.layout.room_list_item);
 
         homeActivityViewModel.getRooms(homeActivityViewModel.uuidMutableLiveData.getValue(), homeActivityViewModel.tokenAccessMutableLiveData.getValue())
                 .observe(this, getRoomsObserver);
@@ -34,7 +34,7 @@ public class RoomActivity extends AppCompatActivity {
     private final Observer<ResponseRoom> getRoomsObserver = new Observer<ResponseRoom>() {
         @Override
         public void onChanged(ResponseRoom responseRoom) {
-            configureToolbar();
+            // configureToolbar();
         }
     };
 
