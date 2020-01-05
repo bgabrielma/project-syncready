@@ -28,12 +28,6 @@ public class UserRepository {
 
     private SyncReadyMobileDataService syncReadyMobileDataService = RetrofitInstance.getService();
 
-    private Application application;
-
-    public UserRepository(@NonNull Application application) {
-        this.application = application;
-    }
-
     public MutableLiveData<RepositoryResponse> getUserLogged(LoginModel loginModelInstance) {
         final MutableLiveData<UserLogged> userLoggedMutableLiveData = new MutableLiveData<>();
         isNetworkTroubleLiveData.setValue(false);

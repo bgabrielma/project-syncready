@@ -1,6 +1,7 @@
 package com.example.syncreadyapp.services;
 
 import com.example.syncreadyapp.models.homedata.ResponseHomeData;
+import com.example.syncreadyapp.models.room.ResponseRoom;
 import com.example.syncreadyapp.models.usermodel.ResponseUser;
 import com.example.syncreadyapp.userregistervalidate.ResponseValidateRegister;
 import com.example.syncreadyapp.models.loginmodel.LoginModel;
@@ -32,4 +33,7 @@ public interface SyncReadyMobileDataService {
 
     @GET("/mobile/home")
     Call<ResponseHomeData> getMobileHome(@Query("uuid") String uuid, @Header("Authorization") String authHeader);
+
+    @GET("/room")
+    Call<ResponseRoom> getRooms(@Query("userUUID") String uuid, @Header("Authorization") String authHeader);
 }

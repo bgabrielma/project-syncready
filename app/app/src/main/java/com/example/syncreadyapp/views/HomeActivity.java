@@ -110,8 +110,12 @@ public class HomeActivity extends AppCompatActivity {
                         isRoomItemClicked = true;
 
                         Intent roomIntent = new Intent(getApplicationContext(), RoomActivity.class);
-                        startActivity(roomIntent);
 
+                        if (HomeActivity.this.getIntent().getExtras() != null) {
+                            roomIntent.putExtras(HomeActivity.this.getIntent().getExtras());
+                        }
+
+                        startActivity(roomIntent);
                         break;
                     }
                     case R.id.HomeIcon: {
