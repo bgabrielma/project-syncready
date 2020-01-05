@@ -23,13 +23,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryLight"
-        app:tabTextColor="@color/colorWhite"
+        app:tabTextColor="@color/colorDimGrey"
+        app:tabIndicatorColor="@color/colorBlack"
+        app:tabIndicatorFullWidth="false"
+        app:tabSelectedTextColor="@color/colorWhite"
         >
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/notifications"
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/alerts"
             />
     </com.google.android.material.tabs.TabLayout>
 
