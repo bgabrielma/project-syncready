@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitInstance {
     private static Retrofit retrofit = null;
-    private static String BASE_URL = "http://157.230.96.205:3000/";
+    public static String BASE_URL = "http://157.230.96.205:3000/";
 
     public static SyncReadyMobileDataService getService() {
         if (retrofit == null) {

@@ -2,19 +2,28 @@ package com.example.syncreadyapp.views;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.syncreadyapp.R;
+import com.example.syncreadyapp.adapters.RoomListAdapter;
+import com.example.syncreadyapp.databinding.RoomBinding;
+import com.example.syncreadyapp.interfaces.OnRoomListClickListener;
 import com.example.syncreadyapp.models.room.ResponseRoom;
+import com.example.syncreadyapp.models.room.Room;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
 
-public class RoomActivity extends AppCompatActivity {
+public class RoomActivity extends AppCompatActivity implements OnRoomListClickListener {
     private HomeActivityViewModel homeActivityViewModel;
+    private RoomBinding roomBinding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,8 +34,6 @@ public class RoomActivity extends AppCompatActivity {
         homeActivityViewModel.uuidMutableLiveData.setValue(bundle.getString("sycnready_user_uuid", null));
         homeActivityViewModel.tokenAccessMutableLiveData.setValue("Bearer " + bundle.getString("syncready_user_token_access", null));
 
-        setContentView(R.layout.room_list_item);
-
         homeActivityViewModel.getRooms(homeActivityViewModel.uuidMutableLiveData.getValue(), homeActivityViewModel.tokenAccessMutableLiveData.getValue())
                 .observe(this, getRoomsObserver);
     }
@@ -34,7 +41,11 @@ public class RoomActivity extends AppCompatActivity {
     private final Observer<ResponseRoom> getRoomsObserver = new Observer<ResponseRoom>() {
         @Override
         public void onChanged(ResponseRoom responseRoom) {
-            // configureToolbar();
+
+            roomBinding = DataBindingUtil.setContentView(RoomActivity.this, R.layout.room);
+
+            configureToolbar();
+            configureRoomAdapter(responseRoom);
         }
     };
 
@@ -49,5 +60,15 @@ public class RoomActivity extends AppCompatActivity {
         });
 
         roomToolbar.setTitle("Conversas");
+    }
+    public void configureRoomAdapter(ResponseRoom responseRoom) {
+        RecyclerView recyclerView = roomBinding.recyclerRooms;
+        recyclerView.setLayoutManager(new LinearLayoutManager(RoomActivity.this));
+        recyclerView.setAdapter(new RoomListAdapter(responseRoom.getResponse(), RoomActivity.this));
+    }
+
+    @Override
+    public void onRoomClick(int position) {
+        Toast.makeText(this, "Item clicked with position " + position, Toast.LENGTH_SHORT).show();
     }
 }

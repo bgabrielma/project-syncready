@@ -1,21 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp">
+<layout>
+    <data>
+        <variable
+            name="Room"
+            type="com.example.syncreadyapp.models.room.Room" />
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="?android:attr/selectableItemBackground">
 
-   <com.google.android.material.card.MaterialCardView
-       android:layout_width="50dp"
-       android:layout_height="50dp"
-       app:cardCornerRadius="25dp"
-       app:strokeWidth="1dp"
-       app:strokeColor="@color/colorPrimaryLight">
-       <ImageView
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:src="@drawable/default_user_image"
-           android:scaleType="centerCrop" />
-   </com.google.android.material.card.MaterialCardView>
-</LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:cardCornerRadius="25dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/colorPrimaryLight">
+                <ImageView
+                    android:id="@+id/groupImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/default_user_image"
+                    android:scaleType="centerCrop" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="15dp">
+                <TextView
+                    android:id="@+id/groupTitle"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="@{Room.nameRoom}"
+                    />
+                <TextView
+                    android:id="@+id/groupLastMessage"
+                    android:layout_marginTop="3dp"
+                    android:textSize="12sp"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="Foda-se, arranja-me isso por amor de deus>:("
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="3dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/groupLastMessageTimestamp"
+                    android:layout_margin="3dp"
+                    style="@style/TextAppearance.MaterialComponents.Caption"
+                    android:textColor="@color/colorSilver"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:textAlignment="textEnd"
+                    android:ellipsize="end"
+                    android:text="20/10/2020 03:30"
+                    />
+                <com.google.android.material.card.MaterialCardView
+                    android:visibility="invisible"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardCornerRadius="5dp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:layout_width="250dp"
+            android:layout_gravity="center"
+            android:layout_height="2dp"
+            android:background="@drawable/border_set"/>
+    </LinearLayout>
+</layout>
