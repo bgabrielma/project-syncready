@@ -15,7 +15,9 @@ const UserRoomController = require('../controllers/usersRoomsController')
 const CompanyController = require('../controllers/companyController')
 const JsonWebTokenController = require('../controllers/jsonWebTokenController')
 
+/*
 router.use(function(req, res, next) {
+  return next()
   const access = ['main', 'auth', 'logout', 'register', 'mobileValidateRegister'] // backend
   const urlFormatted = req.originalUrl.split('?').shift().split('/')
   
@@ -35,7 +37,7 @@ router.use(function(req, res, next) {
   // return 401 Unauthorized status
   return res.status(401).send({ access: 'denied' })
 
-})
+}) */
 
 /* index */
 router.get('/', IndexController.loginOrRegister)

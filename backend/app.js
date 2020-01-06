@@ -1,19 +1,17 @@
 const createError = require('http-errors')
-
-const express = require('express')
 const routes = require('./config/routes')
-
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
-
 const helmet = require('helmet')
 
 const db = require('./config/db')
 
-const app = express()
-
 const { findCompanyByUUID } = require('./controllers/userController')
+
+const express = require('express')
+
+const app = express()
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -24,8 +22,6 @@ app.set('json spaces', 40)
 
 // disable cache and activate security
 app.use(helmet())
-
-
 
 app.use(logger('dev'))
 app.use(express.json())
