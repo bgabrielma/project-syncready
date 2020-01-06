@@ -174,6 +174,11 @@ const newRoom = async function(req, res) {
   let datasheets = []
 
   await db('Datasheet')
+    .distinct('Datasheet.uuid_datasheet', 'Datasheet.designation')
+    .innerJoin('Rooms', 'Rooms.Datasheet_uuid_datasheet', '=', 'Datasheet.uuid_datasheet')
+    .innerJoin('Tickets', 'Tickets.Rooms_uuid_room', '=', 'Rooms.uuid_room')
+    .innerJoin('Ticket_Options', 'Ticket_Options.uuid_ticket_options', '=', 'Tickets.Ticket_Options_uuid_ticket_options')
+    .whereNotIn('Ticket_Options.ticket_option_designation', ['Em Funcionamento', 'Técnico Pendente'])
     .then(data => datasheets = data)
 
   // get all members
@@ -218,7 +223,7 @@ const listRoom = async function(req, res) {
   if(!verifyUser(req)) return res.redirect('/main')
 
   await db('Rooms')
-    .select('Rooms.*', 'Datasheet.*', 'Ticket_Options.ticket_option_designation')
+    .select('Rooms.*', 'Datasheet.designation', 'Datasheet.description', 'Ticket_Options.ticket_option_designation')
     .innerJoin('Datasheet', 'Datasheet.uuid_datasheet', '=', 'Rooms.Datasheet_uuid_datasheet')
     .innerJoin('Tickets', 'Tickets.Rooms_uuid_room', '=', 'Rooms.uuid_room')
     .innerJoin('Ticket_Options', 'Ticket_Options.uuid_ticket_options', '=', 'Tickets.Ticket_Options_uuid_ticket_options')

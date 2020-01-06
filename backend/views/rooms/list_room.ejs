@@ -70,7 +70,7 @@
       $.ajax({
         url: '/room',
         method: 'GET',
-        data: { uuid },
+        data: { roomUUID: uuid },
         success: function(room) {
           const data = room.response[0]
 

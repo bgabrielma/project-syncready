@@ -31,18 +31,12 @@ public class Room {
     @SerializedName("image")
     @Expose
     private String image;
-    @SerializedName("pk_datasheet")
-    @Expose
-    private Integer pkDatasheet;
-    @SerializedName("uuid_datasheet")
-    @Expose
-    private String uuidDatasheet;
-    @SerializedName("description")
-    @Expose
-    private String description;
     @SerializedName("designation")
     @Expose
     private String designation;
+    @SerializedName("description")
+    @Expose
+    private String description;
     @SerializedName("ticket_option_designation")
     @Expose
     private String ticketOptionDesignation;
@@ -122,20 +116,12 @@ public class Room {
         this.image = image;
     }
 
-    public Integer getPkDatasheet() {
-        return pkDatasheet;
+    public String getDesignation() {
+        return designation;
     }
 
-    public void setPkDatasheet(Integer pkDatasheet) {
-        this.pkDatasheet = pkDatasheet;
-    }
-
-    public String getUuidDatasheet() {
-        return uuidDatasheet;
-    }
-
-    public void setUuidDatasheet(String uuidDatasheet) {
-        this.uuidDatasheet = uuidDatasheet;
+    public void setDesignation(String designation) {
+        this.designation = designation;
     }
 
     public String getDescription() {
@@ -144,14 +130,6 @@ public class Room {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getDesignation() {
-        return designation;
-    }
-
-    public void setDesignation(String designation) {
-        this.designation = designation;
     }
 
     public String getTicketOptionDesignation() {

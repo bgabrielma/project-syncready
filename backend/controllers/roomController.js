@@ -172,7 +172,7 @@ const post = async function(req, res) {
 
 const get = function(req, res) {
   const instance = db('Rooms')
-    .select('Rooms.*', 'Datasheet.*', 'Ticket_Options.ticket_option_designation', 'Ticket_Options.uuid_ticket_options')
+    .select('Rooms.*', 'Datasheet.designation', 'Datasheet.description', 'Ticket_Options.ticket_option_designation', 'Ticket_Options.uuid_ticket_options')
     .innerJoin('Datasheet', 'Datasheet.uuid_datasheet', '=', 'Rooms.Datasheet_uuid_datasheet')
     .innerJoin('Tickets', 'Tickets.Rooms_uuid_room', '=', 'Rooms.uuid_room')
     .innerJoin('Ticket_Options', 'Ticket_Options.uuid_ticket_options', '=', 'Tickets.Ticket_Options_uuid_ticket_options')
