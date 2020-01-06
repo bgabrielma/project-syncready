@@ -28,7 +28,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
                     android:contentDescription="Entrar em um grupo"
-                    android:text="Entrar"
+                    android:text="@string/enter"
                     app:icon="@drawable/ic_group_add"
                     app:backgroundTint="@color/colorPrimaryLightSaturate"/>
 

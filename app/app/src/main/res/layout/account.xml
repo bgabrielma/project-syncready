@@ -108,14 +108,17 @@
                             />
                     </LinearLayout>
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:layout_gravity="end"
-                    android:src="@drawable/ic_action_edit"
+                    app:icon="@drawable/ic_action_edit"
+                    android:text="@string/edit"
                     app:backgroundTint="@color/colorPrimary"
-                    app:tint="@color/colorDimGrey"/>
+                    app:tint="@color/colorDimGrey"
+
+                    />
             </com.google.android.material.card.MaterialCardView>
     </ScrollView>
 </layout>
