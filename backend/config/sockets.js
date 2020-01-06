@@ -13,7 +13,7 @@ const configSocket = (io) => {
     socket.on("messageHasSent", function() {
       io.to(socket.room_uuid).emit("newMessages")
     })
-  });
+  })
 }
 
 module.exports = {
