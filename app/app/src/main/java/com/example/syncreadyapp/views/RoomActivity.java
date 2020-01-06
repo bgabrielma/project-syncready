@@ -1,6 +1,7 @@
 package com.example.syncreadyapp.views;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,20 +15,40 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.syncreadyapp.R;
+import com.example.syncreadyapp.Utils;
 import com.example.syncreadyapp.adapters.RoomListAdapter;
 import com.example.syncreadyapp.databinding.RoomBinding;
 import com.example.syncreadyapp.interfaces.OnRoomListClickListener;
 import com.example.syncreadyapp.models.room.ResponseRoom;
 import com.example.syncreadyapp.models.room.Room;
+import com.example.syncreadyapp.services.RetrofitInstance;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
+
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+
+import java.net.URISyntaxException;
+
 
 public class RoomActivity extends AppCompatActivity implements OnRoomListClickListener {
     private HomeActivityViewModel homeActivityViewModel;
     private RoomBinding roomBinding;
+    private Socket mSocket;
+    {
+        try {
+            mSocket = IO.socket(RetrofitInstance.BASE_URL);
+        } catch (URISyntaxException e) {
+            Utils.showInternalUnavailableConnectionToServerAlert(RoomActivity.this);
+            finish();
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // mSocket.connect();
+
         homeActivityViewModel = ViewModelProviders.of(this).get(HomeActivityViewModel.class);
 
         Bundle bundle = this.getIntent().getExtras();

@@ -41,6 +41,9 @@ dependencies {
     // Lib for helping in url images
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    // Lib for socket connections
+    implementation 'com.github.nkzawa:socket.io-client:0.6.0'
+
     implementation 'com.android.support:appcompat-v7:+'
 
     implementation 'com.squareup.retrofit2:retrofit:2.6.3'
