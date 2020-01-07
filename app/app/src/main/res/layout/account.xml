@@ -9,116 +9,149 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="70dp"
+            <RelativeLayout
+                android:id="@+id/materialCardUserAccount"
+                android:layout_marginTop="50dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:elevation="10dp"
-                >
-                    <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                    <RelativeLayout
+                        android:translationZ="10dp"
+                        android:padding="10dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            app:cardCornerRadius="50dp"
+                            app:strokeWidth="1dp"
+                            app:strokeColor="@color/colorPrimaryLight">
+                            <ImageView
+                                android:id="@+id/groupImage"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/default_user_image"
+                                android:scaleType="centerCrop" />
+                        </com.google.android.material.card.MaterialCardView>
+                    </RelativeLayout>
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_margin="20dp"
-                        >
-                        <TextView
-                            style="@style/TextAppearance.MaterialComponents.Headline6"
-                            android:id="@+id/txtNCompletoAccount"
+                        android:layout_marginTop="60dp">
+                        <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/FullName"
-                            android:textSize="18sp"
-                            android:layout_marginTop="40dp"
-                            />
+                            android:layout_height="match_parent"
+                            android:elevation="10dp"
+                            >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_margin="20dp"
+                                >
+                                <TextView
+                                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                                    android:id="@+id/txtNCompletoAccount"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/FullName"
+                                    android:textSize="18sp"
+                                    android:layout_marginTop="40dp"
+                                    />
 
-                        <TextView
-                            style="@style/TextAppearance.MaterialComponents.Body2"
-                            android:layout_marginBottom="15dp"
-                            android:id="@+id/txtNomeAccount"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/nomedodred"
-                            android:textSize="14sp"
-                            android:layout_marginTop="2dp"
-                            />
+                                <TextView
+                                    style="@style/TextAppearance.MaterialComponents.Body2"
+                                    android:layout_marginBottom="15dp"
+                                    android:id="@+id/txtNomeAccount"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/nomedodred"
+                                    android:textSize="14sp"
+                                    android:layout_marginTop="2dp"
+                                    />
 
-                        <TextView
-                            style="@style/TextAppearance.MaterialComponents.Headline6"
-                            android:id="@+id/txtNomeUtilizadorAccount"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/User_name"
-                            android:textSize="18sp"
-                            android:layout_marginTop="10dp"
-                            />
+                                <TextView
+                                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                                    android:id="@+id/txtNomeUtilizadorAccount"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/User_name"
+                                    android:textSize="18sp"
+                                    android:layout_marginTop="10dp"
+                                    />
 
-                        <TextView
-                            style="@style/TextAppearance.MaterialComponents.Body2"
-                            android:layout_marginBottom="15dp"
-                            android:id="@+id/txtUNameAccount"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/userdodred"
-                            android:textSize="14sp"
-                            android:layout_marginTop="2dp"
-                            />
+                                <TextView
+                                    style="@style/TextAppearance.MaterialComponents.Body2"
+                                    android:layout_marginBottom="15dp"
+                                    android:id="@+id/txtUNameAccount"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/userdodred"
+                                    android:textSize="14sp"
+                                    android:layout_marginTop="2dp"
+                                    />
 
-                        <TextView
-                            style="@style/TextAppearance.MaterialComponents.Headline6"
-                            android:id="@+id/txtCCAccount"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/NumCC"
-                            android:textSize="18sp"
-                            android:layout_marginTop="10dp"
-                            />
+                                <TextView
+                                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                                    android:id="@+id/txtCCAccount"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/NumCC"
+                                    android:textSize="18sp"
+                                    android:layout_marginTop="10dp"
+                                    />
 
-                        <TextView
-                            style="@style/TextAppearance.MaterialComponents.Body2"
-                            android:layout_marginBottom="15dp"
-                            android:id="@+id/txtNumCCAccount"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/NCC"
-                            android:textSize="14sp"
-                            android:layout_marginTop="2dp"
-                            />
+                                <TextView
+                                    style="@style/TextAppearance.MaterialComponents.Body2"
+                                    android:layout_marginBottom="15dp"
+                                    android:id="@+id/txtNumCCAccount"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/NCC"
+                                    android:textSize="14sp"
+                                    android:layout_marginTop="2dp"
+                                    />
 
-                        <TextView
-                            style="@style/TextAppearance.MaterialComponents.Headline6"
-                            android:id="@+id/txtCriacaoAccount"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/dtCriacao"
-                            android:textSize="18sp"
-                            android:layout_marginTop="10dp"
-                            />
+                                <TextView
+                                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                                    android:id="@+id/txtCriacaoAccount"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/dtCriacao"
+                                    android:textSize="18sp"
+                                    android:layout_marginTop="10dp"
+                                    />
 
-                        <TextView
-                            style="@style/TextAppearance.MaterialComponents.Body2"
-                            android:layout_marginBottom="15dp"
-                            android:id="@+id/txtdataCriacaoAccount"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/dataC"
-                            android:textSize="14sp"
-                            android:layout_marginTop="2dp"
-                            />
-                    </LinearLayout>
+                                <TextView
+                                    style="@style/TextAppearance.MaterialComponents.Body2"
+                                    android:layout_marginBottom="15dp"
+                                    android:id="@+id/txtdataCriacaoAccount"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/dataC"
+                                    android:textSize="14sp"
+                                    android:layout_marginTop="2dp"
+                                    />
+                            </LinearLayout>
 
-                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:layout_gravity="end"
-                    app:icon="@drawable/ic_action_edit"
-                    android:text="@string/edit"
-                    app:backgroundTint="@color/colorPrimary"
-                    app:tint="@color/colorDimGrey"
+                            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="20dp"
+                                android:layout_gravity="end"
+                                app:icon="@drawable/ic_action_edit"
+                                android:text="@string/edit"
+                                app:backgroundTint="@color/colorPrimary"
+                                app:tint="@color/colorDimGrey"
 
-                    />
-            </com.google.android.material.card.MaterialCardView>
+                                />
+                        </com.google.android.material.card.MaterialCardView>
+                    </RelativeLayout>
+
+            </RelativeLayout>
     </ScrollView>
 </layout>
