@@ -33,4 +33,8 @@
     <string name="alerts">Alertas</string>
     <string name="edit">Editar</string>
     <string name="enter">Entrar</string>
+    <string name="roomAdd">Foi adicionado a uma sala</string>
+    <string name="rightNow">Agora mesmo</string>
+    <string name="maintenance">A nossa app vai entrar em manutenção...</string>
+    <string name="touch">Toque</string>
 </resources>
