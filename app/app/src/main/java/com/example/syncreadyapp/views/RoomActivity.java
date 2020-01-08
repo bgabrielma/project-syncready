@@ -64,7 +64,8 @@ public class RoomActivity extends AppCompatActivity implements OnRoomListClickLi
         public void onChanged(ResponseRoom responseRoom) {
 
             roomBinding = DataBindingUtil.setContentView(RoomActivity.this, R.layout.room);
-
+            roomBinding.setHomeActivityViewModel(homeActivityViewModel);
+            
             configureToolbar();
             configureRoomAdapter(responseRoom);
         }

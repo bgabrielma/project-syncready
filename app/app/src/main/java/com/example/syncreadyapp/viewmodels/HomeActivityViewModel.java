@@ -1,6 +1,8 @@
 package com.example.syncreadyapp.viewmodels;
 
 import android.app.Application;
+import android.content.Intent;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -13,6 +15,7 @@ import com.example.syncreadyapp.models.repositories.UserRepository;
 import com.example.syncreadyapp.models.room.ResponseRoom;
 import com.example.syncreadyapp.models.usermodel.ResponseUser;
 import com.example.syncreadyapp.models.usermodel.User;
+import com.example.syncreadyapp.views.ScannerActivity;
 
 public class HomeActivityViewModel extends AndroidViewModel {
     private UserRepository userRepository;
@@ -44,5 +47,10 @@ public class HomeActivityViewModel extends AndroidViewModel {
 
     public LiveData<ResponseRoom> getRooms(String uuid, String bearerToken) {
         return roomRepository.getRoomsByUserUUID(uuid, bearerToken);
+    }
+
+    public void OnEnterNewRoomButtonClick(View view) {
+        Intent scannerIntent = new Intent(view.getContext(), ScannerActivity.class);
+        view.getContext().startActivity(scannerIntent);
     }
 }
