@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.appcompat.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/roomToolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/colorPrimaryLight"
+    app:titleTextColor="@color/colorDimGrey"
+    app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+    app:title="Pré-visualização da sala"
+    app:navigationIcon="@drawable/ic_keyboard_backspace"
+    app:subtitleTextColor="@color/colorSilver"
+    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />

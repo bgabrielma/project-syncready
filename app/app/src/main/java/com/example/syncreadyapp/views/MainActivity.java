@@ -31,8 +31,6 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.List;
 
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
