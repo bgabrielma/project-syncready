@@ -7,7 +7,9 @@
         android:background="@color/colorBackground"
         android:id="@+id/ScrollViewAccount"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:fillViewport="true">
 
             <RelativeLayout
                 android:id="@+id/materialCardUserAccount"

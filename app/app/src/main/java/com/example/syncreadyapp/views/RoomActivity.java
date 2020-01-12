@@ -1,9 +1,9 @@
 package com.example.syncreadyapp.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,16 +23,20 @@ import com.example.syncreadyapp.models.room.ResponseRoom;
 import com.example.syncreadyapp.models.room.Room;
 import com.example.syncreadyapp.services.RetrofitInstance;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
-
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 
 public class RoomActivity extends AppCompatActivity implements OnRoomListClickListener {
+
     private HomeActivityViewModel homeActivityViewModel;
     private RoomBinding roomBinding;
+    private Bundle bundle;
+    private List<Room> rooms;
+
     private Socket mSocket;
     {
         try {
@@ -47,11 +51,12 @@ public class RoomActivity extends AppCompatActivity implements OnRoomListClickLi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // mSocket.connect();
+        mSocket.connect(); // connect to socket
+        // mSocket.emit("joinRoomList", 1, 2); // trigger server's event
 
         homeActivityViewModel = ViewModelProviders.of(this).get(HomeActivityViewModel.class);
 
-        Bundle bundle = this.getIntent().getExtras();
+        bundle = this.getIntent().getExtras();
         homeActivityViewModel.uuidMutableLiveData.setValue(bundle.getString("sycnready_user_uuid", null));
         homeActivityViewModel.tokenAccessMutableLiveData.setValue("Bearer " + bundle.getString("syncready_user_token_access", null));
 
@@ -62,7 +67,6 @@ public class RoomActivity extends AppCompatActivity implements OnRoomListClickLi
     private final Observer<ResponseRoom> getRoomsObserver = new Observer<ResponseRoom>() {
         @Override
         public void onChanged(ResponseRoom responseRoom) {
-
             roomBinding = DataBindingUtil.setContentView(RoomActivity.this, R.layout.room);
             roomBinding.setHomeActivityViewModel(homeActivityViewModel);
 
@@ -72,25 +76,41 @@ public class RoomActivity extends AppCompatActivity implements OnRoomListClickLi
     };
 
     public void configureToolbar() {
-        Toolbar roomToolbar = findViewById(R.id.roomToolbar);
-
-        roomToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        roomBinding.roomToolbarInclude.roomToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
 
-        roomToolbar.setTitle("Conversas");
+        roomBinding.roomToolbarInclude.roomToolbar.setTitle("Conversas");
     }
     public void configureRoomAdapter(ResponseRoom responseRoom) {
         RecyclerView recyclerView = roomBinding.recyclerRooms;
         recyclerView.setLayoutManager(new LinearLayoutManager(RoomActivity.this));
-        recyclerView.setAdapter(new RoomListAdapter(responseRoom.getResponse(), RoomActivity.this));
+        recyclerView.setAdapter(new RoomListAdapter(rooms = responseRoom.getResponse(), RoomActivity.this));
     }
 
     @Override
     public void onRoomClick(int position) {
-        Toast.makeText(this, "Item clicked with position " + position, Toast.LENGTH_SHORT).show();
+        Intent groupActivity = new Intent(this, GroupActivity.class);
+        bundle.putString("syncready_room_uuid", rooms.get(position).getUuidRoom());
+        bundle.putString("syncready_room_title", rooms.get(position).getNameRoom());
+        bundle.putString("syncready_room_image", rooms.get(position).getImage());
+        groupActivity.putExtras(bundle);
+
+        startActivity(groupActivity);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mSocket.disconnect();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mSocket != null) Log.d("Socket state", mSocket.connected() + "");
     }
 }

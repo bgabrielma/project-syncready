@@ -6,12 +6,17 @@ const configSocket = (io) => {
       socket.pk_uuid = pk_uuid
       socket.room_uuid = room_uuid
 
+      console.log(`New request from user with pk_uuid ${pk_uuid} and room_uuid ${ room_uuid }`)
+
       // connect socket to room
       socket.join(room_uuid)
-    })
 
-    socket.on("messageHasSent", function() {
-      io.to(socket.room_uuid).emit("newMessages")
+      // trigger event
+      /* io.to(room_uuid).emit("newMessages", {
+        user: "Jorge Penedo da Rocha Calhau",
+        message: "Eu sou uma pessoa"
+      }) */
+      
     })
   })
 }

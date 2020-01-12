@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.appbar.AppBarLayout
-    android:id="@+id/roomToolbarAppBarLayout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/roomToolbar"
+<layout>
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/roomToolbarAppBarLayout"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimaryLight"
-        android:elevation="4dp"
-        app:titleTextColor="@color/colorDimGrey"
-        app:navigationIcon="@drawable/ic_keyboard_backspace"
-        app:subtitleTextColor="@color/colorSilver"
-        app:menu="@menu/toolbar_room"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        android:layout_height="wrap_content">
 
-</com.google.android.material.appbar.AppBarLayout>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/roomToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimaryLight"
+            android:elevation="4dp"
+            app:titleTextColor="@color/colorDimGrey"
+            app:navigationIcon="@drawable/ic_keyboard_backspace"
+            app:subtitleTextColor="@color/colorSilver"
+            app:menu="@menu/toolbar_room"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+</layout>

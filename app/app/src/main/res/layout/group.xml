@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground">
+
+        <include
+            android:id="@+id/groupToolbarInclude"
+            layout="@layout/toolbar_group" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@+id/groupToolbarInclude"
+            android:layout_above="@+id/messageToolsZone"
+            android:id="@+id/recyclerMessages"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_marginBottom="20dp"
+            android:id="@+id/messageToolsZone"
+            android:layout_alignParentBottom="true"
+            android:layout_height="120dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <RelativeLayout
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/editTextCardZone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="@dimen/mtrl_card_spacing"
+                    app:cardCornerRadius="25dp"
+                    app:contentPadding="15dp"
+                    app:cardUseCompatPadding="true"
+                    android:padding="5dp">
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scrollbars="vertical"
+                        android:fillViewport="true">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editTextNewMessage"
+                            android:background="@android:color/transparent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:textSize="16sp"
+                            android:textCursorDrawable="@drawable/cursorcolor"
+                            android:hint="Diga algo :)"
+                            android:text=""
+                            />
+
+                    </ScrollView>
+                </com.google.android.material.card.MaterialCardView>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3">
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="55dp"
+                    android:layout_height="65dp"
+                    android:id="@+id/messageButtonSend"
+                    app:iconSize="35dp"
+                    app:iconGravity="textEnd"
+                    app:cornerRadius="40dp"
+                    app:backgroundTint="@color/colorPrimary"
+                    app:icon="@drawable/ic_send"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>
