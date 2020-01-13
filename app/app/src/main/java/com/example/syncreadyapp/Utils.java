@@ -37,7 +37,7 @@ public class Utils {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("Código QR inválido");
         builder.setMessage("Oops, não foi encontrado nenhuma sala a partir do código lido :(");
-        builder.setIcon(R.drawable.ic_block);
+        builder.setIcon(R.drawable.ic_clear);
         builder.setCancelable(false);
 
         return builder;
