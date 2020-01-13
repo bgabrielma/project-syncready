@@ -42,6 +42,7 @@ public class Utils {
 
         return builder;
     }
+    
     public static boolean isEmailPreValid(String email)
     {
         String regExpn =
