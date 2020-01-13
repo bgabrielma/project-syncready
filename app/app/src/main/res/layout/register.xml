@@ -248,6 +248,7 @@
                                 android:background="@drawable/btn_rounded"
                                 android:text="@string/CriarConta_name"
                                 android:elevation="10dp"
+                                android:textColor="@color/colorBlack"
                                 />
                         </LinearLayout>
                     </LinearLayout>
