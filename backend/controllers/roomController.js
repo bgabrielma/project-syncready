@@ -177,10 +177,13 @@ const get = function(req, res) {
     .innerJoin('Tickets', 'Tickets.Rooms_uuid_room', '=', 'Rooms.uuid_room')
     .innerJoin('Ticket_Options', 'Ticket_Options.uuid_ticket_options', '=', 'Tickets.Ticket_Options_uuid_ticket_options')
 
-  if (req.query.roomUUID)
+  if (req.query.roomCode)
+    instance.where({ room_code: req.query.roomCode })
+
+  else if (req.query.roomUUID)
     instance.where({ uuid_room: req.query.roomUUID })
 
-  if (req.query.userUUID)
+  else if (req.query.userUUID)
     instance
       .innerJoin('Users_has_Rooms', 'Rooms.uuid_room', 'Users_has_Rooms.Rooms_uuid_room')
       .andWhere({ 'Users_has_Rooms.Users_pk_uuid': req.query.userUUID })

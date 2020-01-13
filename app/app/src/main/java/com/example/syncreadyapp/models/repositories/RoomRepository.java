@@ -20,11 +20,16 @@ public class RoomRepository {
 
     private SyncReadyMobileDataService syncReadyMobileDataService = RetrofitInstance.getService();
 
-    public MutableLiveData<ResponseRoom> getRoomsByUserUUID(String uuid, String bearerToken) {
+    public MutableLiveData<ResponseRoom> getRooms(String uuid, String roomCode, String bearerToken) {
         final MutableLiveData<ResponseRoom> responseRoomMutableLiveData = new MutableLiveData<>();
         isNetworkTroubleLiveData.setValue(false);
 
-        Call<ResponseRoom> call = syncReadyMobileDataService.getRooms(uuid, bearerToken);
+        Call<ResponseRoom> call = null;
+
+        if(uuid != null && roomCode != null) throw new Error("Cannot query with both parameters");
+
+        if (uuid != null) call = syncReadyMobileDataService.getRooms(uuid, bearerToken);
+        else if (roomCode != null) call = syncReadyMobileDataService.getRoomByQR(roomCode, bearerToken);
 
         call.enqueue(new Callback<ResponseRoom>() {
             @Override

@@ -32,6 +32,16 @@ public class Utils {
 
         return builder;
     }
+
+    public static AlertDialog.Builder showInvalidRoomCode(Activity activity) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Código QR inválido");
+        builder.setMessage("Oops, não foi encontrado nenhuma sala a partir do código lido :(");
+        builder.setIcon(R.drawable.ic_block);
+        builder.setCancelable(false);
+
+        return builder;
+    }
     public static boolean isEmailPreValid(String email)
     {
         String regExpn =

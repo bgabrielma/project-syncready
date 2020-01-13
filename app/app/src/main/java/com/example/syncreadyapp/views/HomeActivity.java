@@ -91,6 +91,10 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 Intent intent = new Intent(getApplicationContext(), ScannerActivity.class);
+
+                if (HomeActivity.this.getIntent().getExtras() != null) {
+                    intent.putExtras(HomeActivity.this.getIntent().getExtras());
+                }
                 startActivity(intent);
 
                 return false;

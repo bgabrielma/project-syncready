@@ -1,136 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimaryLight">
-    <include
-        android:id="@+id/roomPreviewToolbarInclude"
-        layout="@layout/toolbar_simple_two"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+<layout>
     <LinearLayout
-        android:layout_marginTop="40dp"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryLight">
 
-        <com.google.android.material.card.MaterialCardView
-            android:background="@drawable/border_set"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            app:cardCornerRadius="65dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="@color/colorPrimaryLight"
-            app:cardElevation="@dimen/cardview_default_elevation">
+        <include
+            android:id="@+id/roomPreviewToolbarInclude"
+            layout="@layout/toolbar_simple_two"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/groupImage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/default_user_image"
-                android:scaleType="centerCrop" />
-        </com.google.android.material.card.MaterialCardView>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="40dp"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            style="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textSize="20sp"
-            android:text="ID:"/>
-
-        <TextView
-            android:layout_marginStart="10dp"
-            android:id="@+id/roomPreviewRoomId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textSize="16sp"
-            android:text="sbxahasjçdhsadas"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="40dp"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            style="@style/TextAppearance.MaterialComponents.Headline6"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:textAlignment="center"
-            android:id="@+id/roomPreviewRoomTitle"
+        <LinearLayout
+            android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:text="Problema no Disco - Asus - Jorge António"
-            />
+            android:gravity="center">
+
+            <com.google.android.material.card.MaterialCardView
+                android:background="@drawable/border_set"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                app:cardCornerRadius="65dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/colorPrimaryLight"
+                app:cardElevation="@dimen/cardview_default_elevation">
+
+                <ImageView
+                    android:id="@+id/groupImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/default_user_image"
+                    android:scaleType="centerCrop" />
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_marginEnd="105dp"
-                android:layout_marginTop="20dp"
-                android:textAlignment="center"
-                android:textColor="@color/colorDimGrey"
-                android:layout_width="match_parent"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:textSize="15sp"
-                android:text="Descrição"/>
+                android:textSize="20sp"
+                android:text="ID:"/>
 
-        <LinearLayout
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="50dp"
-            android:paddingEnd="50dp"
-            android:orientation="vertical">
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/mtrl_card_spacing"
-                android:layout_marginTop="@dimen/mtrl_card_spacing"
-                android:layout_marginRight="@dimen/mtrl_card_spacing"
-                android:layout_marginBottom="@dimen/mtrl_card_spacing"
-                app:cardCornerRadius="5dp"
-                app:contentPadding="20dp">
-                <TextView
-                    style="@style/TextAppearance.MaterialComponents.Body2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:text="Eu sou uma descrição e sou composto por um conjunto de caracteres que me fazem ter um contexto na vida."/>
-            </com.google.android.material.card.MaterialCardView>
-
-            <Button
-                android:layout_marginTop="30dp"
-                android:padding="20dp"
-                android:layout_gravity="center"
+            <TextView
+                android:id="@+id/roomPreviewRoomId"
+                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorBlack"
-                android:backgroundTint="@color/colorWhite"
-                android:text="Entrar agora" />
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="16sp"
+                android:text="sbxahasjçdhsadas"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/roomPreviewRoomTitle"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text="Problema no Disco - Asus - Jorge António"
+                />
+
+                <TextView
+                    android:layout_marginEnd="105dp"
+                    android:layout_marginTop="20dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorDimGrey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="15sp"
+                    android:text="Descrição"/>
+
+            <LinearLayout
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="50dp"
+                android:paddingEnd="50dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/mtrl_card_spacing"
+                    android:layout_marginTop="@dimen/mtrl_card_spacing"
+                    android:layout_marginRight="@dimen/mtrl_card_spacing"
+                    android:layout_marginBottom="@dimen/mtrl_card_spacing"
+                    app:cardCornerRadius="5dp"
+                    app:contentPadding="20dp">
+                    <TextView
+                        android:id="@+id/roomPreviewRoomDescription"
+                        style="@style/TextAppearance.MaterialComponents.Body2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:text="Eu sou uma descrição e sou composto por um conjunto de caracteres que me fazem ter um contexto na vida."/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <Button
+                    android:layout_marginTop="30dp"
+                    android:padding="20dp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:backgroundTint="@color/colorWhite"
+                    android:text="Entrar agora" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</layout>

@@ -23,6 +23,7 @@ public class HomeActivityViewModel extends AndroidViewModel {
 
     public MutableLiveData<String> uuidMutableLiveData = new MutableLiveData<>();
     public MutableLiveData<String> tokenAccessMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<String> roomCodeAccessMutableLiveData = new MutableLiveData<>();
     public MutableLiveData<User> userMutableLiveData = new MutableLiveData<>();
 
     // UI
@@ -46,7 +47,11 @@ public class HomeActivityViewModel extends AndroidViewModel {
     }
 
     public LiveData<ResponseRoom> getRooms(String uuid, String bearerToken) {
-        return roomRepository.getRoomsByUserUUID(uuid, bearerToken);
+        return roomRepository.getRooms(uuid, null, bearerToken);
+    }
+
+    public LiveData<ResponseRoom> getRoomByQR(String roomCode, String bearerToken) {
+        return roomRepository.getRooms(null, roomCode, bearerToken);
     }
 
     public void OnEnterNewRoomButtonClick(View view) {

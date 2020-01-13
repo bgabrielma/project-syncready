@@ -36,4 +36,7 @@ public interface SyncReadyMobileDataService {
 
     @GET("/room")
     Call<ResponseRoom> getRooms(@Query("userUUID") String uuid, @Header("Authorization") String authHeader);
+
+    @GET("/room")
+    Call<ResponseRoom> getRoomByQR(@Query("roomCode") String roomCode, @Header("Authorization") String authHeader);
 }
