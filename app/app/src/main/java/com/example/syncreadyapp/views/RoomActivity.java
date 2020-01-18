@@ -69,7 +69,6 @@ public class RoomActivity extends AppCompatActivity implements OnRoomListClickLi
         public void onChanged(ResponseRoom responseRoom) {
             roomBinding = DataBindingUtil.setContentView(RoomActivity.this, R.layout.room);
             roomBinding.setHomeActivityViewModel(homeActivityViewModel);
-
             configureToolbar();
             configureRoomAdapter(responseRoom);
         }
@@ -98,6 +97,8 @@ public class RoomActivity extends AppCompatActivity implements OnRoomListClickLi
         bundle.putString("syncready_room_title", rooms.get(position).getNameRoom());
         bundle.putString("syncready_room_image", rooms.get(position).getImage());
         groupActivity.putExtras(bundle);
+
+        mSocket.emit("joinRoomList", homeActivityViewModel.uuidMutableLiveData.getValue(), rooms.get(position).getUuidRoom());
 
         startActivity(groupActivity);
     }

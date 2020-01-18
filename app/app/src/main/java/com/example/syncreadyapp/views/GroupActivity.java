@@ -1,10 +1,15 @@
 package com.example.syncreadyapp.views;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
@@ -16,8 +21,10 @@ import com.example.syncreadyapp.models.usermodel.ResponseUser;
 import com.example.syncreadyapp.services.RetrofitInstance;
 import com.example.syncreadyapp.viewmodels.GroupActivityViewModel;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
+import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
+import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.net.URISyntaxException;
@@ -63,6 +70,10 @@ public class GroupActivity extends AppCompatActivity {
                 homeActivityViewModel.userMutableLiveData.setValue(responseUser.getData().get(0));
                 groupBinding = DataBindingUtil.setContentView(GroupActivity.this, R.layout.group);
                 configureToolbar();
+
+                socket.on("refreshGroupMessages", onNewMessage);
+
+                configureMessageButtonSend();
             }
         }
     };
@@ -84,5 +95,47 @@ public class GroupActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public void configureMessageButtonSend() {
+        groupBinding.messageButtonSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String messageContent = groupBinding.editTextNewMessage.getText().toString();
+
+                if(!messageContent.isEmpty()) {
+                    socket.emit("newMessage", homeActivityViewModel.uuidMutableLiveData.getValue(), groupActivityViewModel.roomUuid.getValue(), messageContent);
+                    groupBinding.editTextNewMessage.setText("");
+                }
+                else
+                    Snackbar.make(groupBinding.getRoot(), "Não é possível enviar mensagens com o corpo do texto em branco.", Snackbar.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private Emitter.Listener onNewMessage = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            GroupActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    AlertDialog dialog = new AlertDialog.Builder(GroupActivity.this)
+                        .setTitle("New messages from server!")
+                        .setMessage("Adapter needs to reload. New messages incoming")
+                        .setPositiveButton("Ok", null)
+                        .setCancelable(false)
+                        .create();
+
+                    dialog.show();
+                }
+            });
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        socket.disconnect();
+        socket.off("refreshGroupMessages", onNewMessage);
     }
 }

@@ -2,6 +2,7 @@ package com.example.syncreadyapp.viewmodels;
 
 import android.app.Application;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -56,6 +57,12 @@ public class HomeActivityViewModel extends AndroidViewModel {
 
     public void OnEnterNewRoomButtonClick(View view) {
         Intent scannerIntent = new Intent(view.getContext(), ScannerActivity.class);
+        Bundle userAuthInformations = new Bundle();
+
+        userAuthInformations.putString("sycnready_user_uuid", uuidMutableLiveData.getValue());
+        userAuthInformations.putString("syncready_user_token_access", tokenAccessMutableLiveData.getValue());
+        scannerIntent.putExtras(userAuthInformations);
+
         view.getContext().startActivity(scannerIntent);
     }
 }

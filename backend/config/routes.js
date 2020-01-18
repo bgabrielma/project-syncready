@@ -18,7 +18,7 @@ const MessagesController = require('../controllers/messagesController')
 
 
 router.use(function(req, res, next) {
-  const access = ['main', 'auth', 'logout', 'register', 'mobileValidateRegister', 'message'] // backend
+  const access = ['main', 'auth', 'logout', 'register', 'mobileValidateRegister'] // backend
   const urlFormatted = req.originalUrl.split('?').shift().split('/')
   
   if(access.includes(urlFormatted[1]) || req.cookies['SYNCREADY_COOKIE_LOGIN']) return next()
