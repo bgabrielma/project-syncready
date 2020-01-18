@@ -14,10 +14,11 @@ const TicketOptionsController = require('../controllers/ticketOptionsController'
 const UserRoomController = require('../controllers/usersRoomsController')
 const CompanyController = require('../controllers/companyController')
 const JsonWebTokenController = require('../controllers/jsonWebTokenController')
+const MessagesController = require('../controllers/messagesController')
 
 
 router.use(function(req, res, next) {
-  const access = ['main', 'auth', 'logout', 'register', 'mobileValidateRegister'] // backend
+  const access = ['main', 'auth', 'logout', 'register', 'mobileValidateRegister', 'message'] // backend
   const urlFormatted = req.originalUrl.split('?').shift().split('/')
   
   if(access.includes(urlFormatted[1]) || req.cookies['SYNCREADY_COOKIE_LOGIN']) return next()
@@ -94,6 +95,9 @@ router.get('/ticket/option/status', TicketOptionsController.get)
 
 // companies
 router.delete('/company', CompanyController.del)
+
+// messages
+router.get('/message', MessagesController.get)
 
 router.get('/cookies', function(req, res) {
   res.send(req.cookies)

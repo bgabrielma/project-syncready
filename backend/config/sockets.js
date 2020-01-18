@@ -1,3 +1,5 @@
+const messagesController = require('../controllers/messagesController')
+
 const configSocket = (io) => {
 
   io.on('connection', function (socket) {
@@ -10,13 +12,20 @@ const configSocket = (io) => {
 
       // connect socket to room
       socket.join(room_uuid)
+    })
 
-      // trigger event
-      /* io.to(room_uuid).emit("newMessages", {
-        user: "Jorge Penedo da Rocha Calhau",
-        message: "Eu sou uma pessoa"
-      }) */
-      
+    socket.on("newMessage", async function(pk_uuid, room_uuid, message) {
+      const call = await messagesController.newMessage({ content: message, pk_uuid, room_uuid })
+
+      await call.callback()
+          .then(_ => {
+            io.to(room_uuid).emit("refreshGroupMessages", {
+              content: message,
+              pk_uuid,
+              room_uuid,
+              sentAt: call.sentAt
+            })
+          })
     })
   })
 }

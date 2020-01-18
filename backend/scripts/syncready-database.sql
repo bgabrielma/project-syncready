@@ -94,7 +94,7 @@
     `content` TEXT NOT NULL,
     `created_at` DATETIME NOT NULL,
     `update_at` DATETIME NOT NULL,
-    `uuid_message` VARCHAR(255) NOT NULL,
+    `uuid_message` VARCHAR(255) NOT NULL DEFAULT UUID(),
     `Status_Message_uuid_status_message` VARCHAR(100) NOT NULL,
     PRIMARY KEY (`pk_message`, `uuid_message`, `Status_Message_uuid_status_message`))
   ENGINE = InnoDB;
@@ -106,7 +106,7 @@
   DROP TABLE IF EXISTS `Messages_has_Users` ;
 
   CREATE TABLE IF NOT EXISTS `Messages_has_Users` (
-    `Messages_uuid_message` VARCHAR(255) NOT NULL,
+    `Messages_uuid_message` VARCHAR(255) NOT NULL DEFAULT UUID(),
     `Users_pk_uuid` VARCHAR(255) NOT NULL,
     `Rooms_uuid_room` VARCHAR(255) NOT NULL,
     `sent_at` DATETIME NOT NULL,
@@ -155,7 +155,7 @@
 
   CREATE TABLE IF NOT EXISTS `Status_Message` (
     `pk_status_message` INT NOT NULL AUTO_INCREMENT,
-    `uuid_status_message` VARCHAR(100) NOT NULL,
+    `uuid_status_message` VARCHAR(100) NOT NULL DEFAULT UUID(),
     `designation` VARCHAR(45) NULL,
     PRIMARY KEY (`pk_status_message`, `uuid_status_message`))
   ENGINE = InnoDB;
