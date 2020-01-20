@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.adapters.MessageListAdapter;
 import com.example.syncreadyapp.databinding.GroupBinding;
+import com.example.syncreadyapp.models.messagemodel.MessageModel;
 import com.example.syncreadyapp.models.messagemodel.ResponseMessage;
 import com.example.syncreadyapp.models.usermodel.ResponseUser;
 import com.example.syncreadyapp.models.usermodel.User;
@@ -32,20 +33,28 @@ import com.github.nkzawa.socketio.client.Socket;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.net.URISyntaxException;
+import java.util.List;
 
 public class GroupActivity extends AppCompatActivity {
-    protected Socket socket;
+    private Socket socket;
     private HomeActivityViewModel homeActivityViewModel;
     private GroupActivityViewModel groupActivityViewModel;
     private GroupBinding groupBinding;
     private Bundle bundle;
+    private List<MessageModel> messageModels;
+
+    protected RecyclerView recyclerViewMessages;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.group);
 
+        setContentView(R.layout.group);
         try {
             socket = IO.socket(RetrofitInstance.BASE_URL);
             socket.connect();
@@ -73,9 +82,15 @@ public class GroupActivity extends AppCompatActivity {
         public void onChanged(ResponseMessage responseMessage) {
             if (responseMessage.getData() != null) {
                 // configure adapter
-                RecyclerView recyclerView = groupBinding.recyclerMessages;
-                recyclerView.setLayoutManager(new LinearLayoutManager(GroupActivity.this));
-                recyclerView.setAdapter(new MessageListAdapter(responseMessage.getData(), homeActivityViewModel.uuidMutableLiveData.getValue()));
+                recyclerViewMessages = groupBinding.recyclerMessages;
+
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(GroupActivity.this);
+                linearLayoutManager.setStackFromEnd(true);
+
+                recyclerViewMessages.setLayoutManager(linearLayoutManager);
+                messageModels = responseMessage.getData();
+
+                recyclerViewMessages.setAdapter(new MessageListAdapter(messageModels, homeActivityViewModel.uuidMutableLiveData.getValue()));
             }
         }
     };
@@ -151,18 +166,33 @@ public class GroupActivity extends AppCompatActivity {
 
     private Emitter.Listener onNewMessage = new Emitter.Listener() {
         @Override
-        public void call(Object... args) {
+        public void call(final Object... args) {
             GroupActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    AlertDialog dialog = new AlertDialog.Builder(GroupActivity.this)
-                        .setTitle("New messages from server!")
-                        .setMessage("Adapter needs to reload. New messages incoming")
-                        .setPositiveButton("Ok", null)
-                        .setCancelable(false)
-                        .create();
+                    JSONObject jsonObject = (JSONObject) args[0];
+                    try {
+                        jsonObject = jsonObject.getJSONArray("newMessage").getJSONObject(0);
 
-                    dialog.show();
+                        messageModels.add(new MessageModel(
+                                jsonObject.getString("fullname"),
+                                jsonObject.getString("pk_uuid"),
+                                jsonObject.getInt("pk_message"),
+                                jsonObject.getString("content"),
+                                jsonObject.getString("created_at"),
+                                jsonObject.getString("update_at"),
+                                jsonObject.getString("uuid_message"),
+                                jsonObject.getString("Status_Message_uuid_status_message"),
+                                jsonObject.getString("type"),
+                                jsonObject.getString("sent_at")
+                        ));
+
+                        recyclerViewMessages.getAdapter().notifyItemInserted(messageModels.size() - 1);
+                        recyclerViewMessages.smoothScrollToPosition(messageModels.size() - 1);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         }

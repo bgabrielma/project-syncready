@@ -35,6 +35,21 @@ public class MessageModel {
     @Expose
     private String sentAt;
 
+    public MessageModel() { }
+
+    public MessageModel(String fullname, String pkUuid, Integer pkMessage, String content, String createdAt, String updateAt, String uuidMessage, String statusMessageUuidStatusMessage, String type, String sentAt) {
+        this.fullname = fullname;
+        this.pkUuid = pkUuid;
+        this.pkMessage = pkMessage;
+        this.content = content;
+        this.createdAt = createdAt;
+        this.updateAt = updateAt;
+        this.uuidMessage = uuidMessage;
+        this.statusMessageUuidStatusMessage = statusMessageUuidStatusMessage;
+        this.type = type;
+        this.sentAt = sentAt;
+    }
+
     public String getFullname() {
         return fullname;
     }
