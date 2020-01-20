@@ -1,35 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <RelativeLayout
-        android:layout_gravity="end"
-        android:layout_width="300dp"
+<layout>
+    <data>
+        <variable
+            name="Message"
+            type="com.example.syncreadyapp.models.messagemodel.MessageModel" />
+    </data>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.card.MaterialCardView
-            app:cardCornerRadius="20dp"
-            android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/colorPrimary"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="15dp"
-            android:minHeight="20dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="end"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:padding="15dp"
-                android:textSize="20sp"
-                android:layout_alignParentEnd="true"
+            <com.google.android.material.card.MaterialCardView
+                android:layout_gravity="end"
+                app:cardCornerRadius="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hello! I'm an message."
-                android:textColor="@color/colorDimGrey"/>
+                app:cardBackgroundColor="@color/colorPrimary"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="15dp"
+                android:minHeight="20dp">
 
-        </com.google.android.material.card.MaterialCardView>
-    </RelativeLayout>
-</LinearLayout>
+                <TextView
+                    android:padding="15dp"
+                    android:textSize="17sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{Message.content}"
+                    android:textColor="@color/colorDimGrey"/>
+
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

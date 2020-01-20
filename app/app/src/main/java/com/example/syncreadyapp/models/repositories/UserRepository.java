@@ -116,30 +116,8 @@ public class UserRepository {
     }
 
     public MutableLiveData<ResponseUser> getUserDataByUuid(String uuid, String bearerToken) {
-        final MutableLiveData<ResponseUser> responseUserMutableLiveData = new MutableLiveData<>();
         isNetworkTroubleLiveData.setValue(false);
-
-        Call<ResponseUser> call = syncReadyMobileDataService.getUser(uuid, bearerToken);
-
-        call.enqueue(new Callback<ResponseUser>() {
-            @Override
-            public void onResponse(Call<ResponseUser> call, Response<ResponseUser> response) {
-                ResponseUser responseUser = response.body();
-
-                if (responseUser != null) {
-                    responseUserMutableLiveData.setValue(responseUser);
-                } else {
-                    responseUserMutableLiveData.setValue(null);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseUser> call, Throwable t) {
-                responseUserMutableLiveData.setValue(null);
-            }
-        });
-
-        return responseUserMutableLiveData;
+        return fetchUsers(syncReadyMobileDataService.getUser(uuid, bearerToken));
     }
 
     public MutableLiveData<ResponseHomeData> getHomeData(String uuid, String bearerToken) {
@@ -166,5 +144,34 @@ public class UserRepository {
         });
 
         return responseHomeDataMutableLiveData;
+    }
+
+    public MutableLiveData<ResponseUser> getUsersByRoom(String roomUUID, String bearerToken) {
+        isNetworkTroubleLiveData.setValue(false);
+        return fetchUsers(syncReadyMobileDataService.getUsersByRoom(roomUUID, bearerToken));
+    }
+
+    private MutableLiveData<ResponseUser> fetchUsers(Call<ResponseUser> call) {
+        final MutableLiveData<ResponseUser> responseUserMutableLiveData = new MutableLiveData<>();
+
+        call.enqueue(new Callback<ResponseUser>() {
+            @Override
+            public void onResponse(Call<ResponseUser> call, Response<ResponseUser> response) {
+                ResponseUser responseUser = response.body();
+
+                if (responseUser != null) {
+                    responseUserMutableLiveData.setValue(responseUser);
+                } else {
+                    responseUserMutableLiveData.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseUser> call, Throwable t) {
+                responseUserMutableLiveData.setValue(null);
+            }
+        });
+
+        return responseUserMutableLiveData;
     }
 }

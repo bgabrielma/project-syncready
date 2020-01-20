@@ -1,8 +1,8 @@
 const db = require('../config/db')
 
-const get = async (req, res) => {
+const post = async (req, res) => {
 
-  const { content, userUUID, roomUUID } = req.query
+  const { content, userUUID, roomUUID } = req.body
 
   if (!content || !userUUID || !roomUUID) return res.status(401).send({ err: "Data missing" })  
 
@@ -52,11 +52,40 @@ const newMessage = async (data) => {
             sent_at: dateNow
           })
       },
-      sentAt: dateNow
+      newMessageUUID
     }
 }
 
+const get = async (req, res) => {
+  
+  if (!req.query.roomUUID) {
+    return res.status(401).send({ err: "Messages not found with room provider" })
+  }
+  
+  await getMessage(req.query.roomUUID, null)
+    .then(data => res.status(200).send({ ok: true, data }))
+    .catch(err => res.status(500).send(err))
+
+}
+
+const getMessage = (roomUUID, messageUUID) => {
+  
+  const query = db('Messages')
+    .select('Users.fullname', 'Users.pk_uuid', 'Messages.*', 'Type_Of_User.type', 'Messages_has_Users.sent_at')
+    .innerJoin('Messages_has_Users', 'Messages_has_Users.Messages_uuid_message', '=', 'Messages.uuid_message')
+    .innerJoin('Users', 'Users.pk_uuid', '=', 'Messages_has_Users.Users_pk_uuid')
+    .innerJoin('Type_Of_User', 'Users.Type_Of_User_uuid_type_of_users', '=', 'Type_Of_User.uuid_type_of_users')
+    .where('Messages_has_Users.Rooms_uuid_room', roomUUID)
+
+    if(messageUUID)
+      query.andWhere('Messages.uuid_message', '=', messageUUID)
+
+  return query
+}
+
 module.exports = {
+  post,
   get,
-  newMessage
+  newMessage,
+  getMessage
 }

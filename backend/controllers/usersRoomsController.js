@@ -3,7 +3,7 @@ const db = require('../config/db')
 const get = async function(req, res) {
 
   if(!req.query.roomUUID) {
-    return res.status(401).send({ err: 'Users not found in room provider' })
+    return res.status(401).send({ err: 'Users not found with room provider' })
   }
 
   await db('Users')

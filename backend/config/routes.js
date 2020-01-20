@@ -97,6 +97,7 @@ router.get('/ticket/option/status', TicketOptionsController.get)
 router.delete('/company', CompanyController.del)
 
 // messages
+router.post('/message', MessagesController.post)
 router.get('/message', MessagesController.get)
 
 router.get('/cookies', function(req, res) {

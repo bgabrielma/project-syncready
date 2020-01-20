@@ -14,10 +14,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.syncreadyapp.R;
+import com.example.syncreadyapp.adapters.MessageListAdapter;
 import com.example.syncreadyapp.databinding.GroupBinding;
+import com.example.syncreadyapp.models.messagemodel.ResponseMessage;
 import com.example.syncreadyapp.models.usermodel.ResponseUser;
+import com.example.syncreadyapp.models.usermodel.User;
 import com.example.syncreadyapp.services.RetrofitInstance;
 import com.example.syncreadyapp.viewmodels.GroupActivityViewModel;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
@@ -43,6 +48,7 @@ public class GroupActivity extends AppCompatActivity {
 
         try {
             socket = IO.socket(RetrofitInstance.BASE_URL);
+            socket.connect();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -62,18 +68,49 @@ public class GroupActivity extends AppCompatActivity {
                 .observe(this, getUserDataObserver);
     }
 
+    private final Observer<ResponseMessage> getMessagesByRoomObserver = new Observer<ResponseMessage>() {
+        @Override
+        public void onChanged(ResponseMessage responseMessage) {
+            if (responseMessage.getData() != null) {
+                // configure adapter
+                RecyclerView recyclerView = groupBinding.recyclerMessages;
+                recyclerView.setLayoutManager(new LinearLayoutManager(GroupActivity.this));
+                recyclerView.setAdapter(new MessageListAdapter(responseMessage.getData(), homeActivityViewModel.uuidMutableLiveData.getValue()));
+            }
+        }
+    };
+
+    private final Observer<ResponseUser> getUsersByRoomObserver = new Observer<ResponseUser>() {
+        @Override
+        public void onChanged(ResponseUser responseUser) {
+
+            if (responseUser.getData() != null) {
+                groupBinding = DataBindingUtil.setContentView(GroupActivity.this, R.layout.group);
+                configureToolbar();
+
+                socket.on("refreshGroupMessages", onNewMessage);
+                for (User user : responseUser.getData()) {
+                    String text = groupBinding.groupToolbarInclude.toolbarGroupUsersFormatted.getText().toString();
+                        groupBinding.groupToolbarInclude.toolbarGroupUsersFormatted.setText(text + user.getFullname().split(" ")[0] + (user == responseUser.getData().get(responseUser.getData().size() - 1) ? "" : ", "));
+                }
+
+                configureMessageButtonSend();
+            }
+
+            groupActivityViewModel.getMessagesByRoom(groupActivityViewModel.roomUuid.getValue(), homeActivityViewModel.tokenAccessMutableLiveData.getValue())
+                    .observe(GroupActivity.this, getMessagesByRoomObserver);
+        }
+    };
+
     private final Observer<ResponseUser> getUserDataObserver = new Observer<ResponseUser>() {
         @Override
         public void onChanged(ResponseUser responseUser) {
 
             if (responseUser.getData() != null) {
                 homeActivityViewModel.userMutableLiveData.setValue(responseUser.getData().get(0));
-                groupBinding = DataBindingUtil.setContentView(GroupActivity.this, R.layout.group);
-                configureToolbar();
 
-                socket.on("refreshGroupMessages", onNewMessage);
-
-                configureMessageButtonSend();
+                groupActivityViewModel.getUsersByRoom(groupActivityViewModel.roomUuid.getValue(), homeActivityViewModel.tokenAccessMutableLiveData.getValue())
+                        .observe(GroupActivity.this, getUsersByRoomObserver);
             }
         }
     };
@@ -81,7 +118,6 @@ public class GroupActivity extends AppCompatActivity {
 
     public void configureToolbar() {
         groupBinding.groupToolbarInclude.toolbarGroupTitle.setText(groupActivityViewModel.roomTitle.getValue());
-        groupBinding.groupToolbarInclude.toolbarGroupUsersFormatted.setText("Bruno, Rafaela, Rafaela, Mafalda, Marta, Carolina");
 
         // set image
         Picasso.get()

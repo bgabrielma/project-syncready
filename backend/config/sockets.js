@@ -18,13 +18,13 @@ const configSocket = (io) => {
       const call = await messagesController.newMessage({ content: message, pk_uuid, room_uuid })
 
       await call.callback()
-          .then(_ => {
-            io.to(room_uuid).emit("refreshGroupMessages", {
-              content: message,
-              pk_uuid,
-              room_uuid,
-              sentAt: call.sentAt
-            })
+          .then(async _ => {
+            
+            await messagesController.getMessage(room_uuid, call.newMessageUUID)
+              .then(newMessage => {
+                newMessage[0].sent_at = new Date(newMessage[0].sent_at).toISOString().slice(0, 19).replace('T', ' ')
+                io.to(room_uuid).emit("refreshGroupMessages", { newMessage })
+              })
           })
     })
   })
