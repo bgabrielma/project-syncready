@@ -50,6 +50,8 @@ public class GroupActivity extends AppCompatActivity {
 
     protected RecyclerView recyclerViewMessages;
 
+    private String usersGroupFormated = "";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,20 +102,18 @@ public class GroupActivity extends AppCompatActivity {
         public void onChanged(ResponseUser responseUser) {
 
             if (responseUser.getData() != null) {
-                groupBinding = DataBindingUtil.setContentView(GroupActivity.this, R.layout.group);
-                configureToolbar();
 
                 socket.on("refreshGroupMessages", onNewMessage);
                 for (User user : responseUser.getData()) {
-                    String text = groupBinding.groupToolbarInclude.toolbarGroupUsersFormatted.getText().toString();
-                        groupBinding.groupToolbarInclude.toolbarGroupUsersFormatted.setText(text + user.getFullname().split(" ")[0] + (user == responseUser.getData().get(responseUser.getData().size() - 1) ? "" : ", "));
+                    usersGroupFormated = usersGroupFormated.concat(user.getFullname().split(" ")[0] + (user == responseUser.getData().get(responseUser.getData().size() - 1) ? "" : ", "));
                 }
 
-                configureMessageButtonSend();
-            }
+                // set group's user text value
+                groupBinding.groupToolbarInclude.toolbarGroupUsersFormatted.setText(usersGroupFormated);
 
-            groupActivityViewModel.getMessagesByRoom(groupActivityViewModel.roomUuid.getValue(), homeActivityViewModel.tokenAccessMutableLiveData.getValue())
-                    .observe(GroupActivity.this, getMessagesByRoomObserver);
+                groupActivityViewModel.getMessagesByRoom(groupActivityViewModel.roomUuid.getValue(), homeActivityViewModel.tokenAccessMutableLiveData.getValue())
+                        .observe(GroupActivity.this, getMessagesByRoomObserver);
+            }
         }
     };
 
@@ -122,6 +122,11 @@ public class GroupActivity extends AppCompatActivity {
         public void onChanged(ResponseUser responseUser) {
 
             if (responseUser.getData() != null) {
+                groupBinding = DataBindingUtil.setContentView(GroupActivity.this, R.layout.group);
+                configureToolbar();
+
+                configureMessageButtonSend();
+
                 homeActivityViewModel.userMutableLiveData.setValue(responseUser.getData().get(0));
 
                 groupActivityViewModel.getUsersByRoom(groupActivityViewModel.roomUuid.getValue(), homeActivityViewModel.tokenAccessMutableLiveData.getValue())
@@ -201,7 +206,12 @@ public class GroupActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        socket.disconnect();
         socket.off("refreshGroupMessages", onNewMessage);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("Socket state", "" + socket.connected());
     }
 }

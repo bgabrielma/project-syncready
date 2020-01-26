@@ -63,7 +63,10 @@ const get = async (req, res) => {
   }
   
   await getMessage(req.query.roomUUID, null)
-    .then(data => res.status(200).send({ ok: true, data }))
+    .then(data => { 
+      console.log(data)
+      res.status(200).send({ ok: true, data })
+    })
     .catch(err => res.status(500).send(err))
 
 }
@@ -76,9 +79,12 @@ const getMessage = (roomUUID, messageUUID) => {
     .innerJoin('Users', 'Users.pk_uuid', '=', 'Messages_has_Users.Users_pk_uuid')
     .innerJoin('Type_Of_User', 'Users.Type_Of_User_uuid_type_of_users', '=', 'Type_Of_User.uuid_type_of_users')
     .where('Messages_has_Users.Rooms_uuid_room', roomUUID)
+    .orderBy('Messages_has_Users.sent_at', 'ASC')
 
     if(messageUUID)
       query.andWhere('Messages.uuid_message', '=', messageUUID)
+
+      console.log(query.toString())
 
   return query
 }

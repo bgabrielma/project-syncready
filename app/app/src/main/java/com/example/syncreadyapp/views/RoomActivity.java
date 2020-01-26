@@ -110,8 +110,8 @@ public class RoomActivity extends AppCompatActivity implements OnRoomListClickLi
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (mSocket != null) Log.d("Socket state", mSocket.connected() + "");
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("Socket state", "" + mSocket.connected());
     }
 }
