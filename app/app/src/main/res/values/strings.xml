@@ -37,4 +37,5 @@
     <string name="rightNow">Agora mesmo</string>
     <string name="maintenance">A nossa app vai entrar em manutenção...</string>
     <string name="touch">Toque</string>
+    <string name="roomName">Nome da sala</string>
 </resources>
