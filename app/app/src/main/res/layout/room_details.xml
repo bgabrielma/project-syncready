@@ -45,7 +45,7 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:title="I'm an title"
+                    app:title="I'm a title"
                     app:menu="@menu/toolbar_room_details"
                     app:navigationIcon="@drawable/ic_keyboard_backspace"
                     app:layout_collapseMode="pin"/>
