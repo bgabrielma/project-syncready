@@ -28,5 +28,13 @@
         <item name="boxStrokeWidth">0.6dp</item>
         <item name="hintTextAppearance">@style/HintText</item>
     </style>
+
+    <style name="expanded_title" parent="Widget.AppCompat.Toolbar">
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="collapse_title" parent="Widget.AppCompat.Toolbar">
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
 </resources>
 

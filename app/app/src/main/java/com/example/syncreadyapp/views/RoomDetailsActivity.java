@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.databinding.RoomDetailsBinding;
-import com.example.syncreadyapp.databinding.RoomDetailsBindingImpl;
 
 public class RoomDetailsActivity extends AppCompatActivity {
     private RoomDetailsBinding detailsBinding;
