@@ -1,5 +1,6 @@
 package com.example.syncreadyapp.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -151,6 +152,18 @@ public class GroupActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        groupBinding.groupToolbarInclude.linearDetailsZone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!homeActivityViewModel.userMutableLiveData.getValue().getType().equalsIgnoreCase("Cliente")) {
+                    Intent roomDetailsActivity = new Intent(GroupActivity.this, RoomDetailsActivity.class);
+                    roomDetailsActivity.putExtras(GroupActivity.this.getIntent().getExtras());
+
+                    startActivity(roomDetailsActivity);
+                }
+            }
+        });
     }
 
     public void configureMessageButtonSend() {
@@ -212,6 +225,13 @@ public class GroupActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+        Log.d("Socket state", "" + socket.connected());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        socket.connected();
         Log.d("Socket state", "" + socket.connected());
     }
 }

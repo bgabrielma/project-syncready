@@ -69,7 +69,7 @@
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardElevation="8dp"
+                        app:cardElevation="2dp"
                         app:cardUseCompatPadding="true"
                         android:padding="16dp">
                         <LinearLayout
@@ -89,7 +89,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardElevation="8dp"
+                app:cardElevation="2dp"
                 app:cardUseCompatPadding="true"
                 android:padding="16dp">
                 <LinearLayout
@@ -117,7 +117,7 @@
             <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardElevation="8dp"
+                    app:cardElevation="2dp"
                     app:cardUseCompatPadding="true"
                     android:padding="16dp">
                     <LinearLayout
