@@ -85,10 +85,12 @@ router.get('/user/type', TypeUserController.get)
 
 // User has rooms
 router.get('/user/room', UserRoomController.get)
+router.get('/user/room/add', RoomController.addIntoRoom)
 
 // room
 router.get('/room', RoomController.get)
 router.post('/room', RoomController.post)
+router.get('/verify/room', RoomController.verifyUserInRoom)
 
 // ticket option
 router.get('/ticket/option/status', TicketOptionsController.get)

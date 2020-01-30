@@ -124,6 +124,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <Button
+                    android:id="@+id/roomPreviewJoinGroup"
                     android:layout_marginTop="30dp"
                     android:padding="20dp"
                     android:layout_gravity="center"

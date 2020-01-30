@@ -17,6 +17,7 @@ import com.example.syncreadyapp.models.room.ResponseRoom;
 import com.example.syncreadyapp.models.usermodel.ResponseUser;
 import com.example.syncreadyapp.models.usermodel.User;
 import com.example.syncreadyapp.views.ScannerActivity;
+import com.google.gson.JsonObject;
 
 public class HomeActivityViewModel extends AndroidViewModel {
     private UserRepository userRepository;
@@ -25,6 +26,7 @@ public class HomeActivityViewModel extends AndroidViewModel {
     public MutableLiveData<String> uuidMutableLiveData = new MutableLiveData<>();
     public MutableLiveData<String> tokenAccessMutableLiveData = new MutableLiveData<>();
     public MutableLiveData<String> roomCodeAccessMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<String> roomUuidAccessMutableLiveData = new MutableLiveData<>();
     public MutableLiveData<User> userMutableLiveData = new MutableLiveData<>();
 
     // UI
@@ -55,12 +57,20 @@ public class HomeActivityViewModel extends AndroidViewModel {
         return roomRepository.getRooms(null, roomCode, bearerToken);
     }
 
+    public LiveData<JsonObject> validationUserInRoom(String userUUID, String roomUUID, String bearerToken) {
+        return roomRepository.validationIsUserInRoom(userUUID, roomUUID, bearerToken);
+    }
+
+    public LiveData<ResponseRoom> addUserIntoRoom(String userUUID, String roomUUID, String bearerToken) {
+        return roomRepository.addUserIntoRoom(userUUID, roomUUID, bearerToken);
+    }
+
     public void OnEnterNewRoomButtonClick(View view) {
         Intent scannerIntent = new Intent(view.getContext(), ScannerActivity.class);
         Bundle userAuthInformations = new Bundle();
 
         userAuthInformations.putString("sycnready_user_uuid", uuidMutableLiveData.getValue());
-        userAuthInformations.putString("syncready_user_token_access", tokenAccessMutableLiveData.getValue());
+        userAuthInformations.putString("syncready_user_token_access", tokenAccessMutableLiveData.getValue().split(" ")[1]);
         scannerIntent.putExtras(userAuthInformations);
 
         view.getContext().startActivity(scannerIntent);

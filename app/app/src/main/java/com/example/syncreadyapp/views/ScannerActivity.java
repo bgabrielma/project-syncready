@@ -17,6 +17,7 @@ import com.example.syncreadyapp.Utils;
 import com.example.syncreadyapp.models.room.ResponseRoom;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.JsonObject;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 
@@ -34,6 +35,8 @@ public class ScannerActivity extends AppCompatActivity {
 
     private Bundle bundle;
     private List<BarcodeFormat> barcodeFormats = new ArrayList<>();
+
+    private String uuidroom = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,14 +80,33 @@ public class ScannerActivity extends AppCompatActivity {
         @Override
         public void onChanged(ResponseRoom responseRoom) {
             if (responseRoom.getResponse().size() != 0) {
+
+                homeActivityViewModel.validationUserInRoom(homeActivityViewModel.uuidMutableLiveData.getValue(), ScannerActivity.this.uuidroom = responseRoom.getResponse().get(0).getUuidRoom(), homeActivityViewModel.tokenAccessMutableLiveData.getValue())
+                        .observe(ScannerActivity.this, validationUserInRoomObserver);
+            } else {
+                Utils.showInvalidRoomCode(ScannerActivity.this).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                }).show();
+            }
+        }
+    };
+
+    private final Observer<JsonObject> validationUserInRoomObserver = new Observer<JsonObject>() {
+        @Override
+        public void onChanged(JsonObject jsonObject) {
+            if(jsonObject.get("count").getAsInt() == 0) {
                 Intent roomPreview = new Intent(ScannerActivity.this, RoomPreviewActivity.class);
                 bundle.putString("syncready_room_code", rawResult);
+                bundle.putString("syncready_room_uuid", ScannerActivity.this.uuidroom);
 
                 roomPreview.putExtras(bundle);
                 startActivity(roomPreview);
                 finish();
             } else {
-                Utils.showInvalidRoomCode(ScannerActivity.this).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                Utils.showAlreadyAdded(ScannerActivity.this).setPositiveButton("Voltar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         finish();

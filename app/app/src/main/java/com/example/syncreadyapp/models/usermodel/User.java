@@ -40,6 +40,9 @@ public class User {
     @SerializedName("Type_Of_User_uuid_type_of_users")
     @Expose
     private String typeOfUserUuidTypeOfUsers;
+    @SerializedName("image")
+    @Expose
+    private String image;
     @SerializedName("type")
     @Expose
     private String type;
@@ -146,5 +149,13 @@ public class User {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

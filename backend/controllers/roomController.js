@@ -10,6 +10,31 @@ const saveUsersIntoRoom = function(pk_uuid, room_uuid) {
     })
 }
 
+const addIntoRoom = async function(req, res) {
+  const { roomUUID, userUUID } = req.query
+
+  if (!roomUUID || !userUUID) return res.status(401).send({ err: 'Invalid data received' })
+
+  await saveUsersIntoRoom(userUUID, roomUUID)
+    .then(_res => res.status(200).send({ ok: true }))
+    .catch(err => res.status(500).send(err))
+}
+
+const verifyUserInRoom = async function(req, res) {
+  const { roomUUID, userUUID } = req.query
+
+  if (!roomUUID || !userUUID) return res.status(401).send({ err: 'Invalid data received' })
+  
+  await db('Users_has_Rooms')
+    .count('*', { as: 'count' })
+    .where({
+      Users_pk_uuid: userUUID,
+      Rooms_uuid_room: roomUUID
+    })
+    .then(_res => res.status(200).send({ ok: true, count: _res[0].count }))
+    .catch(err => res.status(500).send(err))
+}
+
 const saveRoom = async function(req, res) {
 
   const { nameRoom, description, roomCode, datasheet, members, untilAt } = req.body
@@ -196,5 +221,7 @@ const get = function(req, res) {
 module.exports = {
   get,
   post,
-  saveRoom
+  saveRoom,
+  verifyUserInRoom,
+  addIntoRoom
 }

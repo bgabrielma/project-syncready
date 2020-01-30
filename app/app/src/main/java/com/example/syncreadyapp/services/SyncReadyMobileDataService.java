@@ -10,13 +10,13 @@ import com.example.syncreadyapp.models.registermodel.RegisterModel;
 import com.example.syncreadyapp.models.userinsert.ResponseUserInsert;
 import com.example.syncreadyapp.models.userlogged.ResponseUserLogged;
 import com.example.syncreadyapp.userregistervalidate.ValidateRegisterModel;
+import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface SyncReadyMobileDataService {
@@ -46,4 +46,10 @@ public interface SyncReadyMobileDataService {
 
     @GET("/message")
     Call<ResponseMessage> getMessagesByRoom(@Query("roomUUID") String roomUUID, @Header("Authorization") String authHeader);
+
+    @GET("/verify/room")
+    Call<JsonObject> validationIsUserInRoom(@Query("userUUID") String userUUID, @Query("roomUUID") String roomUUID, @Header("Authorization") String authHeader);
+
+    @GET("/user/room/add")
+    Call<ResponseRoom> addUserIntoRoom(@Query("userUUID") String userUUID, @Query("roomUUID") String roomUUID, @Header("Authorization") String authHeader);
 }

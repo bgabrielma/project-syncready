@@ -1,5 +1,6 @@
 package com.example.syncreadyapp.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -31,8 +32,10 @@ public class RoomPreviewActivity extends AppCompatActivity {
         homeActivityViewModel = ViewModelProviders.of(RoomPreviewActivity.this).get(HomeActivityViewModel.class);
 
         bundle = this.getIntent().getExtras();
+        homeActivityViewModel.uuidMutableLiveData.setValue(bundle.getString("sycnready_user_uuid", null));
         homeActivityViewModel.roomCodeAccessMutableLiveData.setValue(bundle.getString("syncready_room_code", null));
         homeActivityViewModel.tokenAccessMutableLiveData.setValue("Bearer " + bundle.getString("syncready_user_token_access", null));
+        homeActivityViewModel.roomUuidAccessMutableLiveData.setValue(bundle.getString("syncready_room_uuid", null));
 
         homeActivityViewModel.getRoomByQR(homeActivityViewModel.roomCodeAccessMutableLiveData.getValue(), homeActivityViewModel.tokenAccessMutableLiveData.getValue())
                 .observe(this, getRoomsObserver);
@@ -43,6 +46,14 @@ public class RoomPreviewActivity extends AppCompatActivity {
         public void onChanged(ResponseRoom responseRoom) {
             Room room = responseRoom.getResponse().get(0);
             roompreviewBinding = DataBindingUtil.setContentView(RoomPreviewActivity.this, R.layout.roompreview);
+
+            roompreviewBinding.roomPreviewJoinGroup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    homeActivityViewModel.addUserIntoRoom(homeActivityViewModel.uuidMutableLiveData.getValue(), homeActivityViewModel.roomUuidAccessMutableLiveData.getValue(), homeActivityViewModel.tokenAccessMutableLiveData.getValue())
+                            .observe(RoomPreviewActivity.this, addUserIntoRoomObserver);
+                }
+            });
 
             roompreviewBinding.roomPreviewToolbarInclude.roomToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -60,6 +71,16 @@ public class RoomPreviewActivity extends AppCompatActivity {
             roompreviewBinding.roomPreviewRoomTitle.setText(room.getNameRoom());
             roompreviewBinding.roomPreviewRoomId.setText(room.getRoomCode());
             roompreviewBinding.roomPreviewRoomDescription.setText(room.getDescription());
+        }
+    };
+
+    private final Observer<ResponseRoom> addUserIntoRoomObserver = new Observer<ResponseRoom>() {
+        @Override
+        public void onChanged(ResponseRoom responseRoom) {
+            Intent roomActivity = new Intent(RoomPreviewActivity.this, RoomActivity.class);
+
+            roomActivity.putExtras(bundle);
+            startActivity(roomActivity);
         }
     };
 }

@@ -52,6 +52,8 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
                         android:id="@+id/linearDetailsZone"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

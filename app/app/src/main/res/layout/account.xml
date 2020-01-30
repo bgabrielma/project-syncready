@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="User"
+            type="com.example.syncreadyapp.models.usermodel.User" />
+    </data>
+
     <ScrollView
         android:background="@color/colorBackground"
         android:id="@+id/ScrollViewAccount"
@@ -35,7 +41,6 @@
                                 android:id="@+id/groupImage"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:src="@drawable/default_user_image"
                                 android:scaleType="centerCrop" />
                         </com.google.android.material.card.MaterialCardView>
                     </RelativeLayout>
@@ -71,7 +76,7 @@
                                     android:id="@+id/txtNomeAccount"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/nomedodred"
+                                    android:text="@{User.fullname}"
                                     android:textSize="14sp"
                                     android:layout_marginTop="2dp"
                                     />
@@ -92,7 +97,7 @@
                                     android:id="@+id/txtUNameAccount"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/userdodred"
+                                    android:text="@{User.nickname}"
                                     android:textSize="14sp"
                                     android:layout_marginTop="2dp"
                                     />
@@ -113,7 +118,7 @@
                                     android:id="@+id/txtNumCCAccount"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/NCC"
+                                    android:text="@{User.citizencard}"
                                     android:textSize="14sp"
                                     android:layout_marginTop="2dp"
                                     />
@@ -134,7 +139,7 @@
                                     android:id="@+id/txtdataCriacaoAccount"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/dataC"
+                                    android:text='@{User.createdAt.split("T")[0]}'
                                     android:textSize="14sp"
                                     android:layout_marginTop="2dp"
                                     />

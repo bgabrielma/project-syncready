@@ -156,12 +156,10 @@ public class GroupActivity extends AppCompatActivity {
         groupBinding.groupToolbarInclude.linearDetailsZone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!homeActivityViewModel.userMutableLiveData.getValue().getType().equalsIgnoreCase("Cliente")) {
-                    Intent roomDetailsActivity = new Intent(GroupActivity.this, RoomDetailsActivity.class);
-                    roomDetailsActivity.putExtras(GroupActivity.this.getIntent().getExtras());
+                Intent roomDetailsActivity = new Intent(GroupActivity.this, RoomDetailsActivity.class);
+                roomDetailsActivity.putExtras(bundle);
 
-                    startActivity(roomDetailsActivity);
-                }
+                startActivity(roomDetailsActivity);
             }
         });
     }

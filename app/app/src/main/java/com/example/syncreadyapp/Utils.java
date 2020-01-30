@@ -42,6 +42,16 @@ public class Utils {
 
         return builder;
     }
+
+    public static AlertDialog.Builder showAlreadyAdded(Activity activity) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Código QR válido, mas...");
+        builder.setMessage("Já está inserido nesta sala :)");
+        builder.setIcon(R.drawable.ic_info);
+        builder.setCancelable(false);
+
+        return builder;
+    }
     
     public static boolean isEmailPreValid(String email)
     {
