@@ -61,7 +61,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
     }
 
     public void configurePermissions() {
-        if (!homeActivityViewModel.userMutableLiveData.getValue().getType().equalsIgnoreCase("Cliente")) {
+        if (homeActivityViewModel.userMutableLiveData.getValue().getType().equalsIgnoreCase("Cliente")) {
             detailsBinding.toolbar.getMenu().getItem(0).setVisible(false);
             detailsBinding.buttonUploadImage.setVisibility(View.INVISIBLE);
         }

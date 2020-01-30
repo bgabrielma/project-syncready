@@ -19,7 +19,7 @@
         <% data.forEach(elem => { %>
         <tr>
           <th scope="row"><%- elem.uuid_room %></th>
-          <td><%- elem.room_code %></td>
+          <td><img src="https://quickchart.io/qr?text=<%- elem.room_code %>" alt="QRCode Room" class="img-thumbnail"></td>
           <td><%- elem.name_room %></td>
           <td><%- elem.created_at.toISOString().split('T')[0] %></td>
           <td><%- elem.updated_at.toISOString().split('T')[0] %></td>
