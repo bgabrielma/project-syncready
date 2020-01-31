@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="User"
+            type="com.example.syncreadyapp.models.usermodel.User" />
+    </data>
+    <androidx.appcompat.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/editToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimaryLight"
+        app:titleTextColor="@color/colorDimGrey"
+        app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        app:title="@{User.fullname}"
+        app:navigationIcon="@drawable/ic_keyboard_backspace"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        />
+
+</layout>

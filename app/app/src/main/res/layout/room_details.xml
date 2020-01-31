@@ -49,7 +49,6 @@
                     app:menu="@menu/toolbar_room_details"
                     app:navigationIcon="@drawable/ic_keyboard_backspace"
                     app:layout_collapseMode="pin"
-                    android:theme="@style/expanded_title"
                     />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -84,9 +83,39 @@
                                 style="@style/TextAppearance.MaterialComponents.Body2"
                                 android:textSize="16sp"
                                 />
+                            <HorizontalScrollView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+                                    <ImageView
+                                        android:layout_width="100dp"
+                                        android:layout_height="100dp"
+                                        android:src="@drawable/repair"/>
+                                    <ImageView
+                                        android:layout_width="100dp"
+                                        android:layout_height="100dp"
+                                        android:src="@drawable/repair"/>
+                                    <ImageView
+                                        android:layout_width="100dp"
+                                        android:layout_height="100dp"
+                                        android:src="@drawable/repair"/>
+                                    <ImageView
+                                        android:layout_width="100dp"
+                                        android:layout_height="100dp"
+                                        android:src="@drawable/repair"/>
+                                    <ImageView
+                                        android:layout_width="100dp"
+                                        android:layout_height="100dp"
+                                        android:src="@drawable/repair"/>
+                                </LinearLayout>
+                            </HorizontalScrollView>
                         </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView
+                android:layout_marginTop="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="2dp"
@@ -115,6 +144,7 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView
+                    android:layout_marginTop="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardElevation="2dp"
