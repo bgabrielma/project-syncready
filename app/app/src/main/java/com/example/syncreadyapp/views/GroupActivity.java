@@ -1,7 +1,11 @@
 package com.example.syncreadyapp.views;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -9,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.syncreadyapp.R;
+import com.example.syncreadyapp.Utils;
 import com.example.syncreadyapp.adapters.MessageListAdapter;
 import com.example.syncreadyapp.databinding.GroupBinding;
 import com.example.syncreadyapp.models.messagemodel.MessageModel;
@@ -38,8 +44,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class GroupActivity extends AppCompatActivity {
     private Socket socket;
@@ -126,7 +142,7 @@ public class GroupActivity extends AppCompatActivity {
                 groupBinding = DataBindingUtil.setContentView(GroupActivity.this, R.layout.group);
                 configureToolbar();
 
-                configureMessageButtonSend();
+                configureMessageButtons();
 
                 homeActivityViewModel.userMutableLiveData.setValue(responseUser.getData().get(0));
 
@@ -164,7 +180,7 @@ public class GroupActivity extends AppCompatActivity {
         });
     }
 
-    public void configureMessageButtonSend() {
+    public void configureMessageButtons() {
         groupBinding.messageButtonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -176,6 +192,20 @@ public class GroupActivity extends AppCompatActivity {
                 }
                 else
                     Snackbar.make(groupBinding.getRoot(), "Não é possível enviar mensagens com o corpo do texto em branco.", Snackbar.LENGTH_SHORT).show();
+            }
+        });
+
+        groupBinding.buttonAttachFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utils.requestFile(GroupActivity.this, true, false);
+            }
+        });
+
+        groupBinding.buttonCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utils.requestFile(GroupActivity.this, true, true);
             }
         });
     }
@@ -231,5 +261,35 @@ public class GroupActivity extends AppCompatActivity {
         super.onResume();
         socket.connected();
         Log.d("Socket state", "" + socket.connected());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+            File photoFile = null;
+            InputStream inputStream = null;
+            FileOutputStream fileOutputStream = null;
+
+            try {
+                photoFile = Utils.createImageFile(GroupActivity.this);
+
+                inputStream = GroupActivity.this.getContentResolver().openInputStream(data.getData());
+                fileOutputStream = new FileOutputStream(photoFile);
+
+                Utils.copyStream(inputStream, fileOutputStream);
+
+                fileOutputStream.close();
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            RequestBody mFile = RequestBody.create(MediaType.parse("image/jpg"), photoFile);
+            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("newFile", photoFile.getName(), mFile);
+
+            groupActivityViewModel.uploadImage(fileToUpload, mFile, homeActivityViewModel.tokenAccessMutableLiveData.getValue());
+        }
     }
 }

@@ -46,25 +46,72 @@
                     app:contentPadding="15dp"
                     app:cardUseCompatPadding="true"
                     android:padding="5dp">
-                    <ScrollView
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scrollbars="vertical"
-                        android:fillViewport="true">
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editTextNewMessage"
-                            android:background="@android:color/transparent"
-                            android:layout_width="match_parent"
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:textSize="16sp"
-                            android:textCursorDrawable="@drawable/cursorcolor"
-                            android:hint="Diga algo :)"
-                            android:text=""
-                            />
+                            android:layout_weight="1">
 
-                    </ScrollView>
+                            <ScrollView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:scrollbars="vertical"
+                                android:fillViewport="true">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTextNewMessage"
+                                    android:background="@android:color/transparent"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:textSize="16sp"
+                                    android:textCursorDrawable="@drawable/cursorcolor"
+                                    android:hint="Diga algo :)"
+                                    android:text=""
+                                    />
+                            </ScrollView>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:gravity="center"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.4">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/buttonAttachFile"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_margin="5dp"
+                                    android:src="@drawable/ic_attach_file"
+                                    android:tint="@color/colorDimGrey" />
+
+                                <ImageView
+                                    android:id="@+id/buttonCamera"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_margin="5dp"
+                                    android:src="@drawable/ic_camera_alt"
+                                    android:tint="@color/colorDimGrey"/>
+
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
                 </com.google.android.material.card.MaterialCardView>
 
             </RelativeLayout>

@@ -79,6 +79,7 @@ router.delete('/user', UserController.del)
 router.post('/authApi', UserController.authApi)
 router.post('/mobileValidateRegister', UserController.validateMobileRegister)
 router.get('/mobile/home', UserController.getHomeDataFromUserMobile)
+router.post('/mobile/upload', multer(multerConfig).single('newFile'), UserController.uploadFile);
 
 // type user
 router.get('/user/type', TypeUserController.get)

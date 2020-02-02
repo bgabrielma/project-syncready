@@ -12,11 +12,16 @@ import com.example.syncreadyapp.models.userlogged.ResponseUserLogged;
 import com.example.syncreadyapp.userregistervalidate.ValidateRegisterModel;
 import com.google.gson.JsonObject;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface SyncReadyMobileDataService {
@@ -52,4 +57,8 @@ public interface SyncReadyMobileDataService {
 
     @GET("/user/room/add")
     Call<ResponseRoom> addUserIntoRoom(@Query("userUUID") String userUUID, @Query("roomUUID") String roomUUID, @Header("Authorization") String authHeader);
+
+    @Multipart
+    @POST("/mobile/upload")
+    Call<ResponseBody> uploadImage(@Part MultipartBody.Part file, @Part("newFile") RequestBody requestBody, @Header("Authorization") String authHeader);
 }

@@ -381,6 +381,10 @@ const getHomeDataFromUserMobile = async function(req, res) {
   return res.status(200).send({ ok: true, messages, groups, activeGroups })
 }
 
+function uploadFile(req, res) {
+  return res.status(200).send("123")
+}
+
 module.exports = {
   register,
   auth,
@@ -397,5 +401,6 @@ module.exports = {
   findUUIDByID,
   findCompanyUUIDById,
   validateMobileRegister,
-  getHomeDataFromUserMobile
+  getHomeDataFromUserMobile,
+  uploadFile
 }

@@ -42,4 +42,5 @@
     <string name="orcamento">Orçamento</string>
     <string name="price">Preço total da reparação: 40€</string>
     <string name="sheet">Ficha Técnica</string>
+    <string name="attach_file">Attach file</string>
 </resources>
