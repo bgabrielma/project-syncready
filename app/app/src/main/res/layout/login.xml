@@ -47,7 +47,7 @@
             android:layout_marginTop="40dp"
             android:layout_marginRight="15dp"
             android:minHeight="200dp"
-            android:elevation="10dp"
+            android:elevation="2dp"
             >
 
         <LinearLayout
@@ -130,14 +130,12 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:onClick="@{MainActivityViewModel::registerButtonClick}"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:id="@+id/btnRegistar"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="5dp"
-                    app:strokeColor="@color/colorPrimaryLight"
                     android:text="@string/Regista_name"
                     android:textColor="@color/colorBlack"
                     />
