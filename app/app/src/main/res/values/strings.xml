@@ -27,7 +27,7 @@
     <string name="dtCriacao">Data de criação</string>
     <string name="nomedodred">Jorge Penedo da Rocha Calhau</string>
     <string name="userdodred">putojorgecrackudo99</string>
-    <string name="NCC">562923192</string>
+    <string name="NCC">562923192 0 ZW4</string>
     <string name="dataC">24/08/2013</string>
     <string name="notifications">Notificações</string>
     <string name="alerts">Alertas</string>
@@ -45,4 +45,6 @@
     <string name="attach_file">Attach file</string>
     <string name="user_img">User Image</string>
     <string name="emailedit">jorgecalhau@gmail.com</string>
+    <string name="k">OK</string>
+    <string name="telem">+351 932 856 073</string>
 </resources>

@@ -17,7 +17,6 @@
 
         <RelativeLayout
             android:gravity="center"
-            android:layout_marginTop="40dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_width="match_parent"
@@ -62,7 +61,6 @@
             app:cardElevation="2dp"
             app:cardUseCompatPadding="true"
             android:padding="16dp"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             app:cardBackgroundColor="@color/colorCard"
@@ -119,6 +117,27 @@
                 </com.google.android.material.textfield.TextInputLayout>
                 <TextView
                     style="@style/TextAppearance.MaterialComponents.Body2"
+                    android:id="@+id/txtNCCEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/NumCC"
+                    android:layout_marginTop="10dp"
+                    />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextFieldStyle"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextNCCEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/NCC"
+                        android:inputType="textPersonName"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    style="@style/TextAppearance.MaterialComponents.Body2"
                     android:id="@+id/txtNomeUtilizadorEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -138,6 +157,35 @@
                         android:enabled="false"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    style="@style/TextAppearance.MaterialComponents.Body2"
+                    android:id="@+id/txtTelEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tele"
+                    android:layout_marginTop="10dp"
+                    />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextFieldStyle"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextTelemrEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/telem"
+                        android:enabled="false"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/k"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="end"
+                    android:textColor="@color/colorBlack"
+                    />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
