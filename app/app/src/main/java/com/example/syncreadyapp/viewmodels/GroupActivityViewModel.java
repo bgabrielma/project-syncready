@@ -12,6 +12,7 @@ import com.example.syncreadyapp.models.repositories.MessageRepository;
 import com.example.syncreadyapp.models.repositories.UserRepository;
 import com.example.syncreadyapp.models.usermodel.ResponseUser;
 import com.example.syncreadyapp.models.usermodel.User;
+import com.google.gson.JsonObject;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -39,7 +40,7 @@ public class GroupActivityViewModel extends AndroidViewModel {
         return messageRepository.getMessagesByRoom(roomUUID, bearerToken);
     }
 
-    public LiveData<ResponseBody> uploadImage(MultipartBody.Part file, RequestBody description, String bearerToken) {
+    public LiveData<JsonObject> uploadImage(MultipartBody.Part file, RequestBody description, String bearerToken) {
         return messageRepository.uploadImage(file, description, bearerToken);
     }
 }

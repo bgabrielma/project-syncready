@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.syncreadyapp.models.messagemodel.ResponseMessage;
 import com.example.syncreadyapp.services.RetrofitInstance;
 import com.example.syncreadyapp.services.SyncReadyMobileDataService;
+import com.google.gson.JsonObject;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -44,23 +45,23 @@ public class MessageRepository {
         return responseMessageMutableLiveData;
     }
 
-    public MutableLiveData<ResponseBody> uploadImage(MultipartBody.Part file, RequestBody description, String bearerToken) {
-        final MutableLiveData<ResponseBody> responseBodyMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<JsonObject> uploadImage(MultipartBody.Part file, RequestBody description, String bearerToken) {
+        final MutableLiveData<JsonObject> responseBodyMutableLiveData = new MutableLiveData<>();
 
-        Call<ResponseBody> responseBodyCall = syncReadyMobileDataService.uploadImage(file, description, bearerToken);
+        Call<JsonObject> responseBodyCall = syncReadyMobileDataService.uploadImage(file, description, bearerToken);
 
-        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+        responseBodyCall.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.body() != null) {
-                    Log.d("response", response.message());
+                    responseBodyMutableLiveData.setValue(response.body());
                 } else {
                     responseBodyMutableLiveData.setValue(null);
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
                 responseBodyMutableLiveData.setValue(null);
             }
         });

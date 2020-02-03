@@ -1,5 +1,6 @@
 package com.example.syncreadyapp.views.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.databinding.AccountBinding;
 import com.example.syncreadyapp.services.RetrofitInstance;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
+import com.example.syncreadyapp.views.EditProfileActivity;
 import com.squareup.picasso.Picasso;
 
 public class AccountFragment extends Fragment {
@@ -35,7 +37,9 @@ public class AccountFragment extends Fragment {
 
         accountBinding.setUser(homeActivityViewModel.userMutableLiveData.getValue());
         accountBinding.setLifecycleOwner(getActivity());
+
         configureUserImage();
+        configureExtendFloatingActionButtonEditUserInfoData();
 
         prevView = accountBinding.getRoot();
 
@@ -49,6 +53,18 @@ public class AccountFragment extends Fragment {
                 .load(RetrofitInstance.BASE_URL + "public/files/" + homeActivityViewModel.userMutableLiveData.getValue().getImage())
                 .placeholder(R.drawable.loading)
                 .into(accountBinding.groupImage);
+    }
+    public void configureExtendFloatingActionButtonEditUserInfoData() {
+        accountBinding.extendFloatingActionButtonEditUserInfoData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = AccountFragment.this.getActivity().getIntent().getExtras();
 
+                Intent editProfileActivity = new Intent(AccountFragment.this.getActivity(), EditProfileActivity.class);
+                editProfileActivity.putExtras(bundle);
+
+                startActivity(editProfileActivity);
+            }
+        });
     }
 }

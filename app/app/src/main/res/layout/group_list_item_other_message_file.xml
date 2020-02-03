@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="Message"
+            type="com.example.syncreadyapp.models.messagemodel.MessageModel" />
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="300dp"
+        android:layout_height="300dp">
+
+            <com.google.android.material.card.MaterialCardView
+                app:cardCornerRadius="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="@color/colorWhite"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="15dp"
+                android:minHeight="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/groupListItemOtherName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{Message.fullname}"
+                        android:padding="15dp"
+                        style="@style/TextAppearance.MaterialComponents.Subtitle2"/>
+
+                    <TextView
+                        android:id="@+id/groupListItemOtherUserType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="15dp"
+                        android:text="@{Message.type}"
+                        android:padding="15dp"
+                        style="@style/TextAppearance.MaterialComponents.Subtitle1"/>
+
+                        <ImageView
+                            android:id="@+id/groupListItemOtherMessageFile"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_image"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</layout>

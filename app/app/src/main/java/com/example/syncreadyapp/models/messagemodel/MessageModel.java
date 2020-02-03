@@ -34,10 +34,13 @@ public class MessageModel {
     @SerializedName("sent_at")
     @Expose
     private String sentAt;
+    @SerializedName("isImage")
+    @Expose
+    private int isImage;
 
     public MessageModel() { }
 
-    public MessageModel(String fullname, String pkUuid, Integer pkMessage, String content, String createdAt, String updateAt, String uuidMessage, String statusMessageUuidStatusMessage, String type, String sentAt) {
+    public MessageModel(String fullname, String pkUuid, Integer pkMessage, String content, String createdAt, String updateAt, String uuidMessage, String statusMessageUuidStatusMessage, String type, String sentAt, int isImage) {
         this.fullname = fullname;
         this.pkUuid = pkUuid;
         this.pkMessage = pkMessage;
@@ -48,6 +51,7 @@ public class MessageModel {
         this.statusMessageUuidStatusMessage = statusMessageUuidStatusMessage;
         this.type = type;
         this.sentAt = sentAt;
+        this.isImage = isImage;
     }
 
     public String getFullname() {
@@ -129,4 +133,8 @@ public class MessageModel {
     public void setSentAt(String sentAt) {
         this.sentAt = sentAt;
     }
+
+    public int getIsImage() { return isImage; };
+
+    public void setIsImage(int isImage) {  this.isImage = isImage; };
 }

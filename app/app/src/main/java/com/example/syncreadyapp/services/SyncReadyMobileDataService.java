@@ -60,5 +60,5 @@ public interface SyncReadyMobileDataService {
 
     @Multipart
     @POST("/mobile/upload")
-    Call<ResponseBody> uploadImage(@Part MultipartBody.Part file, @Part("newFile") RequestBody requestBody, @Header("Authorization") String authHeader);
+    Call<JsonObject> uploadImage(@Part MultipartBody.Part file, @Part("newFile") RequestBody requestBody, @Header("Authorization") String authHeader);
 }

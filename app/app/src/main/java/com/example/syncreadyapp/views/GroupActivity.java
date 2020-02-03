@@ -38,12 +38,14 @@ import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -56,6 +58,7 @@ import java.util.List;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 
 public class GroupActivity extends AppCompatActivity {
     private Socket socket;
@@ -152,6 +155,15 @@ public class GroupActivity extends AppCompatActivity {
         }
     };
 
+    private final Observer<JsonObject> getUploadImage = new Observer<JsonObject>() {
+        @Override
+        public void onChanged(JsonObject responseBody) {
+            String filePath = responseBody.get("filename").getAsString();
+            socket.emit("newMessage", homeActivityViewModel.uuidMutableLiveData.getValue(), groupActivityViewModel.roomUuid.getValue(), filePath, 1);
+            groupBinding.editTextNewMessage.setText("");
+        }
+    };
+
 
     public void configureToolbar() {
         groupBinding.groupToolbarInclude.toolbarGroupTitle.setText(groupActivityViewModel.roomTitle.getValue());
@@ -230,7 +242,8 @@ public class GroupActivity extends AppCompatActivity {
                                 jsonObject.getString("uuid_message"),
                                 jsonObject.getString("Status_Message_uuid_status_message"),
                                 jsonObject.getString("type"),
-                                jsonObject.getString("sent_at")
+                                jsonObject.getString("sent_at"),
+                                jsonObject.getInt("isImage")
                         ));
 
                         recyclerViewMessages.getAdapter().notifyItemInserted(messageModels.size() - 1);
@@ -274,14 +287,25 @@ public class GroupActivity extends AppCompatActivity {
 
             try {
                 photoFile = Utils.createImageFile(GroupActivity.this);
-
-                inputStream = GroupActivity.this.getContentResolver().openInputStream(data.getData());
                 fileOutputStream = new FileOutputStream(photoFile);
 
-                Utils.copyStream(inputStream, fileOutputStream);
+
+                if (requestCode == Utils.CAMERA_REQUEST) {
+                    Bitmap photo = (Bitmap) data.getExtras().get("data");
+                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                    photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+
+                    fileOutputStream.write(bytes.toByteArray());
+                }
+
+                if (requestCode == Utils.PICK_IMAGE) {
+                    inputStream = GroupActivity.this.getContentResolver().openInputStream(data.getData());
+                    Utils.copyStream(inputStream, fileOutputStream);
+                    inputStream.close();
+                }
 
                 fileOutputStream.close();
-                inputStream.close();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -289,7 +313,8 @@ public class GroupActivity extends AppCompatActivity {
             RequestBody mFile = RequestBody.create(MediaType.parse("image/jpg"), photoFile);
             MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("newFile", photoFile.getName(), mFile);
 
-            groupActivityViewModel.uploadImage(fileToUpload, mFile, homeActivityViewModel.tokenAccessMutableLiveData.getValue());
+            groupActivityViewModel.uploadImage(fileToUpload, mFile, homeActivityViewModel.tokenAccessMutableLiveData.getValue())
+                .observe(this, getUploadImage);
         }
     }
 }

@@ -3,7 +3,9 @@ package com.example.syncreadyapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 
@@ -12,6 +14,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,8 +28,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Utils {
-    private static final int PICK_IMAGE = 1;
-    private static final int CAMERA_REQUEST = 2;
+    public static final int PICK_IMAGE = 1;
+    public static final int CAMERA_REQUEST = 2;
 
     public static void showInternalUnavailableConnectionToServerAlert(Activity activity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);

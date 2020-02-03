@@ -5,7 +5,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryLight">
 
         <include
             android:id="@+id/editProfileToolbarInclude"
@@ -14,21 +15,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/imgCardViewEdit"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+        <RelativeLayout
+            android:gravity="center"
             android:layout_marginTop="40dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            app:cardCornerRadius="60dp"
-            android:layout_gravity="center_horizontal"
-            >
-            <LinearLayout
-                android:id="@+id/linearLayoutEdit"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/imgCardViewEdit"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_margin="20dp"
+                app:cardCornerRadius="60dp"
+                android:layout_gravity="center_horizontal"
+                app:cardBackgroundColor="@color/colorCard"
+                >
 
                 <ImageView
                     android:id="@+id/userImageEdit"
@@ -39,16 +42,19 @@
                     android:contentDescription="User Image"
                     />
 
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_image"
-            app:backgroundTint="@color/colorPrimaryLightSaturate"
-            android:layout_marginStart="200dp"
-            android:layout_marginTop="-40dp"
-        />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_alignEnd="@id/imgCardViewEdit"
+                android:layout_alignBottom="@id/imgCardViewEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fabSize="mini"
+                android:src="@drawable/ic_image"
+                app:backgroundTint="@color/colorPrimary"
+                />
+
+        </RelativeLayout>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -59,12 +65,14 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
+            app:cardBackgroundColor="@color/colorCard"
             >
             <LinearLayout
                 android:padding="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <TextView
                     style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:id="@+id/txtNCompletoAccount"
@@ -77,17 +85,18 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/TextFieldStyle"
                     >
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextNCompleto"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/nomedodred"
-                    android:inputType="textPersonName"
-                    android:textAlignment="viewStart"
-                    />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextNCompleto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nomedodred"
+                        android:inputType="textPersonName"
+                        android:textAlignment="viewStart"
+                        />
+
                 </com.google.android.material.textfield.TextInputLayout>
                 <TextView
                     style="@style/TextAppearance.MaterialComponents.Headline6"
