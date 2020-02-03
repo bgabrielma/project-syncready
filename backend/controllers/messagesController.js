@@ -29,7 +29,8 @@ const newMessage = async (data) => {
         content: data.content,
         created_at: dateNow,
         update_at: dateNow,
-        Status_Message_uuid_status_message: res[0].uuid_status_message
+        Status_Message_uuid_status_message: res[0].uuid_status_message,
+        isImage: data.isImage
       })
       .then(async response => {
         await db('Messages')

@@ -382,7 +382,7 @@ const getHomeDataFromUserMobile = async function(req, res) {
 }
 
 function uploadFile(req, res) {
-  return res.status(200).send("123")
+  return res.status(200).send(req.file)
 }
 
 module.exports = {
