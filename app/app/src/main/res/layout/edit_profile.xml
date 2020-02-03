@@ -39,7 +39,7 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     android:src="@drawable/default_user_image"
-                    android:contentDescription="User Image"
+                    android:contentDescription="@string/user_img"
                     />
 
             </com.google.android.material.card.MaterialCardView>
@@ -74,12 +74,33 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:id="@+id/txtNCompletoAccount"
+                    style="@style/TextAppearance.MaterialComponents.Body2"
+                    android:id="@+id/txtNCompletoEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/FullName"
-                    android:textSize="18sp"
+                    />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextFieldStyle"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextNCompletoEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nomedodred"
+                        android:inputType="textPersonName"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    style="@style/TextAppearance.MaterialComponents.Body2"
+                    android:id="@+id/txtEmailEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/User_email"
+                    android:layout_marginTop="10dp"
                     />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -87,39 +108,37 @@
                     android:layout_height="wrap_content"
                     style="@style/TextFieldStyle"
                     >
-
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextNCompleto"
+                        android:id="@+id/editTextEmailEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/nomedodred"
-                        android:inputType="textPersonName"
-                        android:textAlignment="viewStart"
+                        android:text="@string/emailedit"
+                        android:inputType="textEmailAddress"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
                 <TextView
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                    style="@style/TextAppearance.MaterialComponents.Body2"
                     android:id="@+id/txtNomeUtilizadorEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/User_name"
-                    android:textSize="18sp"
                     android:layout_marginTop="10dp"
                     />
-
-                <TextView
-                    style="@style/TextAppearance.MaterialComponents.Body2"
-                    android:layout_marginBottom="15dp"
-                    android:id="@+id/txtUNameAccount"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/userdodred"
-                    android:textSize="14sp"
-                    android:layout_marginTop="2dp"
-                    />
+                    style="@style/TextFieldStyle"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextNUtilizadorEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/userdodred"
+                        android:enabled="false"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
     </LinearLayout>
 </layout>

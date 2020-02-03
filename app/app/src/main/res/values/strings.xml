@@ -43,4 +43,6 @@
     <string name="price">Preço total da reparação: 40€</string>
     <string name="sheet">Ficha Técnica</string>
     <string name="attach_file">Attach file</string>
+    <string name="user_img">User Image</string>
+    <string name="emailedit">jorgecalhau@gmail.com</string>
 </resources>
