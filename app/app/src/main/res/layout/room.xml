@@ -33,10 +33,11 @@
                     android:layout_margin="25dp"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
-                    android:contentDescription="Entrar em um grupo"
+                    android:contentDescription="@string/roomEnter"
                     android:text="@string/enter"
+                    android:textAlignment="center"
                     app:icon="@drawable/ic_group_add"
-                    app:backgroundTint="@color/colorPrimaryLightSaturate"/>
+                    app:backgroundTint="@color/colorPrimaryLightSaturate" />
 
         </RelativeLayout>
 </layout>

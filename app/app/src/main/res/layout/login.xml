@@ -109,7 +109,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:onClick="@{MainActivityViewModel::loginButtonClick}"
                     android:id="@+id/btnEntrar"
-                    android:layout_width="130dp"
+                    android:layout_width="170dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
@@ -131,7 +131,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:onClick="@{MainActivityViewModel::registerButtonClick}"
                     android:id="@+id/btnRegistar"
-                    android:layout_width="130dp"
+                    android:layout_width="170dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
