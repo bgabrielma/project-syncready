@@ -1,6 +1,7 @@
 package com.example.syncreadyapp.views;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -151,6 +152,13 @@ public class GroupActivity extends AppCompatActivity {
 
                 groupActivityViewModel.getUsersByRoom(groupActivityViewModel.roomUuid.getValue(), homeActivityViewModel.tokenAccessMutableLiveData.getValue())
                         .observe(GroupActivity.this, getUsersByRoomObserver);
+            } else {
+                Utils.showInternalUnavailableConnectionToServerAlert(GroupActivity.this).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Utils.ApplicationLogout(GroupActivity.this);
+                    }
+                }).show();
             }
         }
     };
@@ -158,9 +166,20 @@ public class GroupActivity extends AppCompatActivity {
     private final Observer<JsonObject> getUploadImage = new Observer<JsonObject>() {
         @Override
         public void onChanged(JsonObject responseBody) {
-            String filePath = responseBody.get("filename").getAsString();
-            socket.emit("newMessage", homeActivityViewModel.uuidMutableLiveData.getValue(), groupActivityViewModel.roomUuid.getValue(), filePath, 1);
-            groupBinding.editTextNewMessage.setText("");
+
+            if (responseBody != null) {
+
+                String filePath = responseBody.get("filename").getAsString();
+                socket.emit("newMessage", homeActivityViewModel.uuidMutableLiveData.getValue(), groupActivityViewModel.roomUuid.getValue(), filePath, 1);
+
+            } else {
+                Utils.showInternalUnavailableConnectionToServerAlert(GroupActivity.this).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Utils.ApplicationLogout(GroupActivity.this);
+                    }
+                }).show();
+            }
         }
     };
 

@@ -1,5 +1,6 @@
 package com.example.syncreadyapp.views;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.Explode;
@@ -22,6 +23,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.syncreadyapp.R;
+import com.example.syncreadyapp.Utils;
 import com.example.syncreadyapp.databinding.MainBinding;
 import com.example.syncreadyapp.models.usermodel.ResponseUser;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
@@ -68,6 +70,13 @@ public class HomeActivity extends AppCompatActivity {
                 setBottomNavClickListeners();
 
                 mainBinding.BottomNavHome.bottomNavigationView.setSelectedItemId(R.id.HomeIcon);
+            } else {
+                Utils.showInternalUnavailableConnectionToServerAlert(HomeActivity.this).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Utils.ApplicationLogout(HomeActivity.this);
+                    }
+                }).show();
             }
         }
     };

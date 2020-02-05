@@ -14,6 +14,8 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
+import com.example.syncreadyapp.views.MainActivity;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -31,14 +33,14 @@ public class Utils {
     public static final int PICK_IMAGE = 1;
     public static final int CAMERA_REQUEST = 2;
 
-    public static void showInternalUnavailableConnectionToServerAlert(Activity activity) {
+    public static AlertDialog.Builder showInternalUnavailableConnectionToServerAlert(Activity activity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("Oops");
         builder.setMessage("De momento não é possivel estabelecer comunicação com os servidores da SyncReady.");
         builder.setIcon(R.drawable.ic_error);
-        builder.setPositiveButton("Ok", null);
         builder.setCancelable(false);
-        builder.show();
+
+        return builder;
     }
 
     public static AlertDialog.Builder showPermissionDeniedAlert(Activity activity) {
@@ -151,5 +153,11 @@ public class Utils {
         while ((bytesRead = input.read(buffer)) != -1) {
             output.write(buffer, 0, bytesRead);
         }
+    }
+
+    public static void ApplicationLogout(Activity activity) {
+        Intent mainActivity = new Intent(activity, MainActivity.class);
+        activity.startActivity(mainActivity);
+        activity.finish();
     }
 }

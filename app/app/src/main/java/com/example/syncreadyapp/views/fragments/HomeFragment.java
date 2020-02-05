@@ -18,6 +18,7 @@ import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.databinding.HomeBinding;
 import com.example.syncreadyapp.models.homedata.ResponseHomeData;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
+import com.example.syncreadyapp.views.MainActivity;
 
 public class HomeFragment extends Fragment {
 

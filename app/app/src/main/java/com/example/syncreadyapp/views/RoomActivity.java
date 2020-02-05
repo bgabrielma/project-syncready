@@ -1,5 +1,6 @@
 package com.example.syncreadyapp.views;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,7 +43,12 @@ public class RoomActivity extends AppCompatActivity implements OnRoomListClickLi
         try {
             mSocket = IO.socket(RetrofitInstance.BASE_URL);
         } catch (URISyntaxException e) {
-            Utils.showInternalUnavailableConnectionToServerAlert(RoomActivity.this);
+            Utils.showInternalUnavailableConnectionToServerAlert(RoomActivity.this).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Utils.ApplicationLogout(RoomActivity.this);
+                }
+            }).show();
             finish();
         }
     }
@@ -67,10 +73,20 @@ public class RoomActivity extends AppCompatActivity implements OnRoomListClickLi
     private final Observer<ResponseRoom> getRoomsObserver = new Observer<ResponseRoom>() {
         @Override
         public void onChanged(ResponseRoom responseRoom) {
-            roomBinding = DataBindingUtil.setContentView(RoomActivity.this, R.layout.room);
-            roomBinding.setHomeActivityViewModel(homeActivityViewModel);
-            configureToolbar();
-            configureRoomAdapter(responseRoom);
+
+            if (responseRoom != null) {
+                roomBinding = DataBindingUtil.setContentView(RoomActivity.this, R.layout.room);
+                roomBinding.setHomeActivityViewModel(homeActivityViewModel);
+                configureToolbar();
+                configureRoomAdapter(responseRoom);
+            } else {
+                Utils.showInternalUnavailableConnectionToServerAlert(RoomActivity.this).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Utils.ApplicationLogout(RoomActivity.this);
+                    }
+                }).show();
+            }
         }
     };
 
@@ -85,9 +101,18 @@ public class RoomActivity extends AppCompatActivity implements OnRoomListClickLi
         roomBinding.roomToolbarInclude.roomToolbar.setTitle("Conversas");
     }
     public void configureRoomAdapter(ResponseRoom responseRoom) {
-        RecyclerView recyclerView = roomBinding.recyclerRooms;
-        recyclerView.setLayoutManager(new LinearLayoutManager(RoomActivity.this));
-        recyclerView.setAdapter(new RoomListAdapter(rooms = responseRoom.getResponse(), RoomActivity.this));
+        if (responseRoom != null) {
+            RecyclerView recyclerView = roomBinding.recyclerRooms;
+            recyclerView.setLayoutManager(new LinearLayoutManager(RoomActivity.this));
+            recyclerView.setAdapter(new RoomListAdapter(rooms = responseRoom.getResponse(), RoomActivity.this));
+        } else {
+            Utils.showInternalUnavailableConnectionToServerAlert(RoomActivity.this).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Utils.ApplicationLogout(RoomActivity.this);
+                }
+            }).show();
+        }
     }
 
     @Override

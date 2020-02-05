@@ -26,6 +26,7 @@ import com.example.syncreadyapp.models.repositories.UserRepository;
 import com.example.syncreadyapp.models.userinsert.ResponseUserInsert;
 import com.example.syncreadyapp.userregistervalidate.ResponseValidateRegister;
 import com.example.syncreadyapp.viewmodels.MainActivityViewModel;
+import com.example.syncreadyapp.views.GroupActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 public class RegisterFragment extends Fragment {
@@ -164,7 +165,7 @@ public class RegisterFragment extends Fragment {
                 if (!hasError)
                     mainActivityViewModel.getUserInsert().observe(registerBinding.getLifecycleOwner(), responseUserInsertObserver);
             }
-            else Utils.showInternalUnavailableConnectionToServerAlert(getActivity());
+            else Utils.showInternalUnavailableConnectionToServerAlert(getActivity()).setPositiveButton("Ok", null).show();
 
             registerBinding.btnCriarConta.setEnabled(true);
         }
