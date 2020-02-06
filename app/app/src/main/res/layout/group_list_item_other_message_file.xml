@@ -13,6 +13,7 @@
         android:layout_height="300dp">
 
             <com.google.android.material.card.MaterialCardView
+                android:background="?android:attr/selectableItemBackground"
                 app:cardCornerRadius="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -33,7 +34,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@{Message.fullname}"
-                        android:padding="15dp"
+                        android:paddingTop="15dp"
                         style="@style/TextAppearance.MaterialComponents.Subtitle2"/>
 
                     <TextView
@@ -43,7 +44,7 @@
                         android:textSize="14sp"
                         android:layout_marginBottom="15dp"
                         android:text="@{Message.type}"
-                        android:padding="15dp"
+                        android:paddingBottom="15dp"
                         style="@style/TextAppearance.MaterialComponents.Subtitle1"/>
 
                         <ImageView

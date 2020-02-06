@@ -19,6 +19,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.card.MaterialCardView
+                android:background="?android:attr/selectableItemBackground"
                 android:layout_gravity="end"
                 app:cardCornerRadius="20dp"
                 android:layout_width="wrap_content"
