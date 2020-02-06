@@ -12,10 +12,12 @@ import com.example.syncreadyapp.models.userinsert.ResponseUserInsert;
 import com.example.syncreadyapp.models.userlogged.ResponseUserLogged;
 import com.example.syncreadyapp.models.userlogged.UserLogged;
 import com.example.syncreadyapp.models.usermodel.ResponseUser;
+import com.example.syncreadyapp.models.userupdate.UserUpdate;
 import com.example.syncreadyapp.services.RetrofitInstance;
 import com.example.syncreadyapp.services.SyncReadyMobileDataService;
 import com.example.syncreadyapp.userregistervalidate.ResponseValidateRegister;
 import com.example.syncreadyapp.userregistervalidate.ValidateRegisterModel;
+import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -82,6 +84,33 @@ public class UserRepository {
         });
 
         return userInsertMutableLiveData;
+    }
+
+    public MutableLiveData<JsonObject> getUserUpdate(UserUpdate userUpdate) {
+        final MutableLiveData<JsonObject> jsonObjectMutableLiveData = new MutableLiveData<>();
+        isNetworkTroubleLiveData.setValue(false);
+
+        Call<JsonObject> call = syncReadyMobileDataService.update(userUpdate);
+
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject responseUserInsert = response.body();
+
+                if (responseUserInsert != null) {
+                    jsonObjectMutableLiveData.setValue(responseUserInsert);
+                } else {
+                    jsonObjectMutableLiveData.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                jsonObjectMutableLiveData.setValue(null);
+            }
+        });
+
+        return jsonObjectMutableLiveData;
     }
 
     public MutableLiveData<RepositoryResponse> getValidateRegister(ValidateRegisterModel validateRegisterModel) {
@@ -173,5 +202,32 @@ public class UserRepository {
         });
 
         return responseUserMutableLiveData;
+    }
+
+    public MutableLiveData<JsonObject> getUpdateUserImage(String image, String uuid, String bearerToken) {
+        final MutableLiveData<JsonObject> jsonObjectMutableLiveData = new MutableLiveData<>();
+        isNetworkTroubleLiveData.setValue(false);
+
+        Call<JsonObject> call = syncReadyMobileDataService.updateUserImage(image, uuid, bearerToken);
+
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject responseUser = response.body();
+
+                if (responseUser != null) {
+                    jsonObjectMutableLiveData.setValue(responseUser);
+                } else {
+                    jsonObjectMutableLiveData.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                jsonObjectMutableLiveData.setValue(null);
+            }
+        });
+
+        return jsonObjectMutableLiveData;
     }
 }

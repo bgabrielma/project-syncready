@@ -22,8 +22,10 @@ import com.example.syncreadyapp.models.repositories.UserRepository;
 import com.example.syncreadyapp.models.repositories.RepositoryResponse;
 import com.example.syncreadyapp.models.userinsert.ResponseUserInsert;
 import com.example.syncreadyapp.models.userlogged.UserLogged;
+import com.example.syncreadyapp.models.userupdate.UserUpdate;
 import com.example.syncreadyapp.userregistervalidate.ValidateRegisterModel;
 import com.example.syncreadyapp.views.fragments.RegisterFragment;
+import com.google.gson.JsonObject;
 
 public class MainActivityViewModel extends AndroidViewModel {
     // UI Properties - Login
@@ -80,6 +82,10 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     public LiveData<ResponseUserInsert> getUserInsert() {
         return userRepository.getUserInsert(registerUserMutableLiveData.getValue());
+    }
+
+    public LiveData<JsonObject> getUserUpdate(UserUpdate userUpdate) {
+        return userRepository.getUserUpdate(userUpdate);
     }
 
     /* --- */

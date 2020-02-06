@@ -4,6 +4,7 @@ import com.example.syncreadyapp.models.homedata.ResponseHomeData;
 import com.example.syncreadyapp.models.messagemodel.ResponseMessage;
 import com.example.syncreadyapp.models.room.ResponseRoom;
 import com.example.syncreadyapp.models.usermodel.ResponseUser;
+import com.example.syncreadyapp.models.userupdate.UserUpdate;
 import com.example.syncreadyapp.userregistervalidate.ResponseValidateRegister;
 import com.example.syncreadyapp.models.loginmodel.LoginModel;
 import com.example.syncreadyapp.models.registermodel.RegisterModel;
@@ -30,6 +31,9 @@ public interface SyncReadyMobileDataService {
 
     @POST("/user")
     Call<ResponseUserInsert> register(@Body RegisterModel body);
+
+    @POST("/user")
+    Call<JsonObject> update(@Body UserUpdate body);
 
     @POST("/mobileValidateRegister")
     Call<ResponseValidateRegister> mobileValidateRegister(@Body ValidateRegisterModel body);
@@ -61,4 +65,7 @@ public interface SyncReadyMobileDataService {
     @Multipart
     @POST("/mobile/upload")
     Call<JsonObject> uploadImage(@Part MultipartBody.Part file, @Part("newFile") RequestBody requestBody, @Header("Authorization") String authHeader);
+
+    @GET("/user/image")
+    Call<JsonObject> updateUserImage(@Query("image") String image, @Query("userUUID") String uuid, @Header("Authorization") String authHeader);
 }

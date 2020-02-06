@@ -160,4 +160,14 @@ public class Utils {
 
         return builder.create();
     }
+
+    public static AlertDialog.Builder showUserUpdated(Activity activity) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Utilizador atualizado");
+        builder.setMessage("O utilizador foi atualizado com sucesso.");
+        builder.setIcon(R.drawable.ic_update);
+        builder.setCancelable(false);
+
+        return builder;
+    }
 }

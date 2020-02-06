@@ -65,6 +65,10 @@ public class HomeActivityViewModel extends AndroidViewModel {
         return roomRepository.addUserIntoRoom(userUUID, roomUUID, bearerToken);
     }
 
+    public LiveData<JsonObject> getUpdateUserImage(String image, String userUUID, String bearerToken) {
+        return userRepository.getUpdateUserImage(image, userUUID, bearerToken);
+    }
+
     public void OnEnterNewRoomButtonClick(View view) {
         Intent scannerIntent = new Intent(view.getContext(), ScannerActivity.class);
         Bundle userAuthInformations = new Bundle();

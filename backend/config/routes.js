@@ -80,6 +80,7 @@ router.post('/authApi', UserController.authApi)
 router.post('/mobileValidateRegister', UserController.validateMobileRegister)
 router.get('/mobile/home', UserController.getHomeDataFromUserMobile)
 router.post('/mobile/upload', multer(multerConfig).single('newFile'), UserController.uploadFile);
+router.get('/user/image', UserController.updateUserImage)
 
 // type user
 router.get('/user/type', TypeUserController.get)

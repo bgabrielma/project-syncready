@@ -11,9 +11,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/colorPrimaryLight">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <include
             android:id="@+id/editProfileToolbarInclude"
@@ -24,9 +23,11 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:scrollbars="vertical"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:background="@color/colorPrimaryLight">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -48,7 +49,6 @@
                         android:layout_gravity="center_horizontal"
                         app:cardBackgroundColor="@color/colorCard"
                         >
-
                         <ImageView
                             android:id="@+id/userImageEdit"
                             android:layout_width="match_parent"
@@ -61,6 +61,7 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/floatingAtionButtonUserImageEdit"
                         android:layout_alignEnd="@id/imgCardViewEdit"
                         android:layout_alignBottom="@id/imgCardViewEdit"
                         android:layout_width="wrap_content"
@@ -81,6 +82,7 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
                         app:cardBackgroundColor="@color/colorCard"
+                        app:contentPadding="10dp"
                         >
                         <LinearLayout
                             android:padding="20dp"
@@ -88,16 +90,11 @@
                             android:layout_height="match_parent"
                             android:orientation="vertical">
 
-                            <TextView
-                                style="@style/TextAppearance.MaterialComponents.Body2"
-                                android:id="@+id/txtNCompletoEdit"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/FullName"
-                                />
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/editTextNCompletoEditLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:hint="@string/FullName"
                                 style="@style/TextFieldStyle"
                                 >
                                 <com.google.android.material.textfield.TextInputEditText
@@ -109,18 +106,13 @@
                                     />
 
                             </com.google.android.material.textfield.TextInputLayout>
-                            <TextView
-                                style="@style/TextAppearance.MaterialComponents.Body2"
-                                android:id="@+id/txtEmailEdit"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/User_email"
-                                android:layout_marginTop="10dp"
-                                />
 
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/editTextEmailEditLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:hint="@string/Email"
+                                android:layout_marginTop="10dp"
                                 style="@style/TextFieldStyle"
                                 >
                                 <com.google.android.material.textfield.TextInputEditText
@@ -132,17 +124,13 @@
                                     />
 
                             </com.google.android.material.textfield.TextInputLayout>
-                            <TextView
-                                style="@style/TextAppearance.MaterialComponents.Body2"
-                                android:id="@+id/txtNCCEdit"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/NumCC"
-                                android:layout_marginTop="10dp"
-                                />
+
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/editTextNCCEditLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:hint="@string/NumCC"
+                                android:layout_marginTop="10dp"
                                 style="@style/TextFieldStyle"
                                 >
                                 <com.google.android.material.textfield.TextInputEditText
@@ -153,17 +141,13 @@
                                     android:inputType="textPersonName"
                                     />
                             </com.google.android.material.textfield.TextInputLayout>
-                            <TextView
-                                style="@style/TextAppearance.MaterialComponents.Body2"
-                                android:id="@+id/txtNomeUtilizadorEdit"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/User_name"
-                                android:layout_marginTop="10dp"
-                                />
+
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/editTextAddressEditLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:hint="@string/Address"
+                                android:layout_marginTop="10dp"
                                 style="@style/TextFieldStyle"
                                 >
                                 <com.google.android.material.textfield.TextInputEditText
@@ -174,17 +158,13 @@
                                     android:enabled="true"
                                     />
                             </com.google.android.material.textfield.TextInputLayout>
-                            <TextView
-                                style="@style/TextAppearance.MaterialComponents.Body2"
-                                android:id="@+id/txtTelEdit"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/tele"
-                                android:layout_marginTop="10dp"
-                                />
+
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/editTextTelemrEditLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:hint="@string/tele"
+                                android:layout_marginTop="10dp"
                                 style="@style/TextFieldStyle"
                                 >
                                 <com.google.android.material.textfield.TextInputEditText
@@ -194,17 +174,13 @@
                                     android:text="@={UserUpdate.contacto}"
                                     />
                             </com.google.android.material.textfield.TextInputLayout>
-                            <TextView
-                                style="@style/TextAppearance.MaterialComponents.Body2"
-                                android:id="@+id/txtPasswordEdit"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/Password"
-                                android:layout_marginTop="10dp"
-                                />
+
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/editTextNewPasswordEditLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:hint="@string/Password"
+                                android:layout_marginTop="10dp"
                                 style="@style/TextFieldStyle"
                                 >
                                 <com.google.android.material.textfield.TextInputEditText
@@ -215,10 +191,11 @@
                                     />
                             </com.google.android.material.textfield.TextInputLayout>
                             <com.google.android.material.button.MaterialButton
+                                android:id="@+id/editButtonUpdate"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/k"
-                                android:layout_marginTop="20dp"
+                                android:layout_marginTop="10dp"
                                 android:layout_gravity="end"
                                 android:textColor="@color/colorBlack"
                                 />

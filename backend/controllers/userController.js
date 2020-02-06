@@ -385,6 +385,18 @@ function uploadFile(req, res) {
   return res.status(200).send(req.file)
 }
 
+async function updateUserImage(req, res) {
+  const { image, userUUID } = req.query;
+
+  await db('Users')
+    .update({
+      image
+    })
+    .where({ pk_uuid: userUUID })
+    .then(_ => res.status(200).send({ ok: true }))
+    .catch(err => res.status(500).send({ err, ok: false }))
+}
+
 module.exports = {
   register,
   auth,
@@ -402,5 +414,6 @@ module.exports = {
   findCompanyUUIDById,
   validateMobileRegister,
   getHomeDataFromUserMobile,
-  uploadFile
+  uploadFile,
+  updateUserImage
 }

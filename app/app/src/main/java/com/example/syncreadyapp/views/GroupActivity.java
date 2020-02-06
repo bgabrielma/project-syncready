@@ -68,8 +68,6 @@ public class GroupActivity extends AppCompatActivity implements OnMessageListCli
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.group);
         showImageUploadProcessing = Utils.showImageUploadProcessing(GroupActivity.this);
 
         try {
