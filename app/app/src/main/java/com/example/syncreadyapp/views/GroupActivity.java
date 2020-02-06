@@ -23,6 +23,7 @@ import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.Utils;
 import com.example.syncreadyapp.adapters.MessageListAdapter;
 import com.example.syncreadyapp.databinding.GroupBinding;
+import com.example.syncreadyapp.interfaces.OnMessageListClickListener;
 import com.example.syncreadyapp.models.messagemodel.MessageModel;
 import com.example.syncreadyapp.models.messagemodel.ResponseMessage;
 import com.example.syncreadyapp.models.usermodel.ResponseUser;
@@ -51,7 +52,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-public class GroupActivity extends AppCompatActivity {
+public class GroupActivity extends AppCompatActivity implements OnMessageListClickListener {
     private Socket socket;
     private HomeActivityViewModel homeActivityViewModel;
     private GroupActivityViewModel groupActivityViewModel;
@@ -106,7 +107,9 @@ public class GroupActivity extends AppCompatActivity {
                 recyclerViewMessages.setLayoutManager(linearLayoutManager);
                 messageModels = responseMessage.getData();
 
-                recyclerViewMessages.setAdapter(new MessageListAdapter(messageModels, homeActivityViewModel.uuidMutableLiveData.getValue()));
+                MessageListAdapter messageListAdapter = new MessageListAdapter(messageModels, homeActivityViewModel.uuidMutableLiveData.getValue(), GroupActivity.this);
+
+                recyclerViewMessages.setAdapter(messageListAdapter);
             }
         }
     };
@@ -329,5 +332,18 @@ public class GroupActivity extends AppCompatActivity {
             groupActivityViewModel.uploadImage(fileToUpload, description, homeActivityViewModel.tokenAccessMutableLiveData.getValue())
                 .observe(this, getUploadImage);
         }
+    }
+
+    @Override
+    public void OnMessageClick(int position) {
+        Intent intent = new Intent(GroupActivity.this, PictureActivity.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("groupImage", groupActivityViewModel.roomImage.getValue());
+        bundle.putString("groupTitle", groupActivityViewModel.roomTitle.getValue());
+        bundle.putString("groupUsersFormatted", usersGroupFormated);
+        bundle.putString("groupImageFile", messageModels.get(position).getContent());
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

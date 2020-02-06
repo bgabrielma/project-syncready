@@ -2,6 +2,7 @@ package com.example.syncreadyapp.adapters;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -15,6 +16,7 @@ import com.example.syncreadyapp.databinding.GroupListItemMyMessageBinding;
 import com.example.syncreadyapp.databinding.GroupListItemMyMessageFileBinding;
 import com.example.syncreadyapp.databinding.GroupListItemOtherMessageBinding;
 import com.example.syncreadyapp.databinding.GroupListItemOtherMessageFileBinding;
+import com.example.syncreadyapp.interfaces.OnMessageListClickListener;
 import com.example.syncreadyapp.models.messagemodel.MessageModel;
 import com.example.syncreadyapp.services.RetrofitInstance;
 import com.squareup.picasso.Picasso;
@@ -25,10 +27,12 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
     private List<MessageModel> messagesDataset;
     private String uuidUserLogged;
+    private OnMessageListClickListener onMessageListClickListener;
 
-    public MessageListAdapter(List<MessageModel> messagesDataset, String uuidUserLogged) {
+    public MessageListAdapter(List<MessageModel> messagesDataset, String uuidUserLogged, OnMessageListClickListener onMessageListClickListener) {
         this.messagesDataset = messagesDataset;
         this.uuidUserLogged = uuidUserLogged;
+        this.onMessageListClickListener = onMessageListClickListener;
     }
 
     @Override
@@ -62,19 +66,19 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         switch (viewType) {
             case 0: {
                 GroupListItemMyMessageBinding groupListItemMyMessageBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.group_list_item_my_message, parent, false);
-                return new MessageListViewHolder(groupListItemMyMessageBinding);
+                return new MessageListViewHolder(groupListItemMyMessageBinding, onMessageListClickListener);
             }
             case 1: {
                 GroupListItemMyMessageFileBinding groupListItemMyMessageFileBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.group_list_item_my_message_file, parent, false);
-                return new MessageListViewHolder(groupListItemMyMessageFileBinding);
+                return new MessageListViewHolder(groupListItemMyMessageFileBinding, onMessageListClickListener);
             }
             case 2: {
                 GroupListItemOtherMessageBinding groupListItemOtherMessageBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.group_list_item_other_message, parent, false);
-                return new MessageListViewHolder(groupListItemOtherMessageBinding);
+                return new MessageListViewHolder(groupListItemOtherMessageBinding, onMessageListClickListener);
             }
             case 3: {
                 GroupListItemOtherMessageFileBinding groupListItemOtherMessageFileBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.group_list_item_other_message_file, parent, false);
-                return new MessageListViewHolder(groupListItemOtherMessageFileBinding);
+                return new MessageListViewHolder(groupListItemOtherMessageFileBinding, onMessageListClickListener);
             }
             default: {
                 return null;
@@ -120,13 +124,21 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         return messagesDataset.size();
     }
 
-    public class MessageListViewHolder extends RecyclerView.ViewHolder{
+    public class MessageListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ViewDataBinding viewDataBinding;
+        private OnMessageListClickListener onMessageListClickListener;
 
-        public MessageListViewHolder(@NonNull ViewDataBinding viewDataBinding) {
+        public MessageListViewHolder(@NonNull ViewDataBinding viewDataBinding, @NonNull  OnMessageListClickListener onMessageListClickListener) {
             super(viewDataBinding.getRoot());
-
             this.viewDataBinding = viewDataBinding;
+            this.onMessageListClickListener = onMessageListClickListener;
+            viewDataBinding.getRoot().setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (messagesDataset.get(getAdapterPosition()).getIsImage() == 1)
+                onMessageListClickListener.OnMessageClick(getAdapterPosition());
         }
     }
 }

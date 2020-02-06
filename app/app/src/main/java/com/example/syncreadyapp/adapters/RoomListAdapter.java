@@ -60,7 +60,7 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomLi
         private RoomListItemBinding roomListItemBinding;
         private OnRoomListClickListener onRoomListClickListener;
 
-        public RoomListViewHolder(@NonNull RoomListItemBinding roomListItemBinding, OnRoomListClickListener onRoomListClickListener) {
+        public RoomListViewHolder(@NonNull RoomListItemBinding roomListItemBinding, @NonNull  OnRoomListClickListener onRoomListClickListener) {
             super(roomListItemBinding.getRoot());
             this.roomListItemBinding = roomListItemBinding;
             this.onRoomListClickListener = onRoomListClickListener;
