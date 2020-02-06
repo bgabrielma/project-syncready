@@ -3,11 +3,9 @@ package com.example.syncreadyapp.views.fragments;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,12 +20,9 @@ import com.example.syncreadyapp.Utils;
 import com.example.syncreadyapp.databinding.RegisterBinding;
 import com.example.syncreadyapp.models.registermodel.RegisterModel;
 import com.example.syncreadyapp.models.repositories.RepositoryResponse;
-import com.example.syncreadyapp.models.repositories.UserRepository;
 import com.example.syncreadyapp.models.userinsert.ResponseUserInsert;
 import com.example.syncreadyapp.userregistervalidate.ResponseValidateRegister;
 import com.example.syncreadyapp.viewmodels.MainActivityViewModel;
-import com.example.syncreadyapp.views.GroupActivity;
-import com.google.android.material.snackbar.Snackbar;
 
 public class RegisterFragment extends Fragment {
 

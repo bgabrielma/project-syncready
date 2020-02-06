@@ -1,6 +1,5 @@
 package com.example.syncreadyapp.views.fragments;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -23,7 +22,6 @@ import com.example.syncreadyapp.models.loginmodel.LoginModel;
 import com.example.syncreadyapp.models.repositories.RepositoryResponse;
 import com.example.syncreadyapp.models.userlogged.UserLogged;
 import com.example.syncreadyapp.viewmodels.MainActivityViewModel;
-import com.example.syncreadyapp.views.GroupActivity;
 import com.example.syncreadyapp.views.HomeActivity;
 import com.google.android.material.snackbar.Snackbar;
 

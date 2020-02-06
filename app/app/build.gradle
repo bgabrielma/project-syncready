@@ -7,7 +7,7 @@ android {
     }
     defaultConfig {
         applicationId "com.example.syncreadyapp"
-        minSdkVersion 22
+        minSdkVersion 26
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"

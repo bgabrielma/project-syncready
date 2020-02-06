@@ -12,6 +12,13 @@
             android:id="@+id/groupToolbarInclude"
             layout="@layout/toolbar_group" />
 
+        <ImageView
+            android:id="@+id/imageViewImagePickedByGallery"
+            android:layout_below="@+id/groupToolbarInclude"
+            android:layout_above="@+id/messageToolsZone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_below="@+id/groupToolbarInclude"
             android:layout_above="@+id/messageToolsZone"

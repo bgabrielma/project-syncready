@@ -1,9 +1,5 @@
 package com.example.syncreadyapp.views;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,15 +8,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.MotionEvent;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.Utils;
 import com.example.syncreadyapp.views.fragments.LoginFragment;
 import com.example.syncreadyapp.views.fragments.RegisterFragment;
-import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;

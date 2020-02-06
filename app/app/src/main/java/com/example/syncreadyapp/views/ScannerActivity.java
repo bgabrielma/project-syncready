@@ -4,11 +4,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -16,7 +14,6 @@ import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.Utils;
 import com.example.syncreadyapp.models.room.ResponseRoom;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonObject;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;

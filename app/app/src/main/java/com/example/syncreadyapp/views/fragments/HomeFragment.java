@@ -1,8 +1,6 @@
 package com.example.syncreadyapp.views.fragments;
 
 import android.os.Bundle;
-import android.os.Debug;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,6 @@ import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.databinding.HomeBinding;
 import com.example.syncreadyapp.models.homedata.ResponseHomeData;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
-import com.example.syncreadyapp.views.MainActivity;
 
 public class HomeFragment extends Fragment {
 

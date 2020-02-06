@@ -4,17 +4,12 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,24 +37,19 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 
 public class GroupActivity extends AppCompatActivity {
     private Socket socket;
@@ -68,16 +58,19 @@ public class GroupActivity extends AppCompatActivity {
     private GroupBinding groupBinding;
     private Bundle bundle;
     private List<MessageModel> messageModels;
+    private String usersGroupFormated = "";
+    private AlertDialog showImageUploadProcessing;
 
     protected RecyclerView recyclerViewMessages;
 
-    private String usersGroupFormated = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.group);
+        showImageUploadProcessing = Utils.showImageUploadProcessing(GroupActivity.this);
+
         try {
             socket = IO.socket(RetrofitInstance.BASE_URL);
             socket.connect();
@@ -250,6 +243,7 @@ public class GroupActivity extends AppCompatActivity {
                     JSONObject jsonObject = (JSONObject) args[0];
                     try {
                         jsonObject = jsonObject.getJSONArray("newMessage").getJSONObject(0);
+                        showImageUploadProcessing.dismiss();
 
                         messageModels.add(new MessageModel(
                                 jsonObject.getString("fullname"),
@@ -285,13 +279,14 @@ public class GroupActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+        socket.connect();
         Log.d("Socket state", "" + socket.connected());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        socket.connected();
+        socket.connect();
         Log.d("Socket state", "" + socket.connected());
     }
 
@@ -301,27 +296,19 @@ public class GroupActivity extends AppCompatActivity {
 
         if (resultCode == Activity.RESULT_OK) {
             File photoFile = null;
-            InputStream inputStream = null;
+            Bitmap bitmap = null;
             FileOutputStream fileOutputStream = null;
 
             try {
                 photoFile = Utils.createImageFile(GroupActivity.this);
                 fileOutputStream = new FileOutputStream(photoFile);
 
+                if (requestCode == Utils.CAMERA_REQUEST) bitmap = (Bitmap) data.getExtras().get("data");
+                else if (requestCode == Utils.PICK_IMAGE) bitmap = BitmapFactory.decodeFile(Utils.getRealPathFromURI(GroupActivity.this, data.getData()));
 
-                if (requestCode == Utils.CAMERA_REQUEST) {
-                    Bitmap photo = (Bitmap) data.getExtras().get("data");
-                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                    photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-
-                    fileOutputStream.write(bytes.toByteArray());
-                }
-
-                if (requestCode == Utils.PICK_IMAGE) {
-                    inputStream = GroupActivity.this.getContentResolver().openInputStream(data.getData());
-                    Utils.copyStream(inputStream, fileOutputStream);
-                    inputStream.close();
-                }
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                fileOutputStream.write(bytes.toByteArray());
 
                 fileOutputStream.close();
 
@@ -329,10 +316,17 @@ public class GroupActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            RequestBody mFile = RequestBody.create(MediaType.parse("image/jpg"), photoFile);
+            RequestBody mFile = null;
+            if (photoFile != null) {
+                mFile = RequestBody.create(MediaType.parse("image/jpeg"), photoFile);
+            }
             MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("newFile", photoFile.getName(), mFile);
 
-            groupActivityViewModel.uploadImage(fileToUpload, mFile, homeActivityViewModel.tokenAccessMutableLiveData.getValue())
+            //Create request body with text description and text media type
+            RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
+
+            showImageUploadProcessing.show();
+            groupActivityViewModel.uploadImage(fileToUpload, description, homeActivityViewModel.tokenAccessMutableLiveData.getValue())
                 .observe(this, getUploadImage);
         }
     }
