@@ -35,6 +35,8 @@
                         android:layout_height="wrap_content"
                         android:text="@{Message.fullname}"
                         android:paddingTop="15dp"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
                         style="@style/TextAppearance.MaterialComponents.Subtitle2"/>
 
                     <TextView
@@ -42,8 +44,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
-                        android:layout_marginBottom="15dp"
                         android:text="@{Message.type}"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
                         android:paddingBottom="15dp"
                         style="@style/TextAppearance.MaterialComponents.Subtitle1"/>
 

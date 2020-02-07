@@ -160,7 +160,7 @@ public class EditProfileActivity extends AppCompatActivity {
         public void onChanged(JsonObject jsonObject) {
             if (jsonObject != null && jsonObject.get("ok").getAsString().equals("true")) {
                 Utils.showUserUpdated(EditProfileActivity.this)
-                    .setPositiveButton("Voltar", new DialogInterface.OnClickListener() {
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             finish();
