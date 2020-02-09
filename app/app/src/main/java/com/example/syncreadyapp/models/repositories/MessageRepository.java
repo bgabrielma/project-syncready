@@ -22,9 +22,13 @@ public class MessageRepository {
 
     private SyncReadyMobileDataService syncReadyMobileDataService = RetrofitInstance.getService();
 
-    public MutableLiveData<ResponseMessage> getMessagesByRoom(String roomUUID, String bearerCode) {
+    public MutableLiveData<ResponseMessage> getMessagesByRoom(String roomUUID, String bearerCode, boolean isLast) {
         final MutableLiveData<ResponseMessage> responseMessageMutableLiveData = new MutableLiveData<>();
-        Call<ResponseMessage> call = syncReadyMobileDataService.getMessagesByRoom(roomUUID, bearerCode);
+        Call<ResponseMessage> call;
+        if (!isLast)
+            call = syncReadyMobileDataService.getMessagesByRoom(roomUUID, bearerCode);
+        else
+            call = syncReadyMobileDataService.getLastMessageByRoom(roomUUID, bearerCode);
 
         call.enqueue(new Callback<ResponseMessage>() {
             @Override

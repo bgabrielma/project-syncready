@@ -95,7 +95,7 @@ public class GroupActivity extends AppCompatActivity implements OnMessageListCli
     private final Observer<ResponseMessage> getMessagesByRoomObserver = new Observer<ResponseMessage>() {
         @Override
         public void onChanged(ResponseMessage responseMessage) {
-            if (responseMessage.getData() != null) {
+            if (responseMessage != null) {
                 // configure adapter
                 recyclerViewMessages = groupBinding.recyclerMessages;
 
@@ -126,7 +126,7 @@ public class GroupActivity extends AppCompatActivity implements OnMessageListCli
                 // set group's user text value
                 groupBinding.groupToolbarInclude.toolbarGroupUsersFormatted.setText(usersGroupFormated);
 
-                groupActivityViewModel.getMessagesByRoom(groupActivityViewModel.roomUuid.getValue(), homeActivityViewModel.tokenAccessMutableLiveData.getValue())
+                groupActivityViewModel.getMessagesByRoom(groupActivityViewModel.roomUuid.getValue(), homeActivityViewModel.tokenAccessMutableLiveData.getValue(), false)
                         .observe(GroupActivity.this, getMessagesByRoomObserver);
             }
         }

@@ -37,7 +37,6 @@ INSERT INTO Companies (`uuid_company`, `name`, `company_address`, `company_telep
 VALUES
 (UUID(), 'SyncReady', 'SyncReady - Portugal', '999999999', 'entity@syncready.pt');
 
-
 /* IR AO PHPMYADMIN */
 
 /* CRIAR UM UTILIZADOR DO TIPO ENTIDADE CHAMADO SYNCREADY */

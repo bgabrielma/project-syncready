@@ -2,9 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/toolbar_menu_action_logout"
+        android:id="@+id/toolbar_room_menu_action_search"
         android:icon="@drawable/ic_action_search"
-        android:title="Procurar salas"
-        app:showAsAction="always">
+        android:title="@string/filtrar_salas"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView">
     </item>
 </menu>

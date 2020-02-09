@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -118,14 +119,6 @@ public class Utils {
         return image;
     }
 
-    public static void copyStream(InputStream input, OutputStream output) throws IOException {
-        byte[] buffer = new byte[1024];
-        int bytesRead;
-        while ((bytesRead = input.read(buffer)) != -1) {
-            output.write(buffer, 0, bytesRead);
-        }
-    }
-
     public static void ApplicationLogout(Activity activity) {
         Intent mainActivity = new Intent(activity, MainActivity.class);
         activity.startActivity(mainActivity);
@@ -163,6 +156,19 @@ public class Utils {
         return builder.create();
     }
 
+    public static Date getDateFromString(String inputDate) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+        Date date = null;
+        try {
+            date = simpleDateFormat.parse(inputDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return date;
+    }
+
     public static AlertDialog.Builder showUserUpdated(Activity activity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("Utilizador atualizado");
@@ -173,12 +179,24 @@ public class Utils {
         return builder;
     }
 
-    public Bitmap fixOrientation(Bitmap mBitmap) {
+    public static AlertDialog.Builder showGroupExpired(Activity activity) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Não é possível entrar no grupo");
+        builder.setMessage("O tempo de validade do grupo expirou, contacte a loja responsável pela criação da sala.");
+        builder.setIcon(R.drawable.ic_sync_disabled);
+        builder.setCancelable(false);
+
+        return builder;
+    }
+
+    public static Bitmap fixOrientation(Bitmap mBitmap) {
+        Matrix matrix = new Matrix();
         if (mBitmap.getWidth() > mBitmap.getHeight()) {
-            Matrix matrix = new Matrix();
             matrix.postRotate(90);
-            mBitmap = Bitmap.createBitmap(mBitmap , 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
+        } else if (mBitmap.getHeight() > mBitmap.getWidth()){
+            matrix.postRotate(-90);
         }
+        mBitmap = Bitmap.createBitmap(mBitmap , 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
 
         return mBitmap;
     }

@@ -64,15 +64,12 @@ const get = async (req, res) => {
   }
   
   await getMessage(req.query.roomUUID, null)
-    .then(data => { 
-      console.log(data)
-      res.status(200).send({ ok: true, data })
-    })
+    .then(data => res.status(200).send({ ok: true, data }))
     .catch(err => res.status(500).send(err))
 
 }
 
-const getMessage = (roomUUID, messageUUID) => {
+const getMessage = (roomUUID, messageUUID, isAsc = true) => {
   
   const query = db('Messages')
     .select('Users.fullname', 'Users.pk_uuid', 'Messages.*', 'Type_Of_User.type', 'Messages_has_Users.sent_at')
@@ -80,19 +77,30 @@ const getMessage = (roomUUID, messageUUID) => {
     .innerJoin('Users', 'Users.pk_uuid', '=', 'Messages_has_Users.Users_pk_uuid')
     .innerJoin('Type_Of_User', 'Users.Type_Of_User_uuid_type_of_users', '=', 'Type_Of_User.uuid_type_of_users')
     .where('Messages_has_Users.Rooms_uuid_room', roomUUID)
-    .orderBy('Messages_has_Users.sent_at', 'ASC')
+    .orderBy('Messages_has_Users.sent_at', isAsc ? 'ASC' : 'DESC')
 
     if(messageUUID)
       query.andWhere('Messages.uuid_message', '=', messageUUID)
 
-      console.log(query.toString())
-
   return query
+}
+
+const getLastMessage = async (req, res) => {
+
+  if (!req.query.roomUUID) {
+    return res.status(401).send({ err: "Messages not found with room provider" })
+  }
+
+  getMessage(req.query.roomUUID, null, false)
+    .limit(1)
+    .then(data => res.status(200).send({ ok: true, data }))
+    .catch(err => res.status(500).send(err))
 }
 
 module.exports = {
   post,
   get,
   newMessage,
-  getMessage
+  getMessage,
+  getLastMessage
 }

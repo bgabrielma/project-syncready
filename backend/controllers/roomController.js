@@ -203,10 +203,10 @@ const get = function(req, res) {
     .innerJoin('Ticket_Options', 'Ticket_Options.uuid_ticket_options', '=', 'Tickets.Ticket_Options_uuid_ticket_options')
 
   if (req.query.roomCode)
-    instance.where({ room_code: req.query.roomCode })
+    instance.andWhere({ room_code: req.query.roomCode })
 
   else if (req.query.roomUUID)
-    instance.where({ uuid_room: req.query.roomUUID })
+    instance.andWhere({ uuid_room: req.query.roomUUID })
 
   else if (req.query.userUUID)
     instance

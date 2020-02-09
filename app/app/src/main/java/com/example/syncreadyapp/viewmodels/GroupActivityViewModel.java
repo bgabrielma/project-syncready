@@ -36,8 +36,8 @@ public class GroupActivityViewModel extends AndroidViewModel {
         return userRepository.getUsersByRoom(roomUUID, bearerToken);
     }
 
-    public LiveData<ResponseMessage> getMessagesByRoom(String roomUUID, String bearerToken) {
-        return messageRepository.getMessagesByRoom(roomUUID, bearerToken);
+    public LiveData<ResponseMessage> getMessagesByRoom(String roomUUID, String bearerToken, boolean isLast) {
+        return messageRepository.getMessagesByRoom(roomUUID, bearerToken, isLast);
     }
 
     public LiveData<JsonObject> uploadImage(MultipartBody.Part file, RequestBody description, String bearerToken) {

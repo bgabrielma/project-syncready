@@ -107,6 +107,7 @@ router.delete('/company', CompanyController.del)
 // messages
 router.post('/message', MessagesController.post)
 router.get('/message', MessagesController.get)
+router.get('/message/last', MessagesController.getLastMessage)
 
 // alerts
 router.delete('/alert', AlertController.del)

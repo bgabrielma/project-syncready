@@ -68,4 +68,7 @@ public interface SyncReadyMobileDataService {
 
     @GET("/user/image")
     Call<JsonObject> updateUserImage(@Query("image") String image, @Query("userUUID") String uuid, @Header("Authorization") String authHeader);
+
+    @GET("/message/last")
+    Call<ResponseMessage> getLastMessageByRoom(@Query("roomUUID") String roomUUID, @Header("Authorization") String authHeader);
 }

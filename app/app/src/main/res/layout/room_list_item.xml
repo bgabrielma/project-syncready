@@ -56,7 +56,6 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:text="Foda-se, arranja-me isso por amor de deus>:("
                     />
             </LinearLayout>
             <LinearLayout
