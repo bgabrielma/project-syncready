@@ -261,7 +261,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 photoFile = Utils.createImageFile(EditProfileActivity.this);
                 fileOutputStream = new FileOutputStream(photoFile);
 
-                bitmap = BitmapFactory.decodeFile(Utils.getRealPathFromURI(EditProfileActivity.this, data.getData()));
+                bitmap = Utils.fixOrientation(BitmapFactory.decodeFile(Utils.getRealPathFromURI(EditProfileActivity.this, data.getData())));
 
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);

@@ -4,27 +4,34 @@
           Registar novo alerta
           <i class="fas fa-exclamation-circle ml-2 fa-1x"></i>
       </h2>
-      <form class="border shadow-sm">
+      <form class="border shadow-sm" action="/dashboard/alert/new" method="POST">
           <div class="form-group">
               <label for="exampleInputEmail1">Nome do alerta</label>
-              <input type="text" class="form-control" id="exampleInputFullName" aria-describedby="emailHelp" placeholder="Nome do alerta">
+              <input type="text" class="form-control" name="alertName" id="exampleInputFullName" aria-describedby="emailHelp" placeholder="Nome do alerta" required>
           </div>
           <div class="form-group">
               <label for="alertDesc">Descrição do alerta</label>
-              <textarea class="form-control" id="alertDesc" rows="3" placeholder="Descrição do alerta"></textarea>
+              <textarea class="form-control" name="alertDesc" rows="3" placeholder="Descrição do alerta" required></textarea>
           </div>
           <div class="form-group">
               <label for="type">Alerta visível para</label>
-              <select name="type" class="selectpicker show-tick form-control border" multiple>
+              <select name="alertTypesUsers" class="selectpicker show-tick form-control border" multiple required>
                   <optgroup label="Tipos de utilizador">
-                      <option>Cliente</option>
-                      <option>Técnico</option>
-                      <option>Administrador</option>
+                    <% data.types.forEach(type => { %>
+                            <option value="<%- type.uuid_type_of_users %>"><%- type.type %></option>
+                    <% }) %>
                   </optgroup>
-                  <optgroup label="Planetas nunca vistos">
-                      <option>Pesquisa por Jupiturno</option>
-                      <option>Pesquisa por Terrercurio</option>
-                      <option>Pesquisa por Venarte</option>
+              </select>
+          </div>
+          <div class="form-group">
+              <label for="type">Tipo de alertas</label>
+              <select name="alertTypesAlerts" class="selectpicker show-tick form-control border" required>
+                  <optgroup label="Tipos de alertas">
+                    <% data.typesAlerts.forEach(typesAlerts => { %>
+                        <%  if ( ! (typesAlerts.type_of_alert_designation == "Cliente" && userLogged.company.name == "SyncReady")) { %>
+                            <option value="<%- typesAlerts.uuid_type_of_alert %>"><%- typesAlerts.type_of_alert_designation %></option>
+                        <% } %>
+                    <% }) %>
                   </optgroup>
               </select>
           </div>

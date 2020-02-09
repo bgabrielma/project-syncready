@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -169,5 +171,15 @@ public class Utils {
         builder.setCancelable(false);
 
         return builder;
+    }
+
+    public Bitmap fixOrientation(Bitmap mBitmap) {
+        if (mBitmap.getWidth() > mBitmap.getHeight()) {
+            Matrix matrix = new Matrix();
+            matrix.postRotate(90);
+            mBitmap = Bitmap.createBitmap(mBitmap , 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
+        }
+
+        return mBitmap;
     }
 }

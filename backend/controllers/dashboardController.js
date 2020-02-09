@@ -4,6 +4,7 @@ const randomToken = require('random-token')
 const userController = require('./userController')
 const roomController = require('./roomController')
 const ticketController = require('./ticketController')
+const alertController = require('./alertController')
 
 const verifyUser = function (req) {
   return !!req.userLogged
@@ -278,33 +279,96 @@ const registerRoom = async function(req, res) {
     })
 }
 
-const newAlert = function(req, res) {
+const newAlert = async function(req, res) {
 
   // if user is not logged
   if(!verifyUser(req)) return res.redirect('/main')
+    
+  // get all members
+  let types = []
+  let typesAlerts = []
+
+  await db('Type_Of_User')
+    .select('*')
+    .then(data => types = data)
+
+    await db('Type_Of_Alert')
+      .select('*')
+      .then(data => typesAlerts = data)
+
+  const data = {
+    types,
+    typesAlerts,
+    userLogged: req.userLogged
+  }
+
 
   res.render('index', 
     { 
       title:  'Registar novo alerta | SyncReady', 
       page: 'dashboard', 
-      data: {},
+      data,
       userLogged: req.userLogged,
       subPage: 'alerts/new_alert_form' 
     })
 }
 
-const listAlert = function(req, res) {
+const listAlert = async function(req, res) {
 
   // if user is not logged
   if(!verifyUser(req)) return res.redirect('/main')
+
+  let alerts = []
+
+  await alertController.getAlerts()
+    .then(res => alerts = res)
+    
+  const data = {
+    alerts,
+    userLogged: req.userLogged
+  }
 
   res.render('index', 
     { 
       title:  'Lista de alertas | SyncReady', 
       page: 'dashboard', 
-      data: {},
+      data,
       userLogged: req.userLogged,
       subPage: 'alerts/list_alert' 
+    })
+}
+
+const registerAlert = async function(req, res) {
+
+  const { alertName, alertDesc, alertTypesUsers, alertTypesAlerts } = req.body
+  
+  await db('Alerts')
+    .insert({
+      name_alerts: alertName,
+      alert_text: alertDesc,
+      created_at: db.raw('NOW()'),
+      until_at: db.raw('NOW()'),
+      Type_Of_Alert_uuid_type_of_alert: alertTypesAlerts
+    })
+    .then(async pk_alerts => {
+      
+      await db('Alerts')
+        .select('Alerts.uuid_alerts')
+        .where({ pk_alerts: pk_alerts })
+        .then(async response => {
+
+          // put types users in alerts
+
+          // one elem
+          if(typeof(alertTypesUsers) === 'string') 
+            await alertController.saveUsersTypesIntoAlerts(alertTypesUsers, response[0].uuid_alerts)
+          else alertTypesUsers.forEach(async elem => {
+              await alertController.saveUsersTypesIntoAlerts(elem, response[0].uuid_alerts)
+            })
+          
+        })
+
+        res.redirect('/dashboard/alert/list')
     })
 }
 
@@ -405,6 +469,7 @@ module.exports = {
   registerRoom,
   newAlert,
   listAlert,
+  registerAlert,
   newCompany,
   listCompanies,
   registerCompany,

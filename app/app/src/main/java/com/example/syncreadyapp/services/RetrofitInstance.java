@@ -1,5 +1,8 @@
 package com.example.syncreadyapp.services;
 
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -12,9 +15,17 @@ public class RetrofitInstance {
     public static SyncReadyMobileDataService getService() {
         if (retrofit == null) {
 
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .connectTimeout(1, TimeUnit.MINUTES)
+                    .readTimeout(1, TimeUnit.MINUTES)
+                    .writeTimeout(1, TimeUnit.MINUTES)
+                    .retryOnConnectionFailure(true)
+                    .build();
+
             retrofit = new Retrofit
                     .Builder()
                     .baseUrl(BASE_URL)
+                    .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }

@@ -307,6 +307,8 @@ public class GroupActivity extends AppCompatActivity implements OnMessageListCli
                 if (requestCode == Utils.CAMERA_REQUEST) bitmap = (Bitmap) data.getExtras().get("data");
                 else if (requestCode == Utils.PICK_IMAGE) bitmap = BitmapFactory.decodeFile(Utils.getRealPathFromURI(GroupActivity.this, data.getData()));
 
+                bitmap = Utils.fixOrientation(bitmap);
+
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
                 fileOutputStream.write(bytes.toByteArray());
