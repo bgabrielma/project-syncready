@@ -25,7 +25,8 @@
 
   CREATE TABLE IF NOT EXISTS `Alerts` (
     `pk_alerts` INT NOT NULL AUTO_INCREMENT,
-    `uuid_alerts` VARCHAR(255) NOT NULL,
+    `uuid_alerts` VARCHAR(255) NOT NULL DEFAULT UUID(),
+    `name_alerts` VARCHAR(255) NOT NULL,
     `alert_text` TEXT NULL,
     `created_at` DATETIME NOT NULL,
     `until_at` DATETIME NOT NULL,

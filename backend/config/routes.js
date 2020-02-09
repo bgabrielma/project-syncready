@@ -13,6 +13,9 @@ const RoomController = require('../controllers/roomController')
 const TicketOptionsController = require('../controllers/ticketOptionsController')
 const UserRoomController = require('../controllers/usersRoomsController')
 const CompanyController = require('../controllers/companyController')
+const AlertController = require('../controllers/alertController')
+const TypeAlertController = require('../controllers/typeAlertController')
+const TypeUserAlertController = require('../controllers/typeUserAlertController')
 const JsonWebTokenController = require('../controllers/jsonWebTokenController')
 const MessagesController = require('../controllers/messagesController')
 
@@ -63,6 +66,7 @@ router.get('/dashboard/room/list', DashboardController.listRoom)
 
 /* Alerts */
 router.get('/dashboard/alert/new', DashboardController.newAlert)
+router.post('/dashboard/alert/new', DashboardController.registerAlert)
 router.get('/dashboard/alert/list', DashboardController.listAlert)
 
 /* Companies */
@@ -79,7 +83,7 @@ router.delete('/user', UserController.del)
 router.post('/authApi', UserController.authApi)
 router.post('/mobileValidateRegister', UserController.validateMobileRegister)
 router.get('/mobile/home', UserController.getHomeDataFromUserMobile)
-router.post('/mobile/upload', multer(multerConfig).single('newFile'), UserController.uploadFile);
+router.post('/mobile/upload', multer(multerConfig).single('newFile'), UserController.uploadFile)
 router.get('/user/image', UserController.updateUserImage)
 
 // type user
@@ -103,6 +107,17 @@ router.delete('/company', CompanyController.del)
 // messages
 router.post('/message', MessagesController.post)
 router.get('/message', MessagesController.get)
+
+// alerts
+router.delete('/alert', AlertController.del)
+router.get('/alert', AlertController.get)
+router.post('/alert', AlertController.post)
+
+// type alert
+router.get('/alert/type', TypeAlertController.get)
+
+// type user alert
+router.get('/alert/user/type', TypeUserAlertController.get)
 
 router.get('/cookies', function(req, res) {
   res.send(req.cookies)
