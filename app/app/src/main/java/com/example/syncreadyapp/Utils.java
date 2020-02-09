@@ -190,13 +190,11 @@ public class Utils {
     }
 
     public static Bitmap fixOrientation(Bitmap mBitmap) {
-        Matrix matrix = new Matrix();
         if (mBitmap.getWidth() > mBitmap.getHeight()) {
+            Matrix matrix = new Matrix();
             matrix.postRotate(90);
-        } else if (mBitmap.getHeight() > mBitmap.getWidth()){
-            matrix.postRotate(-90);
+            mBitmap = Bitmap.createBitmap(mBitmap , 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
         }
-        mBitmap = Bitmap.createBitmap(mBitmap , 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
 
         return mBitmap;
     }

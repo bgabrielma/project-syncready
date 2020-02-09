@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitInstance {
     private static Retrofit retrofit = null;
-    private static boolean devMode = true;
+    private static boolean devMode = false;
     private static String port = "3000";
     public static String BASE_URL = devMode ? "http://10.0.3.2" + ":" + port + "/" : "http://157.230.96.205" + ":" + port + "/";
 
