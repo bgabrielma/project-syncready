@@ -1,5 +1,7 @@
 package com.example.syncreadyapp.views;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -12,14 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.databinding.RoomDetailsBinding;
 import com.example.syncreadyapp.models.usermodel.ResponseUser;
+import com.example.syncreadyapp.services.RetrofitInstance;
 import com.example.syncreadyapp.viewmodels.GroupActivityViewModel;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
+import com.squareup.picasso.Picasso;
 
 public class RoomDetailsActivity extends AppCompatActivity {
     private RoomDetailsBinding detailsBinding;
     private Bundle bundle;
     private HomeActivityViewModel homeActivityViewModel;
     private GroupActivityViewModel groupActivityViewModel;
+    private String groupUsersFormatted = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +40,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
         groupActivityViewModel.roomUuid.setValue(bundle.getString("syncready_room_uuid", null));
         groupActivityViewModel.roomTitle.setValue(bundle.getString("syncready_room_title", null));
         groupActivityViewModel.roomImage.setValue(bundle.getString("syncready_room_image", null));
+        groupUsersFormatted = bundle.getString("groupUsersFormatted", null);
 
         // loading user data
         homeActivityViewModel.getUserData(homeActivityViewModel.uuidMutableLiveData.getValue(), homeActivityViewModel.tokenAccessMutableLiveData.getValue())
@@ -48,16 +54,32 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
             configureToolbar();
             configurePermissions();
+
+            detailsBinding.roomDetailsGroupUsersFormatted.setText(groupUsersFormatted);
+
+            detailsBinding.btnDownload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(RoomDetailsActivity.this, SyncReadyPDFViewerActivity.class));
+                }
+            });
         }
     };
 
     public void configureToolbar() {
+
         detailsBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+
+        detailsBinding.toolbar.setTitle(groupActivityViewModel.roomTitle.getValue());
+        Picasso.get()
+                .load(RetrofitInstance.BASE_URL + "public/files/" + groupActivityViewModel.roomImage.getValue())
+                .placeholder(R.drawable.loading)
+                .into(detailsBinding.expandedImage);
     }
 
     public void configurePermissions() {

@@ -27,7 +27,7 @@
                 <ImageView
                     android:id="@+id/expandedImage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="400dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/repair"
                     app:layout_collapseMode="parallax"
@@ -45,7 +45,7 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:title="@string/roomName"
+                    android:title="@string/roomName"
                     app:menu="@menu/toolbar_room_details"
                     app:navigationIcon="@drawable/ic_keyboard_backspace"
                     app:layout_collapseMode="pin"
@@ -130,16 +130,18 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/orcamento"
+                        android:text="@string/membros"
                         style="@style/TextAppearance.MaterialComponents.Body2"
                         android:textSize="16sp"
                         />
                     <TextView
+                        android:id="@+id/roomDetailsGroupUsersFormatted"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/price"
+                        android:text=""
                         android:layout_marginTop="5dp"
                         style="@style/TextAppearance.MaterialComponents.Body1"
+                        android:textFontWeight="800"
                         />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

@@ -123,6 +123,9 @@ public class GroupActivity extends AppCompatActivity implements OnMessageListCli
                     usersGroupFormated = usersGroupFormated.concat(user.getFullname().split(" ")[0] + (user == responseUser.getData().get(responseUser.getData().size() - 1) ? "" : ", "));
                 }
 
+                // put groupUsersFormattedText as bundle member
+                bundle.putString("groupUsersFormatted", usersGroupFormated);
+
                 // set group's user text value
                 groupBinding.groupToolbarInclude.toolbarGroupUsersFormatted.setText(usersGroupFormated);
 
@@ -341,7 +344,6 @@ public class GroupActivity extends AppCompatActivity implements OnMessageListCli
         Bundle bundle = new Bundle();
         bundle.putString("groupImage", groupActivityViewModel.roomImage.getValue());
         bundle.putString("groupTitle", groupActivityViewModel.roomTitle.getValue());
-        bundle.putString("groupUsersFormatted", usersGroupFormated);
         bundle.putString("groupImageFile", messageModels.get(position).getContent());
         intent.putExtras(bundle);
         startActivity(intent);
