@@ -10,9 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.syncreadyapp.R;
+import com.example.syncreadyapp.adapters.MessageListAdapter;
 import com.example.syncreadyapp.databinding.RoomDetailsBinding;
+import com.example.syncreadyapp.models.messagemodel.ResponseMessage;
 import com.example.syncreadyapp.models.usermodel.ResponseUser;
 import com.example.syncreadyapp.services.RetrofitInstance;
 import com.example.syncreadyapp.viewmodels.GroupActivityViewModel;
@@ -51,18 +54,42 @@ public class RoomDetailsActivity extends AppCompatActivity {
         @Override
         public void onChanged(ResponseUser responseUser) {
             homeActivityViewModel.userMutableLiveData.setValue(responseUser.getData().get(0));
+            groupActivityViewModel.getMessagesByRoom(groupActivityViewModel.roomUuid.getValue(), homeActivityViewModel.tokenAccessMutableLiveData.getValue(), false)
+                    .observe(RoomDetailsActivity.this, getMessagesByRoomObserver);
+        }
+    };
 
-            configureToolbar();
-            configurePermissions();
+    private final Observer<ResponseMessage> getMessagesByRoomObserver = new Observer<ResponseMessage>() {
+        @Override
+        public void onChanged(ResponseMessage responseMessage) {
+            if (responseMessage != null) {
+                configureToolbar();
+                configurePermissions();
 
-            detailsBinding.roomDetailsGroupUsersFormatted.setText(groupUsersFormatted);
+                detailsBinding.roomDetailsGroupUsersFormatted.setText(groupUsersFormatted);
 
-            detailsBinding.btnDownload.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startActivity(new Intent(RoomDetailsActivity.this, SyncReadyPDFViewerActivity.class));
-                }
-            });
+                detailsBinding.btnDownload.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(RoomDetailsActivity.this, SyncReadyPDFViewerActivity.class));
+                    }
+                });
+
+                detailsBinding.expandedImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent intent = new Intent(RoomDetailsActivity.this, PictureActivity.class);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("groupImage", groupActivityViewModel.roomImage.getValue());
+                        bundle.putString("groupTitle", groupActivityViewModel.roomTitle.getValue());
+                        bundle.putString("groupImageFile", groupActivityViewModel.roomImage.getValue());
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+                });
+            }
         }
     };
 
