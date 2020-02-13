@@ -83,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.toolbar_menu_action_logout: {
-                        Toast.makeText(getApplicationContext(), "Logout option clicked!", Toast.LENGTH_LONG).show();
+                        Utils.ApplicationLogout(HomeActivity.this);
                         break;
                     }
                 }

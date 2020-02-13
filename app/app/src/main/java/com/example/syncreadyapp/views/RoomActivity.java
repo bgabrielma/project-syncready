@@ -220,7 +220,7 @@ public class RoomActivity extends AppCompatActivity implements OnRoomListClickLi
     protected void onResume() {
         super.onResume();
 
-        if (rooms != null)
+        if (rooms != null && roomListAdapter.getItemCount() != 0)
             setLastMessageForRooms();
     }
 }

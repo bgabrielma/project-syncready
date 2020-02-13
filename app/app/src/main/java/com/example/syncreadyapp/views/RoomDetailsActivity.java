@@ -11,10 +11,14 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.adapters.MessageListAdapter;
+import com.example.syncreadyapp.adapters.RoomDetailsFilesAdapter;
 import com.example.syncreadyapp.databinding.RoomDetailsBinding;
+import com.example.syncreadyapp.interfaces.OnRoomDetailsFileClickListener;
+import com.example.syncreadyapp.models.messagemodel.MessageModel;
 import com.example.syncreadyapp.models.messagemodel.ResponseMessage;
 import com.example.syncreadyapp.models.usermodel.ResponseUser;
 import com.example.syncreadyapp.services.RetrofitInstance;
@@ -22,12 +26,16 @@ import com.example.syncreadyapp.viewmodels.GroupActivityViewModel;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
 import com.squareup.picasso.Picasso;
 
-public class RoomDetailsActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class RoomDetailsActivity extends AppCompatActivity implements OnRoomDetailsFileClickListener {
     private RoomDetailsBinding detailsBinding;
     private Bundle bundle;
     private HomeActivityViewModel homeActivityViewModel;
     private GroupActivityViewModel groupActivityViewModel;
     private String groupUsersFormatted = null;
+    private List<MessageModel> filesAsMessages = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +73,12 @@ public class RoomDetailsActivity extends AppCompatActivity {
             if (responseMessage != null) {
                 configureToolbar();
                 configurePermissions();
+
+                filesAsMessages.clear();
+                for (MessageModel messageModel : responseMessage.getData()) {
+                    if (messageModel.getIsImage() == 1) filesAsMessages.add(messageModel);
+                }
+                configureRecyclerFilesView(filesAsMessages);
 
                 detailsBinding.roomDetailsGroupUsersFormatted.setText(groupUsersFormatted);
 
@@ -114,5 +128,28 @@ public class RoomDetailsActivity extends AppCompatActivity {
             detailsBinding.toolbar.getMenu().getItem(0).setVisible(false);
             detailsBinding.buttonUploadImage.setVisibility(View.INVISIBLE);
         }
+    }
+
+    public void configureRecyclerFilesView(List<MessageModel> messagesAsFiles) {
+        RecyclerView recyclerView = detailsBinding.roomDetailsRecyclerView;
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(RoomDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        RoomDetailsFilesAdapter roomDetailsFilesAdapter = new RoomDetailsFilesAdapter(messagesAsFiles, groupActivityViewModel.roomTitle.getValue(), this);
+
+        recyclerView.setAdapter(roomDetailsFilesAdapter);
+    }
+
+    @Override
+    public void onRoomDetailsFileClickListener(int position) {
+
+        Intent intent = new Intent(RoomDetailsActivity.this, PictureActivity.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("groupImage", groupActivityViewModel.roomImage.getValue());
+        bundle.putString("groupTitle", groupActivityViewModel.roomTitle.getValue());
+        bundle.putString("groupImageFile", filesAsMessages.get(position).getContent());
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

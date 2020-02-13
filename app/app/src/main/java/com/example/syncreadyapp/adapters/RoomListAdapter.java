@@ -72,7 +72,7 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomLi
             List<Room> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(roomsListFiltered);
+                filteredList.addAll(roomsDataset);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 

@@ -1,5 +1,6 @@
 package com.example.syncreadyapp.adapters;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.syncreadyapp.R;
+import com.example.syncreadyapp.databinding.GroupListItemMyMessageFileBinding;
 import com.example.syncreadyapp.databinding.PictureActivityBinding;
 import com.example.syncreadyapp.databinding.RoomListItemBinding;
 import com.example.syncreadyapp.interfaces.OnRoomDetailsFileClickListener;
@@ -38,8 +40,8 @@ public class RoomDetailsFilesAdapter extends RecyclerView.Adapter<RoomDetailsFil
     @NonNull
     @Override
     public RoomDetailsFileViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        PictureActivityBinding pictureActivityBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.picture_activity, parent, false);
-        return new RoomDetailsFileViewHolder(pictureActivityBinding, onMessageFileClickListener);
+        GroupListItemMyMessageFileBinding groupListItemMyMessageFileBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.group_list_item_my_message_file, parent, false);
+        return new RoomDetailsFileViewHolder(groupListItemMyMessageFileBinding, onMessageFileClickListener);
     }
 
     @Override
@@ -51,14 +53,10 @@ public class RoomDetailsFilesAdapter extends RecyclerView.Adapter<RoomDetailsFil
         Picasso.get()
             .load(RetrofitInstance.BASE_URL + "public/files/" + currentRoom.getContent())
             .placeholder(R.drawable.loading)
-            .into(holder.pictureActivityBinding.groupImage );
+            .into(holder.groupListItemMyMessageFileBinding.groupListItemMyMessageFile );
 
-        Picasso.get()
-                .load(RetrofitInstance.BASE_URL + "public/files/" + currentRoom.getContent())
-                .placeholder(R.drawable.loading)
-                .into(holder.pictureActivityBinding.touchImageFileView);
-
-        holder.pictureActivityBinding.toolbarGroupTitle.setText(this.roomTitle);
+        holder.groupListItemMyMessageFileBinding.getRoot().setBackgroundColor(Color.WHITE);
+        holder.groupListItemMyMessageFileBinding.groupListMyMessageLinearLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     @Override
@@ -68,14 +66,14 @@ public class RoomDetailsFilesAdapter extends RecyclerView.Adapter<RoomDetailsFil
 
     public class RoomDetailsFileViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public PictureActivityBinding pictureActivityBinding;
+        public GroupListItemMyMessageFileBinding groupListItemMyMessageFileBinding;
         private OnRoomDetailsFileClickListener onMessageFileClickListener;
 
-        public RoomDetailsFileViewHolder(@NonNull PictureActivityBinding pictureActivityBinding, @NonNull  OnRoomDetailsFileClickListener onMessageFileClickListener) {
-            super(pictureActivityBinding.getRoot());
-            this.pictureActivityBinding = pictureActivityBinding;
+        public RoomDetailsFileViewHolder(@NonNull GroupListItemMyMessageFileBinding groupListItemMyMessageFileBinding, @NonNull  OnRoomDetailsFileClickListener onMessageFileClickListener) {
+            super(groupListItemMyMessageFileBinding.getRoot());
+            this.groupListItemMyMessageFileBinding = groupListItemMyMessageFileBinding;
             this.onMessageFileClickListener = onMessageFileClickListener;
-            pictureActivityBinding.getRoot().setOnClickListener(this);
+            groupListItemMyMessageFileBinding.getRoot().setOnClickListener(this);
         }
 
         @Override
