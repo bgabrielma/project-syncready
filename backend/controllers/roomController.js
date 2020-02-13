@@ -218,10 +218,24 @@ const get = function(req, res) {
     .catch(err => res.status(500).send(err))
 }
 
+async function updateRoomImage(req, res) {
+  const { image, roomUUID } = req.query
+
+  await db('Rooms')
+    .update({
+      image
+    })
+    .where({ uuid_room: roomUUID })
+    .then(_ => res.status(200).send({ ok: true }))
+    .catch(err => res.status(500).send({ err, ok: false }))
+}
+
+
 module.exports = {
   get,
   post,
   saveRoom,
   verifyUserInRoom,
-  addIntoRoom
+  addIntoRoom,
+  updateRoomImage
 }

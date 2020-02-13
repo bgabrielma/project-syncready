@@ -386,7 +386,7 @@ function uploadFile(req, res) {
 }
 
 async function updateUserImage(req, res) {
-  const { image, userUUID } = req.query;
+  const { image, userUUID } = req.query
 
   await db('Users')
     .update({

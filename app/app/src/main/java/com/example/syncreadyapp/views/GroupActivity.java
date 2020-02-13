@@ -203,7 +203,7 @@ public class GroupActivity extends AppCompatActivity implements OnMessageListCli
                 Intent roomDetailsActivity = new Intent(GroupActivity.this, RoomDetailsActivity.class);
                 roomDetailsActivity.putExtras(bundle);
 
-                startActivity(roomDetailsActivity);
+                startActivityForResult(roomDetailsActivity, Utils.GROUP_IMAGE_DETAILS_VIEW);
             }
         });
     }
@@ -334,6 +334,14 @@ public class GroupActivity extends AppCompatActivity implements OnMessageListCli
             showImageUploadProcessing.show();
             groupActivityViewModel.uploadImage(fileToUpload, description, homeActivityViewModel.tokenAccessMutableLiveData.getValue())
                 .observe(this, getUploadImage);
+        }
+
+        if (resultCode == Utils.GROUP_IMAGE_UPDATED) {
+            Intent intent = new Intent();
+            intent.putExtra("room_uuid", groupActivityViewModel.roomUuid.getValue());
+            intent.putExtra("newGroupImage", data.getStringExtra("newGroupImage"));
+            setResult(Utils.GROUP_LIST_NEED_TO_BE_RELOADED, intent);
+            finish();
         }
     }
 

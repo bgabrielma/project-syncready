@@ -1,11 +1,16 @@
 package com.example.syncreadyapp.views;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
@@ -14,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.syncreadyapp.R;
+import com.example.syncreadyapp.Utils;
 import com.example.syncreadyapp.adapters.MessageListAdapter;
 import com.example.syncreadyapp.adapters.RoomDetailsFilesAdapter;
 import com.example.syncreadyapp.databinding.RoomDetailsBinding;
@@ -24,10 +30,19 @@ import com.example.syncreadyapp.models.usermodel.ResponseUser;
 import com.example.syncreadyapp.services.RetrofitInstance;
 import com.example.syncreadyapp.viewmodels.GroupActivityViewModel;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
+import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class RoomDetailsActivity extends AppCompatActivity implements OnRoomDetailsFileClickListener {
     private RoomDetailsBinding detailsBinding;
@@ -35,11 +50,14 @@ public class RoomDetailsActivity extends AppCompatActivity implements OnRoomDeta
     private HomeActivityViewModel homeActivityViewModel;
     private GroupActivityViewModel groupActivityViewModel;
     private String groupUsersFormatted = null;
+    private AlertDialog showImageUploadProcessing;
     private List<MessageModel> filesAsMessages = new ArrayList<>();
+    private String newGroupImagePath = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        showImageUploadProcessing = Utils.showImageUploadProcessing(RoomDetailsActivity.this);
         detailsBinding = DataBindingUtil.setContentView(this, R.layout.room_details);
 
         homeActivityViewModel = ViewModelProviders.of(this).get(HomeActivityViewModel.class);
@@ -103,6 +121,53 @@ public class RoomDetailsActivity extends AppCompatActivity implements OnRoomDeta
                         startActivity(intent);
                     }
                 });
+
+                detailsBinding.buttonUploadImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Utils.requestFile(RoomDetailsActivity.this, true, false);
+                    }
+                });
+            }
+        }
+    };
+
+    private final Observer<JsonObject> getUploadImage = new Observer<JsonObject>() {
+        @Override
+        public void onChanged(JsonObject responseBody) {
+
+            if (responseBody != null ) {
+                String filePath = newGroupImagePath = responseBody.get("filename").getAsString();
+                homeActivityViewModel.getUpdateRoomImage(filePath, groupActivityViewModel.roomUuid.getValue(), homeActivityViewModel.tokenAccessMutableLiveData.getValue())
+                        .observe(RoomDetailsActivity.this, getUserUpdateObserver);
+            } else {
+                Utils.showInternalUnavailableConnectionToServerAlert(RoomDetailsActivity.this).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Utils.ApplicationLogout(RoomDetailsActivity.this);
+                    }
+                }).show();
+            }
+        }
+    };
+
+    private final Observer<JsonObject> getUserUpdateObserver = new Observer<JsonObject>() {
+        @Override
+        public void onChanged(JsonObject jsonObject) {
+            if (jsonObject != null && jsonObject.get("ok").getAsString().equals("true")) {
+                Utils.showGroupUpdated(RoomDetailsActivity.this)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                showImageUploadProcessing.dismiss();
+                                Intent resultIntent = new Intent();
+                                resultIntent.putExtra("newGroupImage", newGroupImagePath);
+                                setResult(Utils.GROUP_IMAGE_UPDATED, resultIntent);
+
+                                finish();
+                            }
+                        })
+                        .show();
             }
         }
     };
@@ -151,5 +216,49 @@ public class RoomDetailsActivity extends AppCompatActivity implements OnRoomDeta
         bundle.putString("groupImageFile", filesAsMessages.get(position).getContent());
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+            File photoFile = null;
+            Bitmap bitmap = null;
+            FileOutputStream fileOutputStream = null;
+
+            try {
+                photoFile = Utils.createImageFile(RoomDetailsActivity.this);
+                fileOutputStream = new FileOutputStream(photoFile);
+
+                if (requestCode == Utils.CAMERA_REQUEST) bitmap = (Bitmap) data.getExtras().get("data");
+                else if (requestCode == Utils.PICK_IMAGE) bitmap = BitmapFactory.decodeFile(Utils.getRealPathFromURI(RoomDetailsActivity.this, data.getData()));
+
+                bitmap = Utils.fixOrientation(bitmap);
+
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                fileOutputStream.write(bytes.toByteArray());
+
+                fileOutputStream.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            RequestBody mFile = null;
+            if (photoFile != null) {
+                mFile = RequestBody.create(MediaType.parse("image/jpeg"), photoFile);
+            }
+            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("newFile", photoFile.getName(), mFile);
+
+            //Create request body with text description and text media type
+            RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
+
+
+            showImageUploadProcessing.show();
+            groupActivityViewModel.uploadImage(fileToUpload, description, homeActivityViewModel.tokenAccessMutableLiveData.getValue())
+                    .observe(this, getUploadImage);
+        }
     }
 }

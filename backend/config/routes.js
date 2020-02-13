@@ -97,6 +97,7 @@ router.get('/user/room/add', RoomController.addIntoRoom)
 router.get('/room', RoomController.get)
 router.post('/room', RoomController.post)
 router.get('/verify/room', RoomController.verifyUserInRoom)
+router.get('/room/image', RoomController.updateRoomImage)
 
 // ticket option
 router.get('/ticket/option/status', TicketOptionsController.get)

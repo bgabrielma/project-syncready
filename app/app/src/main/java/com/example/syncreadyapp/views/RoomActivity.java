@@ -30,6 +30,7 @@ import com.example.syncreadyapp.viewmodels.GroupActivityViewModel;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
+import com.squareup.picasso.Picasso;
 
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
@@ -201,7 +202,7 @@ public class RoomActivity extends AppCompatActivity implements OnRoomListClickLi
 
         mSocket.emit("joinRoomList", homeActivityViewModel.uuidMutableLiveData.getValue(), room.getUuidRoom());
 
-        startActivity(groupActivity);
+        startActivityForResult(groupActivity, Utils.ROOM_VIEW);
     }
 
     @Override
@@ -222,5 +223,21 @@ public class RoomActivity extends AppCompatActivity implements OnRoomListClickLi
 
         if (rooms != null && roomListAdapter.getItemCount() != 0)
             setLastMessageForRooms();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Utils.GROUP_LIST_NEED_TO_BE_RELOADED) {
+            for (int i = 0 ; i < rooms.size() ; i++) {
+                if (rooms.get(i).getUuidRoom().equals(data.getStringExtra("room_uuid"))) {
+                    rooms.get(i).setImage(data.getStringExtra("newGroupImage"));
+                    break;
+                }
+            }
+
+            roomListAdapter.notifyDataSetChanged();
+        }
     }
 }

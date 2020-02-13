@@ -30,6 +30,10 @@ import java.util.regex.Pattern;
 public class Utils {
     public static final int PICK_IMAGE = 1;
     public static final int CAMERA_REQUEST = 2;
+    public static final int GROUP_IMAGE_DETAILS_VIEW = 3;
+    public static final int ROOM_VIEW = 4;
+    public static final int GROUP_IMAGE_UPDATED = 5;
+    public static final int GROUP_LIST_NEED_TO_BE_RELOADED = 6;
 
     public static AlertDialog.Builder showInternalUnavailableConnectionToServerAlert(Activity activity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -173,6 +177,16 @@ public class Utils {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("Utilizador atualizado");
         builder.setMessage("O utilizador foi atualizado com sucesso.");
+        builder.setIcon(R.drawable.ic_update);
+        builder.setCancelable(false);
+
+        return builder;
+    }
+
+    public static AlertDialog.Builder showGroupUpdated(Activity activity) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Grupo atualizado");
+        builder.setMessage("A imagem do grupo foi atualizada com sucesso.");
         builder.setIcon(R.drawable.ic_update);
         builder.setCancelable(false);
 

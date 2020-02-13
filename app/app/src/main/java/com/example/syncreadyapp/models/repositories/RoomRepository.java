@@ -101,4 +101,30 @@ public class RoomRepository {
 
         return responseRoomMutableLiveData;
     }
+    public MutableLiveData<JsonObject> getUpdateRoomImage(String image, String uuid, String bearerToken) {
+        final MutableLiveData<JsonObject> jsonObjectMutableLiveData = new MutableLiveData<>();
+        isNetworkTroubleLiveData.setValue(false);
+
+        Call<JsonObject> call = syncReadyMobileDataService.updateRoomImage(image, uuid, bearerToken);
+
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject responseRoom = response.body();
+
+                if (responseRoom != null) {
+                    jsonObjectMutableLiveData.setValue(responseRoom);
+                } else {
+                    jsonObjectMutableLiveData.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                jsonObjectMutableLiveData.setValue(null);
+            }
+        });
+
+        return jsonObjectMutableLiveData;
+    }
 }
