@@ -69,6 +69,7 @@ public class RoomDetailsActivity extends AppCompatActivity implements OnRoomDeta
         groupActivityViewModel.roomUuid.setValue(bundle.getString("syncready_room_uuid", null));
         groupActivityViewModel.roomTitle.setValue(bundle.getString("syncready_room_title", null));
         groupActivityViewModel.roomImage.setValue(bundle.getString("syncready_room_image", null));
+        groupActivityViewModel.roomDesignation.setValue(bundle.getString("syncready_room_designation", null));
         groupUsersFormatted = bundle.getString("groupUsersFormatted", null);
 
         // loading user data
@@ -103,7 +104,9 @@ public class RoomDetailsActivity extends AppCompatActivity implements OnRoomDeta
                 detailsBinding.btnDownload.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(RoomDetailsActivity.this, SyncReadyPDFViewerActivity.class));
+                        Intent intent = new Intent(RoomDetailsActivity.this, SyncReadyPDFViewerActivity.class);
+                        intent.putExtra("syncready_room_designation", groupActivityViewModel.roomDesignation.getValue());
+                        startActivity(intent);
                     }
                 });
 
@@ -206,7 +209,7 @@ public class RoomDetailsActivity extends AppCompatActivity implements OnRoomDeta
     }
 
     @Override
-    public void onRoomDetailsFileClickListener(int position) {
+    public void onRoomDetailsFileClick(int position) {
 
         Intent intent = new Intent(RoomDetailsActivity.this, PictureActivity.class);
 

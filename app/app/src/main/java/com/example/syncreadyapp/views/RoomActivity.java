@@ -198,6 +198,7 @@ public class RoomActivity extends AppCompatActivity implements OnRoomListClickLi
         bundle.putString("syncready_room_uuid", room.getUuidRoom());
         bundle.putString("syncready_room_title", room.getNameRoom());
         bundle.putString("syncready_room_image", room.getImage());
+        bundle.putString("syncready_room_designation", room.getDesignation());
         groupActivity.putExtras(bundle);
 
         mSocket.emit("joinRoomList", homeActivityViewModel.uuidMutableLiveData.getValue(), room.getUuidRoom());

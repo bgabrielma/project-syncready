@@ -26,18 +26,21 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.databinding.SyncreadyPdfViewerBinding;
+import com.example.syncreadyapp.services.RetrofitInstance;
 
 public class SyncReadyPDFViewerActivity extends AppCompatActivity {
 
     private SyncreadyPdfViewerBinding syncreadyPdfViewerBinding;
-    private String url = "http://www.orimi.com/pdf-test.pdf";
-    private String formattedUrl = "https://docs.google.com/viewer?url=" + url;
+    private String url = null;
+    private String formattedUrl = null;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         syncreadyPdfViewerBinding = DataBindingUtil.setContentView(this, R.layout.syncready_pdf_viewer);
+        formattedUrl = "https://docs.google.com/viewer?url=" + RetrofitInstance.BASE_URL + "public/files/"
+                + getIntent().getExtras().getString("syncready_room_designation", "http://www.orimi.com/pdf-test.pdf");
 
         syncreadyPdfViewerBinding.webview.getSettings().setJavaScriptEnabled(true);
 

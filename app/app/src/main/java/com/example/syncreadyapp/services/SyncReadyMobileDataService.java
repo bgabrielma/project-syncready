@@ -1,5 +1,6 @@
 package com.example.syncreadyapp.services;
 
+import com.example.syncreadyapp.models.alert.ResponseAlert;
 import com.example.syncreadyapp.models.homedata.ResponseHomeData;
 import com.example.syncreadyapp.models.messagemodel.ResponseMessage;
 import com.example.syncreadyapp.models.room.ResponseRoom;
@@ -74,4 +75,7 @@ public interface SyncReadyMobileDataService {
 
     @GET("/room/image")
     Call<JsonObject> updateRoomImage(@Query("image") String image, @Query("roomUUID") String uuid, @Header("Authorization") String authHeader);
+
+    @GET("/alert")
+    Call<ResponseAlert> getAlertsByUuidTypeUsers(@Query("uuidTypeUsers") String uuidTypeUsers, @Header("Authorization") String authHeader);
 }

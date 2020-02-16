@@ -22,6 +22,7 @@ public class GroupActivityViewModel extends AndroidViewModel {
     public MutableLiveData<String> roomUuid = new MutableLiveData<>();
     public MutableLiveData<String> roomTitle = new MutableLiveData<>();
     public MutableLiveData<String> roomImage = new MutableLiveData<>();
+    public MutableLiveData<String> roomDesignation = new MutableLiveData<>();
 
     public UserRepository userRepository;
     public MessageRepository messageRepository;

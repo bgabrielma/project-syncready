@@ -23,6 +23,7 @@ import com.example.syncreadyapp.databinding.MainBinding;
 import com.example.syncreadyapp.models.usermodel.ResponseUser;
 import com.example.syncreadyapp.viewmodels.HomeActivityViewModel;
 import com.example.syncreadyapp.views.fragments.AccountFragment;
+import com.example.syncreadyapp.views.fragments.AlertsFragment;
 import com.example.syncreadyapp.views.fragments.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -138,7 +139,7 @@ public class HomeActivity extends AppCompatActivity {
                     }
                     case R.id.AlertIcon: {
                         lastMenuItemClicked = item;
-
+                        changeFragments(R.id.AlertIcon);
                         break;
                     }
                     default: {
@@ -172,6 +173,15 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 else { // re-use the old fragment
                     fTransaction.replace(R.id.mainContent, fragment, AccountFragment.class.getName());
+                }
+                break;
+            case R.id.AlertIcon:
+                fragment = fManager.findFragmentByTag(AlertsFragment.class.getName());
+                if (fragment == null) {
+                    fTransaction.add(R.id.mainContent, new AlertsFragment(), AlertsFragment.class.getName());
+                }
+                else { // re-use the old fragment
+                    fTransaction.replace(R.id.mainContent, fragment, AlertsFragment.class.getName());
                 }
                 break;
         }

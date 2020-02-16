@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <variable
+            name="Alert"
+            type="com.example.syncreadyapp.models.alert.Alert" />
+    </data>
     <LinearLayout
         android:orientation="vertical"
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -25,10 +30,9 @@
                 android:scaleType="centerCrop" />
         </com.google.android.material.card.MaterialCardView>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="15dp"
             android:layout_marginStart="15dp">
             <TextView
                 android:id="@+id/notificationText"
@@ -36,17 +40,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:text="@string/roomAdd"
+                android:lines="1"
+                android:text="@{Alert.nameAlerts}"
                 />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="bottom"
-            android:orientation="vertical">
+            <TextView
+                android:id="@+id/notificationContent"
+                style="@style/TextAppearance.MaterialComponents.Overline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@{Alert.alertText}"
+                />
             <TextView
                 android:id="@+id/notificationTimestamp"
-                android:layout_margin="3dp"
+                android:layout_marginTop="5dp"
                 style="@style/TextAppearance.MaterialComponents.Caption"
                 android:textColor="@color/colorSilver"
                 android:layout_width="match_parent"
@@ -54,7 +62,7 @@
                 android:maxLines="1"
                 android:textAlignment="textEnd"
                 android:ellipsize="end"
-                android:text="@string/rightNow"
+                android:text='@{Alert.createdAt.split("T")[0]}'
                 />
         </LinearLayout>
     </LinearLayout>

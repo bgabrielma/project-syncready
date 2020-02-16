@@ -28,7 +28,7 @@ const del = async (req, res) => {
   .catch(err => res.status(500).send({ err, ok: false }))
 }
 
-const getAlerts = (uuid_alerts = null) => {
+const getAlerts = (uuid_alerts = null, uuid_type_of_users = null) => {
 
   console.log(uuid_alerts)
 
@@ -40,13 +40,19 @@ const getAlerts = (uuid_alerts = null) => {
     instance
       .where({uuid_alerts})
   }
+  
+  if (uuid_type_of_users) {
+    instance
+      .innerJoin('Type_Of_User_has_Alerts', 'Type_Of_User_has_Alerts.Alerts_uuid_alerts', '=', 'Alerts.uuid_alerts')
+      .where('Type_Of_User_has_Alerts.Type_Of_User_uuid_type_of_users', '=', uuid_type_of_users)
+  }
 
-  return instance;
+  return instance
 }
 
 const get = async (req, res) => {
 
-  await getAlerts(req.query.uuid)
+  await getAlerts(req.query.uuid, req.query.uuidTypeUsers)
     .then(data => res.status(200).send({ ok: true, response: data }))
     .catch(err => res.status(500).send(err))
 }

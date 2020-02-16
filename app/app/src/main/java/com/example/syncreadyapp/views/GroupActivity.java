@@ -86,6 +86,7 @@ public class GroupActivity extends AppCompatActivity implements OnMessageListCli
         groupActivityViewModel.roomUuid.setValue(bundle.getString("syncready_room_uuid", null));
         groupActivityViewModel.roomTitle.setValue(bundle.getString("syncready_room_title", null));
         groupActivityViewModel.roomImage.setValue(bundle.getString("syncready_room_image", null));
+        groupActivityViewModel.roomDesignation.setValue(bundle.getString("syncready_room_designation", null));
 
         // loading user data
         homeActivityViewModel.getUserData(homeActivityViewModel.uuidMutableLiveData.getValue(), homeActivityViewModel.tokenAccessMutableLiveData.getValue())
@@ -353,6 +354,7 @@ public class GroupActivity extends AppCompatActivity implements OnMessageListCli
         bundle.putString("groupImage", groupActivityViewModel.roomImage.getValue());
         bundle.putString("groupTitle", groupActivityViewModel.roomTitle.getValue());
         bundle.putString("groupImageFile", messageModels.get(position).getContent());
+
         intent.putExtras(bundle);
         startActivity(intent);
     }

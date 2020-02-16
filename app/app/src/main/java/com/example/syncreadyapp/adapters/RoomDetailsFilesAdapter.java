@@ -4,8 +4,6 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -13,16 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.syncreadyapp.R;
 import com.example.syncreadyapp.databinding.GroupListItemMyMessageFileBinding;
-import com.example.syncreadyapp.databinding.PictureActivityBinding;
-import com.example.syncreadyapp.databinding.RoomListItemBinding;
 import com.example.syncreadyapp.interfaces.OnRoomDetailsFileClickListener;
-import com.example.syncreadyapp.interfaces.OnRoomListClickListener;
 import com.example.syncreadyapp.models.messagemodel.MessageModel;
-import com.example.syncreadyapp.models.room.Room;
 import com.example.syncreadyapp.services.RetrofitInstance;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RoomDetailsFilesAdapter extends RecyclerView.Adapter<RoomDetailsFilesAdapter.RoomDetailsFileViewHolder> {
@@ -78,7 +71,7 @@ public class RoomDetailsFilesAdapter extends RecyclerView.Adapter<RoomDetailsFil
 
         @Override
         public void onClick(View view) {
-            onMessageFileClickListener.onRoomDetailsFileClickListener(getAdapterPosition());
+            onMessageFileClickListener.onRoomDetailsFileClick(getAdapterPosition());
         }
     }
 }

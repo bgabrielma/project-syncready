@@ -10,7 +10,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.syncreadyapp.models.alert.ResponseAlert;
 import com.example.syncreadyapp.models.homedata.ResponseHomeData;
+import com.example.syncreadyapp.models.repositories.AlertRepository;
 import com.example.syncreadyapp.models.repositories.RoomRepository;
 import com.example.syncreadyapp.models.repositories.UserRepository;
 import com.example.syncreadyapp.models.room.ResponseRoom;
@@ -22,6 +24,7 @@ import com.google.gson.JsonObject;
 public class HomeActivityViewModel extends AndroidViewModel {
     private UserRepository userRepository;
     private RoomRepository roomRepository;
+    private AlertRepository alertRepository;
 
     public MutableLiveData<String> uuidMutableLiveData = new MutableLiveData<>();
     public MutableLiveData<String> tokenAccessMutableLiveData = new MutableLiveData<>();
@@ -39,6 +42,7 @@ public class HomeActivityViewModel extends AndroidViewModel {
         super(application);
         userRepository = new UserRepository();
         roomRepository = new RoomRepository();
+        alertRepository = new AlertRepository();
     }
 
     public LiveData<ResponseUser> getUserData(String uuid, String bearerToken) {
@@ -71,6 +75,10 @@ public class HomeActivityViewModel extends AndroidViewModel {
 
     public LiveData<JsonObject> getUpdateRoomImage(String image, String userUUID, String bearerToken) {
         return roomRepository.getUpdateRoomImage(image, userUUID, bearerToken);
+    }
+
+    public LiveData<ResponseAlert> getAlertsByUuidTypeUsers(String uuidTypeUsers, String bearerToken) {
+        return alertRepository.getAlertsByUuidTypeUsers(uuidTypeUsers, bearerToken);
     }
 
     public void OnEnterNewRoomButtonClick(View view) {
