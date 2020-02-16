@@ -176,13 +176,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.AlertIcon:
-                fragment = fManager.findFragmentByTag(AlertsFragment.class.getName());
-                if (fragment == null) {
-                    fTransaction.add(R.id.mainContent, new AlertsFragment(), AlertsFragment.class.getName());
-                }
-                else { // re-use the old fragment
-                    fTransaction.replace(R.id.mainContent, fragment, AlertsFragment.class.getName());
-                }
+                fTransaction.add(R.id.mainContent, new AlertsFragment(), AlertsFragment.class.getName());
                 break;
         }
 
