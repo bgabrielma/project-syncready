@@ -159,6 +159,7 @@ public class EditProfileActivity extends AppCompatActivity {
         @Override
         public void onChanged(JsonObject jsonObject) {
             if (jsonObject != null && jsonObject.get("ok").getAsString().equals("true")) {
+                showImageUploadProcessing.dismiss();
                 Utils.showUserUpdated(EditProfileActivity.this)
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
@@ -253,6 +254,7 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
+            showImageUploadProcessing.show();
             File photoFile = null;
             Bitmap bitmap = null;
             FileOutputStream fileOutputStream = null;
