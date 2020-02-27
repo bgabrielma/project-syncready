@@ -291,7 +291,7 @@ const authApi = async function(req, res) {
     .select('pk_uuid')
     .where({ 
       email,
-      password
+      password: db.raw(`MD5('${password}')`)
      })
      .then(response => {
        if(!response.length) return res.status(401).send({ err: 'User not found' })
