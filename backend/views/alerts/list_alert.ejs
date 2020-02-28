@@ -137,12 +137,11 @@
                   let optgroupHTML = '<optgroup label="Tipos de Utilizador">'
 
                   types.forEach(type => {
-                    if (type.type != "Cliente") {
-                      
                       let wasInserted = false
                       
                       alertUserTypes.forEach(elem => {
                         console.log(elem.Type_Of_User_uuid_type_of_users == type.uuid_type_of_users)
+                        
                         if (elem.Type_Of_User_uuid_type_of_users == type.uuid_type_of_users) {
                           
                           wasInserted = true
@@ -154,8 +153,6 @@
                       if (!wasInserted) {
                         optgroupHTML +=  `<option value="${type.uuid_type_of_users}">${type.type}</option>`
                       }
-                    }
-
                   })
                   
                   // insert optgroupt

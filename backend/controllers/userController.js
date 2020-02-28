@@ -13,7 +13,7 @@ const login = async function(email, password, req, res) {
   .join('Type_Of_User', 'Users.Type_Of_User_uuid_type_of_users', '=', 'Type_Of_User.uuid_type_of_users')
   .where({
       email,
-      password,
+      password: db.raw(`MD5('${password}')`),
     })
   .whereNot('Type_Of_User.type', 'Cliente')
     .then(r => {
@@ -26,6 +26,7 @@ const login = async function(email, password, req, res) {
       }
     })
     .catch(err => {
+      console.log(err)
       return res.render('index', { title: 'SyncReady', page: 'main/login', errors: { }, messageErrorOnInsert } )
     })
 }
@@ -196,7 +197,7 @@ const saveUser = async function(req) {
     email,
     telephone: contacto,
     citizencard: cc,
-    password,
+    password: db.raw(`MD5('${password}')`),
     Type_Of_User_uuid_type_of_users: typeToSearch ? typeOfUserUUID : type
   })
 }
@@ -225,7 +226,7 @@ const updateUser = async function(req) {
     telephone: contacto,
     citizencard: cc,
     Type_Of_User_uuid_type_of_users: type,
-    password: password === "" ? user.password : password,
+    password: db.raw(`MD5('${password === "" ? user.password : password}')`),
     update_at: db.raw('NOW()')
     })
     .where({ pk_uuid: secretUUIDToUpdate })
@@ -290,7 +291,7 @@ const authApi = async function(req, res) {
     .select('pk_uuid')
     .where({ 
       email,
-      password
+      password: db.raw(`MD5('${password}')`)
      })
      .then(response => {
        if(!response.length) return res.status(401).send({ err: 'User not found' })

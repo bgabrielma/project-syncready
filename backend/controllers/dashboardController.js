@@ -419,7 +419,7 @@ const registerCompany = async function(req, res) {
           email: companyEmail,
           telephone: companyTelephone,
           citizencard: companyCC,
-          password,
+          password: db.raw(`MD5('${password}')`),
           Type_Of_User_uuid_type_of_users: userTypeUUID
         })
         .then(async response => {
