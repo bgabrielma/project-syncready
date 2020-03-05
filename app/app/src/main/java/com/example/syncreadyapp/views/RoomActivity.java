@@ -105,35 +105,36 @@ public class RoomActivity extends AppCompatActivity implements OnRoomListClickLi
     };
 
     private void setLastMessageForRooms() {
-        for (Room room : rooms) {
-            currentRoom = room;
+        for (final Room room : rooms) {
             groupActivityViewModel.getMessagesByRoom(room.getUuidRoom(), homeActivityViewModel.tokenAccessMutableLiveData.getValue(), true)
-                    .observe(RoomActivity.this, getMessagesByRoomObserver);
+                    .observe(RoomActivity.this, new Observer<ResponseMessage>() {
+                        @Override
+                        public void onChanged(ResponseMessage responseMessage) {
+
+                            currentRoom = room;
+                            String lastMessage = null;
+                            RoomListAdapter.RoomListViewHolder holder = null;
+
+                            if (responseMessage != null ) {
+                                int positionId = roomListAdapter.getItemPosition(currentRoom.getUuidRoom());
+
+                                holder = (RoomListAdapter.RoomListViewHolder) roomBinding.recyclerRooms.findViewHolderForAdapterPosition(positionId);
+
+                                if (!responseMessage.getData().isEmpty()) {
+                                    if (responseMessage.getData().get(0).getIsImage() == 1) lastMessage = "Fotografia";
+                                    else lastMessage = responseMessage.getData().get(0).getContent();
+                                }
+                                else {
+                                    lastMessage = "";
+                                }
+
+                                holder.roomListItemBinding.groupLastMessage.setText(lastMessage);
+                            }
+                        }
+                    });
+            groupActivityViewModel.getMessagesByRoom(room.getUuidRoom(), homeActivityViewModel.tokenAccessMutableLiveData.getValue(), true).removeObservers(RoomActivity.this);
         }
     }
-
-    private final Observer<ResponseMessage> getMessagesByRoomObserver = new Observer<ResponseMessage>() {
-        @Override
-        public void onChanged(ResponseMessage responseMessage) {
-            String lastMessage = null;
-            RoomListAdapter.RoomListViewHolder holder = null;
-            if (responseMessage != null ) {
-                int positionId = roomListAdapter.getItemPosition(currentRoom.getUuidRoom());
-
-                holder = (RoomListAdapter.RoomListViewHolder) roomBinding.recyclerRooms.findViewHolderForAdapterPosition(positionId);
-
-                if (!responseMessage.getData().isEmpty()) {
-                    if (responseMessage.getData().get(0).getIsImage() == 1) lastMessage = "Fotografia";
-                    else lastMessage = responseMessage.getData().get(0).getContent();
-                }
-                else {
-                    lastMessage = "";
-                }
-
-                holder.roomListItemBinding.groupLastMessage.setText(lastMessage);
-            }
-        }
-    };
 
     public void configureToolbar() {
         roomBinding.roomToolbarInclude.roomToolbar.setNavigationOnClickListener(new View.OnClickListener() {
